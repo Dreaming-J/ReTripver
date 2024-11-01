@@ -9,7 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
+import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.exception.NotFoundUserException;
 import com.retripver.user.service.UserService;
+
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/user")
@@ -22,12 +29,31 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+	@PostMapping
+	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
 		LoginResponse loginResponse = userService.login(loginRequest);
 		
-		return ResponseEntity.ok(loginResponse);
+		session.setAttribute("loginUser", loginResponse);
+		
+		// 로그인 실패 시, 추가하기 
+		
+		return ResponseEntity.ok().build();
 	}
 	
+	@PostMapping("/signup")
+	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
+		
+		// 유효성 검사하기
+		// 1. 비어있는 값이 있는 지
+		// 2. 비밀번호와 비밀번호 체크가 같은지
+		// 3. 존재하지 않는 아이디인지
+		
+		
+		userService.signup(signupRequest);
+		
+		// 로그인 실패시도 생성
+		
+		return ResponseEntity.ok().build();
+	}
 	
 }
