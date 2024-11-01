@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
+import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.mapper.UserMapper;
 
 @Repository
@@ -20,5 +21,10 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		return userMapper.selectByIdAndPassword(loginRequest);
+	}
+
+	@Override
+	public void insertUser(SignupRequest signupRequest) {
+		userMapper.insert(signupRequest);
 	}
 }
