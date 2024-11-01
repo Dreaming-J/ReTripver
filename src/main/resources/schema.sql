@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS `you10001`;
-CREATE DATABASE `you10001`;
-USE `you10001`;
+DROP DATABASE IF EXISTS `you1000`;
+CREATE DATABASE `you1000`;
+USE `you1000`;
 
 -- -----------------------------------
 -- 장소 관련 TABLE

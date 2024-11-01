@@ -14,14 +14,14 @@ import com.zaxxer.hikari.HikariDataSource;
 @PropertySource("classpath:/application.properties")
 public class DataBaseConfiguration {
 
-	@Bean
-	@ConfigurationProperties(prefix = "spring.datasource.hikari")
-	public HikariConfig hikariConfig() {
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource.hikari")
+    HikariConfig hikariConfig() {
 		return new HikariConfig();
 	}
-	
-	@Bean
-	public DataSource dataSource() throws Exception {
+
+    @Bean
+    DataSource dataSource() throws Exception {
 		DataSource dataSource = new HikariDataSource(hikariConfig());
 		System.out.println(dataSource.toString());
 		return dataSource;
