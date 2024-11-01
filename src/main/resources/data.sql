@@ -23,7 +23,7 @@ INSERT INTO `notifications` VALUES (1,'test','알림이 왔습니다.',0),(2,'te
 -- 여행 관련 TABLE
 -- -----------------------------------
 
-INSERT INTO `plans` VALUES (1,'test','신나는 부산 여행!',6,0,1),(2,'test','설렘 가득 제주도 여행!',17,0,1),(3,'test','한적한 강릉 바다 힐링 여행',10,0,1),(4,'test','가을빛 담은 경주 역사 탐방',13,0,1),(5,'test','푸른 물결 속 여수 밤바다 여행',16,0,1),(6,'test','서울에서의 활기찬 문화 체험',1,0,1),(7,'test','속초 설악산 등반과 힐링 투어',10,0,1),(8,'test','대구 별빛 야경 투어',4,0,1),(9,'test','전주의 한옥마을과 전통 맛집 탐방',15,0,1),(10,'test','고요한 남해의 섬마을 여행',14,0,1),(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
+INSERT INTO `plans` VALUES (1,'test','신나는 부산 여행!',6,0,1),(2,'test','설렘 가득 제주도 여행!',39,0,1),(3,'test','한적한 강릉 바다 힐링 여행',32,0,1),(4,'test','가을빛 담은 경주 역사 탐방',35,0,1),(5,'test','푸른 물결 속 여수 밤바다 여행',38,0,1),(6,'test','서울에서의 활기찬 문화 체험',1,0,1),(7,'test','속초 설악산 등반과 힐링 투어',32,0,1),(8,'test','대구 별빛 야경 투어',4,0,1),(9,'test','전주의 한옥마을과 전통 맛집 탐방',37,0,1),(10,'test','고요한 남해의 섬마을 여행',36,0,1),(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
 INSERT INTO `courses` VALUES (1,6,3837,0),(2,6,4486,1),(3,6,3931,2);
 INSERT INTO `quests` VALUES (1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),(2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),(3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0);
 INSERT INTO `plan_like` VALUES (6,'admin'),(8,'admin'),(1,'pro1'),(6,'pro1'),(1,'user'),(2,'user'),(3,'user'),(6,'user');

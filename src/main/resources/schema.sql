@@ -102,12 +102,12 @@ CREATE TABLE `follow` (
 
 CREATE TABLE `visit_counts` (
     `user_id`	VARCHAR(16) NOT NULL,
-    `sido_no`	INT NOT NULL,
+    `sido_code`	INT NOT NULL,
     `count`		INT NOT NULL DEFAULT 0,
     
-    PRIMARY KEY (`user_id`, `sido_no`),
+    PRIMARY KEY (`user_id`, `sido_code`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`sido_no`) REFERENCES `sidos`(`sido_code`)
+    FOREIGN KEY (`sido_code`) REFERENCES `sidos`(`sido_code`)
 );
 
 CREATE TABLE `notifications` (
@@ -128,13 +128,13 @@ CREATE TABLE `plans` (
     `id`		INT NOT NULL AUTO_INCREMENT,
     `user_id`	VARCHAR(16) NOT NULL,
     `title`		VARCHAR(100) NOT NULL,
-    `sido_no`	INT NOT NULL,
+    `sido_code`	INT NOT NULL,
     `isClear`	BOOLEAN NOT NULL DEFAULT false,
     `isPublic`	BOOLEAN NOT NULL DEFAULT true,
     
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`sido_no`) REFERENCES `sidos`(`no`)
+    FOREIGN KEY (`sido_code`) REFERENCES `sidos`(`sido_code`)
 );
 
 CREATE TABLE `current_plans` (
@@ -185,12 +185,12 @@ CREATE TABLE `achievement_visit` (
     `id`			INT NOT NULL AUTO_INCREMENT,
     `name`			VARCHAR(100) NOT NULL,
     `content`		VARCHAR(100) NOT NULL,
-    `sido_no`		INT NOT NULL,
+    `sido_code`		INT NOT NULL,
     `visit_count`	INT NOT NULL,
     `img`			VARCHAR(255) NOT NULL,
     
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`sido_no`) REFERENCES `sidos`(`sido_code`)
+    FOREIGN KEY (`sido_code`) REFERENCES `sidos`(`sido_code`)
 );
 
 CREATE TABLE `acquire_visit` (
