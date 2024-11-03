@@ -5,7 +5,11 @@ import org.springframework.stereotype.Service;
 
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
+import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.UserModifyRequest;
+import com.retripver.user.dto.UserProfileRequest;
+import com.retripver.user.dto.UserSearchIdRequest;
 import com.retripver.user.exception.NotFoundUserException;
 import com.retripver.user.repository.UserRepository;
 
@@ -32,7 +36,32 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void signup(SignupRequest signupRequest) {
-		userRepository.insertUser(signupRequest);
+		userRepository.signup(signupRequest);
+	}
+
+	@Override
+	public void profileUpload(UserProfileRequest userProfileRequest) {
+		userRepository.modifyProfile(userProfileRequest);
+	}
+
+	@Override
+	public boolean idCheck(String id) {
+		return userRepository.idCheck(id);
+	}
+
+	@Override
+	public String searchId(UserSearchIdRequest userSearchIdRequest) {
+		return userRepository.searchId(userSearchIdRequest);
+	}
+
+	@Override
+	public void modify(UserModifyRequest userModifyRequest) {
+		userRepository.modify(userModifyRequest);
+	}
+
+	@Override
+	public void modifyPassword(PwdModifyRequest pwdModifyRequset) {
+		userRepository.modifyPassword(pwdModifyRequset);
 	}
 
 }
