@@ -29,6 +29,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public PlanResponse getPlan(int planId) {
 		PlanResponse planResponse = planRepository.getPlan(planId);
 		
@@ -39,9 +40,20 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<PlanResponse> likePlanList(String userId) {
-		List<PlanResponse> planList = planRepository.likePlanList(userId);
+		List<PlanResponse> likePlanList = planRepository.likePlanList(userId);
 		
-		return planList;
+		return likePlanList;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<PlanResponse> rankPlanList(int page) {
+		List<PlanResponse> rankPlanList = planRepository.rankPlanList(page);
+		
+		//error
+		
+		return rankPlanList;
 	}
 }

@@ -11,4 +11,6 @@ public interface PlanRepository {
 	PlanResponse getPlan(int planId);
 
 	List<PlanResponse> likePlanList(String userId);
+
+	List<PlanResponse> rankPlanList(int page);
 }
