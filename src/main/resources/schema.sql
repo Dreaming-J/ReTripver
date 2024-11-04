@@ -129,8 +129,8 @@ CREATE TABLE `plans` (
     `user_id`	VARCHAR(16) NOT NULL,
     `title`		VARCHAR(100) NOT NULL,
     `sido_code`	INT NOT NULL,
-    `isClear`	BOOLEAN NOT NULL DEFAULT false,
-    `isPublic`	BOOLEAN NOT NULL DEFAULT true,
+    `is_clear`	BOOLEAN NOT NULL DEFAULT false,
+    `is_public`	BOOLEAN NOT NULL DEFAULT true,
     
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
