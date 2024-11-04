@@ -29,4 +29,11 @@ public class PlanController {
 		
 		return ResponseEntity.ok(planList);
 	}
+	
+	@GetMapping("/copy/{planId}")
+	public ResponseEntity<?> copyPlan(@PathVariable("planId") int planId) {
+		PlanResponse planResponse = planService.getPlan(planId);
+		
+		return ResponseEntity.ok(planResponse);
+	}
 }

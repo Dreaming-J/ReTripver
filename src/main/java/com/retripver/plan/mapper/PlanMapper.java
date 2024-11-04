@@ -21,11 +21,20 @@ public interface PlanMapper {
 	    @Result(property = "id", column = "id"),
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
-	List<PlanResponse> selectPlanByUserId(String userId);
+	List<PlanResponse> selectPlansByUserId(String userId);
 
     @Select("SELECT * " +
             "FROM courses " +
             "WHERE plan_id = #{planId} " +
             "ORDER BY course_order")
 	List<CourseResponse> selectCoursesByPlanId(int planId);
+
+    @Select("SELECT * " +
+    		"FROM plans " +
+    		"WHERE id = #{planId}")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+	PlanResponse selectPlanByPlanId(int planId);
 }
