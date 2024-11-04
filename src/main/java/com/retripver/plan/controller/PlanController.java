@@ -40,7 +40,7 @@ public class PlanController {
 		return ResponseEntity.ok(planResponse);
 	}
 	
-	@GetMapping("/my/like")
+	@GetMapping("/like")
 	public ResponseEntity<?> likeMyPlans(HttpSession httpSession) {
 		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
 		

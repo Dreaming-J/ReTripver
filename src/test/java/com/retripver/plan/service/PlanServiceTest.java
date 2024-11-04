@@ -43,4 +43,14 @@ public class PlanServiceTest {
 			assertEquals(3837, planResponse.getCourses().get(0).getAttractionNo());
 		});
 	}
+	
+	@Test
+	@DisplayName("좋아요 목록 불러오기")
+	void likePlans() {
+		List<PlanResponse> planList = planService.likePlanList("user");
+		
+		assertAll(() -> {
+			assertEquals(4, planList.size());
+		});
+	}
 }

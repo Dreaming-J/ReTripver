@@ -4,17 +4,20 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.plan.controller.PlanController;
-import com.retripver.plan.service.PlanService;
+import com.retripver.user.dto.LoginRequest;
+import com.retripver.user.dto.LoginResponse;
 
 @AutoConfigureMockMvc
 @SpringBootTest(
@@ -25,12 +28,28 @@ import com.retripver.plan.service.PlanService;
 public class PlanControllerTest {
 	
 	private MockMvc mockMvc;
+	private static MockHttpSession session;
 	
 	@Autowired
 	public PlanControllerTest(MockMvc mockMvc) {
 		this.mockMvc = mockMvc;
 	}
-
+	
+	@BeforeAll
+	static void setUp() {
+		LoginResponse loginResponse = new LoginResponse();
+		loginResponse.setId("test");
+		loginResponse.setProfeImg("/");
+		
+		session = new MockHttpSession();
+		session.setAttribute("loginUser", loginResponse);
+	}
+	
+	@AfterAll
+	static void clear() {
+		session.clearAttributes();
+	}
+	
 	@Test
 	@DisplayName("특정 유저의 여행 계획 목록 불러오기")
 	@Transactional
@@ -44,5 +63,14 @@ public class PlanControllerTest {
 	void copyPlan() throws Exception {
 		mockMvc.perform(get("/plan/copy/1")).andExpect(status().isOk()).andDo(print());
 		mockMvc.perform(get("/plan/copy/-1")).andExpect(status().isInternalServerError()).andDo(print());
+	}
+	
+	@Test
+	@DisplayName("좋아요 목록 불러오기")
+	@Transactional
+	void likePlanList() throws Exception {
+		mockMvc.perform(get("/plan/like")
+						.session(session))
+				.andExpect(status().isOk()).andDo(print());
 	}
 }
