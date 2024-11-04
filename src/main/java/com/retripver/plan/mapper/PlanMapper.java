@@ -37,4 +37,14 @@ public interface PlanMapper {
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
 	PlanResponse selectPlanByPlanId(int planId);
+
+	@Select("SELECT * " +
+			"FROM plan_like pl JOIN plans p " +
+			"ON pl.plan_id = p.id " +
+			"WHERE pl.user_id = #{userId}")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+	List<PlanResponse> selectLikePlansByUserId(String userId);
 }

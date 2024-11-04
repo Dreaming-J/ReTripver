@@ -37,4 +37,11 @@ public class PlanServiceImpl implements PlanService {
 		
 		return planResponse;
 	}
+
+	@Override
+	public List<PlanResponse> likePlanList(String userId) {
+		List<PlanResponse> planList = planRepository.likePlanList(userId);
+		
+		return planList;
+	}
 }

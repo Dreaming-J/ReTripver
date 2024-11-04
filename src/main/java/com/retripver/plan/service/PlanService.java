@@ -11,4 +11,6 @@ public interface PlanService {
 
 	PlanResponse getPlan(int planId);
 
+	List<PlanResponse> likePlanList(String userId);
+
 }

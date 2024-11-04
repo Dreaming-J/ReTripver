@@ -27,4 +27,9 @@ public class PlanRepositoryImpl implements PlanRepository {
 	public PlanResponse getPlan(int planId) {
 		return planMapper.selectPlanByPlanId(planId);
 	}
+
+	@Override
+	public List<PlanResponse> likePlanList(String userId) {
+		return planMapper.selectLikePlansByUserId(userId);
+	}
 }

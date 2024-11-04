@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
+import com.retripver.user.dto.LoginResponse;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/plan")
@@ -35,5 +38,14 @@ public class PlanController {
 		PlanResponse planResponse = planService.getPlan(planId);
 		
 		return ResponseEntity.ok(planResponse);
+	}
+	
+	@GetMapping("/my/like")
+	public ResponseEntity<?> likeMyPlans(HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		List<PlanResponse> planList = planService.likePlanList(loginResponse.getId());
+		
+		return ResponseEntity.ok(planList);
 	}
 }
