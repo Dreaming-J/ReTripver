@@ -19,8 +19,7 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
-	public List<PlanResponse> planList(int userId) {
-		
+	public List<PlanResponse> planList(String userId) {
 		return planMapper.selectPlanByUserId(userId);
 	}
 }

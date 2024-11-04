@@ -24,7 +24,7 @@ public class PlanController {
 	}
 	
 	@GetMapping("/list/{userId}")
-	public ResponseEntity<?> planList(@PathVariable("userId") int userId) {
+	public ResponseEntity<?> planList(@PathVariable("userId") String userId) {
 		List<PlanResponse> planList = planService.planList(userId);
 		
 		return ResponseEntity.ok(planList);

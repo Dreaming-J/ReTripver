@@ -6,6 +6,6 @@ import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanRepository {
 
-	List<PlanResponse> planList(int userId);
+	List<PlanResponse> planList(String userId);
 
 }
