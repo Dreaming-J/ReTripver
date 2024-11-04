@@ -1,9 +1,12 @@
 package com.retripver.plan.dto;
 
+import java.util.List;
+
 public class PlanResponse {
 	private int id;
 	private String title;
 	private int sidoCode;
+	private List<CourseResponse> courses;
 	private boolean isClear;
 	private boolean isPublic;
 	
@@ -24,6 +27,12 @@ public class PlanResponse {
 	}
 	public void setSidoCode(int sidoCode) {
 		this.sidoCode = sidoCode;
+	}
+	public List<CourseResponse> getCourses() {
+		return courses;
+	}
+	public void setCourses(List<CourseResponse> courses) {
+		this.courses = courses;
 	}
 	public boolean isClear() {
 		return isClear;

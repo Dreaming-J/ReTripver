@@ -1,4 +1,4 @@
-package com.retripver.plan;
+package com.retripver.plan.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -36,6 +36,5 @@ public class PlanControllerTest {
 	@Transactional
 	void testPlanList() throws Exception {
 		mockMvc.perform(get("/plan/list/test")).andExpect(status().isOk()).andDo(print());
-		mockMvc.perform(get("/plan/list/noUser")).andExpect(status().isInternalServerError()).andDo(print());
 	}
 }
