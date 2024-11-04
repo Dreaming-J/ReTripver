@@ -8,4 +8,7 @@ public interface PlanRepository {
 
 	List<PlanResponse> planList(String userId);
 
+	PlanResponse getPlan(int planId);
+
+	List<PlanResponse> likePlanList(String userId);
 }

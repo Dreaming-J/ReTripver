@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
+import com.retripver.user.dto.LoginResponse;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/plan")
@@ -26,6 +29,22 @@ public class PlanController {
 	@GetMapping("/list/{userId}")
 	public ResponseEntity<?> planList(@PathVariable("userId") String userId) {
 		List<PlanResponse> planList = planService.planList(userId);
+		
+		return ResponseEntity.ok(planList);
+	}
+	
+	@GetMapping("/copy/{planId}")
+	public ResponseEntity<?> copyPlan(@PathVariable("planId") int planId) {
+		PlanResponse planResponse = planService.getPlan(planId);
+		
+		return ResponseEntity.ok(planResponse);
+	}
+	
+	@GetMapping("/like")
+	public ResponseEntity<?> likeMyPlans(HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		List<PlanResponse> planList = planService.likePlanList(loginResponse.getId());
 		
 		return ResponseEntity.ok(planList);
 	}

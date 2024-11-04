@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
 
 @Service
@@ -23,6 +24,23 @@ public class PlanServiceImpl implements PlanService {
 	@Transactional(readOnly = true)
 	public List<PlanResponse> planList(String userId) {
 		List<PlanResponse> planList = planRepository.planList(userId);
+		
+		return planList;
+	}
+
+	@Override
+	public PlanResponse getPlan(int planId) {
+		PlanResponse planResponse = planRepository.getPlan(planId);
+		
+		if (planResponse == null)
+			throw new NotFoundPlanException();
+		
+		return planResponse;
+	}
+
+	@Override
+	public List<PlanResponse> likePlanList(String userId) {
+		List<PlanResponse> planList = planRepository.likePlanList(userId);
 		
 		return planList;
 	}
