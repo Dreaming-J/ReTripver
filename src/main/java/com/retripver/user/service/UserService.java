@@ -25,6 +25,10 @@ public interface UserService {
 
 	void modifyPassword(PwdModifyRequest pwdModifyRequset);
 
+	void resign(String id);
+
+	boolean follow(String fromId, String toId);
+
 	
 
 }
