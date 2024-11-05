@@ -25,6 +25,8 @@ public interface UserService {
 
 	void modifyPassword(PwdModifyRequest pwdModifyRequset);
 
+	void resign(String id);
+
 	
 
 }

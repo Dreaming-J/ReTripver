@@ -62,5 +62,10 @@ public class UserRepositoryImpl implements UserRepository {
 		userMapper.updatePassword(pwdModifyRequset);
 	}
 
+	@Override
+	public void resign(String id) {
+		userMapper.deleteUser(id);
+	}
+
 	
 }

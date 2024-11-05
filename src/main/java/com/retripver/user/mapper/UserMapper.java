@@ -1,5 +1,6 @@
 package com.retripver.user.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -36,6 +37,9 @@ public interface UserMapper {
 
 	@Update("UPDATE users SET password=#{newPassword} WHERE id=#{id}")
 	void updatePassword(PwdModifyRequest pwdModifyRequset);
+
+	@Delete("DELETE FROM users WHERE id=#{id}")
+	void deleteUser(String id);
 
 	
 

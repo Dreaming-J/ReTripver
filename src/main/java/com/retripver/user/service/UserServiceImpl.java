@@ -64,4 +64,9 @@ public class UserServiceImpl implements UserService {
 		userRepository.modifyPassword(pwdModifyRequset);
 	}
 
+	@Override
+	public void resign(String id) {
+		userRepository.resign(id);
+	}
+
 }

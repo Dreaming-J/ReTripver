@@ -24,6 +24,8 @@ public interface UserRepository {
 
 	void modifyPassword(PwdModifyRequest pwdModifyRequset);
 
+	void resign(String id);
+
 	
 
 }
