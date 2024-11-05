@@ -44,8 +44,15 @@ public class PlanController {
 	public ResponseEntity<?> likeMyPlans(HttpSession httpSession) {
 		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
 		
-		List<PlanResponse> planList = planService.likePlanList(loginResponse.getId());
+		List<PlanResponse> likePlanList = planService.likePlanList(loginResponse.getId());
 		
-		return ResponseEntity.ok(planList);
+		return ResponseEntity.ok(likePlanList);
+	}
+	
+	@GetMapping("/rank/{page}")
+	public ResponseEntity<?> rank(@PathVariable("page") int page) {
+		List<PlanResponse> rankPlanList = planService.rankPlanList(page);
+		
+		return ResponseEntity.ok(rankPlanList);
 	}
 }

@@ -13,4 +13,6 @@ public interface PlanService {
 
 	List<PlanResponse> likePlanList(String userId);
 
+	List<PlanResponse> rankPlanList(int page);
+
 }

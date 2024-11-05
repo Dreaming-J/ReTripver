@@ -47,4 +47,12 @@ public interface PlanMapper {
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
 	List<PlanResponse> selectLikePlansByUserId(String userId);
+
+	@Select("SELECT p.id, p.user_id, p.title, p.sido_code, count(plan_id) likeCount " +
+			"FROM plans p JOIN plan_like pl" +
+			"ON p.id = pl.plan_id " +
+			"WHERE p.is_public = true " +
+			"GROUP BY plan_id " +
+			"ORDER BY likeCount DESC")
+	List<PlanResponse> selectRankPlans(int page);
 }

@@ -32,4 +32,9 @@ public class PlanRepositoryImpl implements PlanRepository {
 	public List<PlanResponse> likePlanList(String userId) {
 		return planMapper.selectLikePlansByUserId(userId);
 	}
+
+	@Override
+	public List<PlanResponse> rankPlanList(int page) {
+		return planMapper.selectRankPlans(page);
+	}
 }
