@@ -160,13 +160,15 @@ public class UserController {
 	}
 	
 	// 유저 팔로우/언팔로우
-	@PutMapping("/follow/from/{fromId}/to/{toId}")
-	public ResponseEntity<?> follow(@PathVariable String fromId, @PathVariable String toId) {
+	@PutMapping("/follow/{toId}")
+	public ResponseEntity<?> follow(@PathVariable String toId, HttpSession session) {
+		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+		String fromId = loginUser.getId();
+		
+		boolean isFollow = userService.follow(fromId, toId);
 		
 		
-		
-		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(isFollow);
 	}
 	
 	

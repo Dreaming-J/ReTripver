@@ -69,4 +69,20 @@ public class UserServiceImpl implements UserService {
 		userRepository.resign(id);
 	}
 
+	@Override
+	public boolean follow(String fromId, String toId) {
+		boolean isFollow = userRepository.isFollow(fromId, toId);
+		
+		// 이미 팔로우 했다면 취소
+		if (isFollow) {
+			userRepository.unfollow(fromId, toId);
+
+			return false;
+		} else { // 노 팔로우라면 팔로우하기
+			userRepository.follow(fromId, toId);
+			
+			return true;
+		}
+	}
+
 }

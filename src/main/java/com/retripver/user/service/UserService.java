@@ -27,6 +27,8 @@ public interface UserService {
 
 	void resign(String id);
 
+	boolean follow(String fromId, String toId);
+
 	
 
 }
