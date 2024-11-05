@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.retripver.user.controller.UserController;
 
 @RestControllerAdvice(basePackageClasses = UserController.class, annotations = RestController.class)
-public class ControllerException {
+public class UserControllerException {
 
 	@ExceptionHandler(NotFoundUserException.class)
 	public ResponseEntity<?> notFoundUserHandler(Exception ex) {
 		ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.NOT_FOUND_USER);
 		
-		return ResponseEntity.badRequest().body(errorResponse);
+		return ResponseEntity.internalServerError().build();
 	}
 }
