@@ -158,14 +158,15 @@ CREATE TABLE `courses` (
 );
 
 CREATE TABLE `quests` (
-    `id`			INT NOT NULL,
+    `id`			INT NOT NULL AUTO_INCREMENT,
+    `courses_id`	INT NOT NULL,
     `mission_img`	VARCHAR(255) NOT NULL,
     `user_img`		VARCHAR(255) DEFAULT NULL,
     `exp`			INT NOT NULL DEFAULT 0,
     `isClear`		BOOLEAN NOT NULL DEFAULT false,
     
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`id`) REFERENCES `courses`(`id`)
+    FOREIGN KEY (`courses_id`) REFERENCES `courses`(`id`)
 );
 
 CREATE TABLE `plan_like` (
