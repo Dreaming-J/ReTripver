@@ -1,6 +1,7 @@
 package com.retripver.plan.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.retripver.plan.dto.PlanResponse;
 
@@ -12,5 +13,5 @@ public interface PlanRepository {
 
 	List<PlanResponse> likePlanList(String userId);
 
-	List<PlanResponse> rankPlanList(int page);
+	List<PlanResponse> rankPlanList(Map<String, Object> params);
 }

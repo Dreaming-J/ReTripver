@@ -4,17 +4,25 @@ import java.util.List;
 
 public class PlanResponse {
 	private int id;
+	private String userId;
 	private String title;
 	private int sidoCode;
-	private List<CourseResponse> courses;
 	private boolean isClear;
 	private boolean isPublic;
+	private List<CourseResponse> courses;
+	private int likeCount;
 	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getTitle() {
 		return title;
@@ -28,12 +36,6 @@ public class PlanResponse {
 	public void setSidoCode(int sidoCode) {
 		this.sidoCode = sidoCode;
 	}
-	public List<CourseResponse> getCourses() {
-		return courses;
-	}
-	public void setCourses(List<CourseResponse> courses) {
-		this.courses = courses;
-	}
 	public boolean isClear() {
 		return isClear;
 	}
@@ -45,5 +47,17 @@ public class PlanResponse {
 	}
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
+	}
+	public List<CourseResponse> getCourses() {
+		return courses;
+	}
+	public void setCourses(List<CourseResponse> courses) {
+		this.courses = courses;
+	}
+	public int getLikeCount() {
+		return likeCount;
+	}
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
 	}
 }

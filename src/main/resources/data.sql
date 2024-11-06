@@ -13,26 +13,83 @@ INSERT INTO `attractions` VALUES (3818,2733967,'가회동성당',12,1,23,'http:/
 -- 유저 관련 TABLE
 -- -----------------------------------
 
-INSERT INTO `tier` VALUES (1,'브론즈','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',0),(2,'실버','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',100),(3,'골드','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',200),(4,'플레티넘','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',300),(5,'다이아','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',400);
-INSERT INTO `users` VALUES ('admin','admin','관리자','admin@admin.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','사이트 관리자입니다.',999,NULL,NULL,'2024-11-01 05:13:20',5),('champ1','champ1','신챔피언','champ1@champ.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','챔피언 유저입니다.',680,NULL,NULL,'2024-11-01 05:13:20',5),('guest1','guest1','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),('member1','member1','최회원','member1@member.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','활동적인 회원입니다.',320,NULL,NULL,'2024-11-01 05:13:20',4),('newbie1','newbie1','조신입','newbie1@newbie.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','새로 가입한 유저입니다.',20,NULL,NULL,'2024-11-01 05:13:20',1),('pro1','pro1','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),('test','test','김테스트','test@test.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','안녕하세요',55,NULL,NULL,'2024-11-01 05:13:20',1),('user','user','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,'Acquire_visit',1,'2024-11-01 05:13:20',3),('user2','user2','김유저','user2@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',180,NULL,NULL,'2024-11-01 05:13:20',2),('vip1','vip1','황VIP','vip1@vip.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','VIP 유저입니다.',800,NULL,NULL,'2024-11-01 05:13:20',5);
-INSERT INTO `follow` VALUES ('test','guest1'),('guest1','test'),('user','test'),('test','user');
-INSERT INTO `visit_counts` VALUES ('test',1,5),('test',36,1);
-INSERT INTO `notifications` VALUES (1,'test','알림이 왔습니다.',0),(2,'test','읽은 알림',1);
+INSERT INTO `tier`(`id`, `name`, `img`, `base_exp`)
+VALUES	(1,'브론즈','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',0),
+		(2,'실버','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',100),
+        (3,'골드','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',200),
+        (4,'플레티넘','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',300),
+        (5,'다이아','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',400);
+INSERT INTO `users`
+VALUES	('admin','admin','관리자','admin@admin.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','사이트 관리자입니다.',999,NULL,NULL,'2024-11-01 05:13:20',5),
+		('champ1','champ1','신챔피언','champ1@champ.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','챔피언 유저입니다.',680,NULL,NULL,'2024-11-01 05:13:20',5),
+        ('guest1','guest1','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),
+        ('member1','member1','최회원','member1@member.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','활동적인 회원입니다.',320,NULL,NULL,'2024-11-01 05:13:20',4),
+        ('newbie1','newbie1','조신입','newbie1@newbie.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','새로 가입한 유저입니다.',20,NULL,NULL,'2024-11-01 05:13:20',1),
+        ('pro1','pro1','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),
+        ('test','test','김테스트','test@test.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','안녕하세요',55,NULL,NULL,'2024-11-01 05:13:20',1),
+        ('user','user','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,'Acquire_visit',1,'2024-11-01 05:13:20',3),
+        ('user2','user2','김유저','user2@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',180,NULL,NULL,'2024-11-01 05:13:20',2),
+        ('vip1','vip1','황VIP','vip1@vip.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','VIP 유저입니다.',800,NULL,NULL,'2024-11-01 05:13:20',5);
+INSERT INTO `follow`
+VALUES	('test','guest1'),
+		('guest1','test'),
+        ('user','test'),
+        ('test','user');
+INSERT INTO `visit_counts`
+VALUES	('test',1,5),
+		('test',36,1);
+INSERT INTO `notifications`
+VALUES	(1,'test','알림이 왔습니다.',0),
+		(2,'test','읽은 알림',1);
 
 -- -----------------------------------
 -- 여행 관련 TABLE
 -- -----------------------------------
 
-INSERT INTO `plans` VALUES (1,'test','신나는 부산 여행!',6,0,1),(2,'test','설렘 가득 제주도 여행!',39,0,1),(3,'test','한적한 강릉 바다 힐링 여행',32,0,1),(4,'test','가을빛 담은 경주 역사 탐방',35,0,1),(5,'test','푸른 물결 속 여수 밤바다 여행',38,0,1),(6,'test','서울에서의 활기찬 문화 체험',1,0,1),(7,'test','속초 설악산 등반과 힐링 투어',32,0,1),(8,'test','대구 별빛 야경 투어',4,0,1),(9,'test','전주의 한옥마을과 전통 맛집 탐방',37,0,1),(10,'test','고요한 남해의 섬마을 여행',36,0,1),(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
-INSERT INTO `courses` VALUES (1,6,3837,0),(2,6,4486,1),(3,6,3931,2);
-INSERT INTO `quests` VALUES (1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),(2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),(3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0);
-INSERT INTO `plan_like` VALUES (6,'admin'),(8,'admin'),(1,'pro1'),(6,'pro1'),(1,'user'),(2,'user'),(3,'user'),(6,'user');
+INSERT INTO `plans`
+VALUES	(1,'test','신나는 부산 여행!',6,0,1),
+		(2,'test','설렘 가득 제주도 여행!',39,0,1),
+		(3,'test','한적한 강릉 바다 힐링 여행',32,0,1),
+		(4,'test','가을빛 담은 경주 역사 탐방',35,0,1),
+		(5,'test','푸른 물결 속 여수 밤바다 여행',38,0,1),
+		(6,'test','서울에서의 활기찬 문화 체험',1,0,1),
+		(7,'test','속초 설악산 등반과 힐링 투어',32,0,1),
+		(8,'test','대구 별빛 야경 투어',4,0,1),
+		(9,'test','전주의 한옥마을과 전통 맛집 탐방',37,0,1),
+		(10,'test','고요한 남해의 섬마을 여행',36,0,1),
+		(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
+INSERT INTO `courses`
+VALUES	(1,6,3837,0),
+		(2,6,4486,1),
+		(3,6,3931,2);
+INSERT INTO `quests`
+VALUES	(0, 1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
+		(0, 2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
+		(0, 3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0);
+INSERT INTO `plan_like`
+VALUES	(6,'admin'),
+		(8,'admin'),
+		(1,'pro1'),
+		(6,'pro1'),
+		(1,'user'),
+		(2,'user'),
+		(3,'user'),
+		(6,'user');
 
 -- -----------------------------------
 -- 업적 관련 TABLE
 -- -----------------------------------
 
-INSERT INTO `achievement_visit` VALUES (1,'서울 1회','서울을 1회 이상 방문하여 얻을 수 있는 업적',1,1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),(2,'서울 3회','서울을 3회 이상 방문하여 얻을 수 있는 업적',1,3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),(3,'서울 5회','서울을 5회 이상 방문하여 얻을 수 있는 업적',1,5,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),(4,'경남 수호자','경상남도를 3회 이상 방문하여 얻을 수 있는 업적',36,3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png');
-INSERT INTO `acquire_visit` VALUES ('test',1),('test',4);
-INSERT INTO `achievement_tier` VALUES (1,'브론즈 업적','브론즈 달성 시 얻을 수 있는 업적',1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),(2,'실버 업적','실버 달성 시 얻을 수 있는 업적',2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png');
-INSERT INTO `acquire_tier` VALUES ('test',1);
+INSERT INTO `achievement_visit`
+VALUES	(1,'서울 1회','서울을 1회 이상 방문하여 얻을 수 있는 업적',1,1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
+		(2,'서울 3회','서울을 3회 이상 방문하여 얻을 수 있는 업적',1,3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
+		(3,'서울 5회','서울을 5회 이상 방문하여 얻을 수 있는 업적',1,5,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
+		(4,'경남 수호자','경상남도를 3회 이상 방문하여 얻을 수 있는 업적',36,3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png');
+INSERT INTO `acquire_visit`
+VALUES	('test',1),
+		('test',4);
+INSERT INTO `achievement_tier`
+VALUES	(1,'브론즈 업적','브론즈 달성 시 얻을 수 있는 업적',1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
+		(2,'실버 업적','실버 달성 시 얻을 수 있는 업적',2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png');
+INSERT INTO `acquire_tier`
+VALUES	('test',1);

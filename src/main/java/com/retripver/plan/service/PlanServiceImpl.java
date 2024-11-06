@@ -1,6 +1,8 @@
 package com.retripver.plan.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
+import static com.retripver.global.constant.Constant.PAGE_SIZE;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -50,7 +53,11 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<PlanResponse> rankPlanList(int page) {
-		List<PlanResponse> rankPlanList = planRepository.rankPlanList(page);
+		Map<String, Object> params = new HashMap<>();
+		params.put("page", (page - 1) * PAGE_SIZE);
+		params.put("size", PAGE_SIZE);
+		
+		List<PlanResponse> rankPlanList = planRepository.rankPlanList(params);
 		
 		//error
 		
