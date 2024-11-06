@@ -4,6 +4,8 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -31,6 +33,8 @@ public interface UserRepository {
 	void unfollow(String fromId, String toId);
 
 	void follow(String fromId, String toId);
+	
+	StatusUserInfoResponse getStatusInfo(String id);
 
 	
 

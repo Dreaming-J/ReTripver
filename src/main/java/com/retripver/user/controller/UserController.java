@@ -11,6 +11,7 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -167,8 +168,32 @@ public class UserController {
 		
 		boolean isFollow = userService.follow(fromId, toId);
 		
+		// 실패도 하기
+		
 		
 		return ResponseEntity.ok(isFollow);
+	}
+	
+	// 상태창 유저 정보
+	@GetMapping("/status/info")
+	public ResponseEntity<?> statusUser(HttpSession session) {
+//		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+		
+//		StatusUserInfoResponse statusInfo = userService.statusUserInfo(loginUser.getId());
+		
+		StatusUserInfoResponse statusInfo = userService.statusUserInfo("test");
+	
+		// 오류 확인
+		
+		return ResponseEntity.ok(statusInfo);
+	}
+	
+	// 상태창 지도
+	@GetMapping("/status/map")
+	public ResponseEntity<?> statusMap() {
+		
+		
+		return null;
 	}
 	
 	

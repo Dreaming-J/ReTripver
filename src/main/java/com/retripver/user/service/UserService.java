@@ -4,6 +4,7 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -28,6 +29,8 @@ public interface UserService {
 	void resign(String id);
 
 	boolean follow(String fromId, String toId);
+
+	StatusUserInfoResponse statusUserInfo(String id);
 
 	
 

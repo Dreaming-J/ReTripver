@@ -7,6 +7,9 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.TierInfoResponse;
+import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -84,6 +87,21 @@ public class UserRepositoryImpl implements UserRepository {
 	public void follow(String fromId, String toId) {
 		userMapper.insertFollow(fromId, toId);
 	}
+	
+	@Override
+	public StatusUserInfoResponse getStatusInfo(String id) {
+		StatusUserInfoResponse statusInfo = userMapper.selectUserInfoById(id);
+		
+		int achievementId = statusInfo.getUserInfo().getAchievementId();
+		String achievementTable = statusInfo.getUserInfo().getAchievementTable();
+		
+		String achievementTitle = userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+		statusInfo.getUserInfo().setAchievementTitle(achievementTitle);
+		
+		return statusInfo;
+	}
+
+	
 
 	
 }
