@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PlanResponse {
 	private int id;
-	private String user_id;
+	private String userId;
 	private String title;
 	private int sidoCode;
 	private boolean isClear;
@@ -18,11 +18,11 @@ public class PlanResponse {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getUser_id() {
-		return user_id;
+	public String getUserId() {
+		return userId;
 	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getTitle() {
 		return title;

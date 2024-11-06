@@ -9,7 +9,7 @@ public class AttractionResponse {
 	private int areaCode;
 	private String sidoName;
 	private int siGunGuCode;
-	private String gugunsName;
+	private String gugunName;
 	private String firstImage1;
 	private String firstImage2;
 	private int mapLevel;
@@ -69,11 +69,11 @@ public class AttractionResponse {
 	public void setSiGunGuCode(int siGunGuCode) {
 		this.siGunGuCode = siGunGuCode;
 	}
-	public String getGugunsName() {
-		return gugunsName;
+	public String getGugunName() {
+		return gugunName;
 	}
-	public void setGugunsName(String gugunsName) {
-		this.gugunsName = gugunsName;
+	public void setGugunName(String gugunName) {
+		this.gugunName = gugunName;
 	}
 	public String getFirstImage1() {
 		return firstImage1;
