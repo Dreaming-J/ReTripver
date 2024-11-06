@@ -53,4 +53,15 @@ public class PlanServiceTest {
 			assertEquals(4, planList.size());
 		});
 	}
+	
+	@Test
+	@DisplayName("인기 여행 계획 불러오기")
+	void rankPlans() {
+		List<PlanResponse> planList = planService.rankPlanList(1);
+		
+		assertAll(() -> {
+			assertEquals(10, planList.size());
+			assertEquals(3, planList.get(0).getLikeCount());
+		});
+	}
 }

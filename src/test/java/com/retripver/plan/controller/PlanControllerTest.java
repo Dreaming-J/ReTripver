@@ -73,4 +73,12 @@ public class PlanControllerTest {
 						.session(session))
 				.andExpect(status().isOk()).andDo(print());
 	}
+	
+	@Test
+	@DisplayName("인기 여행 계획 불러오기")
+	@Transactional
+	void rankPlanList() throws Exception {
+		mockMvc.perform(get("/plan/rank/1"))
+				.andExpect(status().isOk()).andDo(print());
+	}
 }
