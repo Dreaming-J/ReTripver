@@ -62,5 +62,28 @@ public class UserRepositoryImpl implements UserRepository {
 		userMapper.updatePassword(pwdModifyRequset);
 	}
 
+	@Override
+	public void resign(String id) {
+		userMapper.deleteUser(id);
+	}
+
+	@Override
+	public boolean isFollow(String fromId, String toId) {
+		int isFollow = userMapper.selectCountByFromIdAndToId(fromId, toId);
+		
+		if (isFollow == 0) return false;
+		return true;
+	}
+
+	@Override
+	public void unfollow(String fromId, String toId) {
+		userMapper.deleteFollow(fromId, toId);
+	}
+
+	@Override
+	public void follow(String fromId, String toId) {
+		userMapper.insertFollow(fromId, toId);
+	}
+
 	
 }

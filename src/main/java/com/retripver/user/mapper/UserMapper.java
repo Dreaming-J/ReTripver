@@ -1,5 +1,6 @@
 package com.retripver.user.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -36,6 +37,18 @@ public interface UserMapper {
 
 	@Update("UPDATE users SET password=#{newPassword} WHERE id=#{id}")
 	void updatePassword(PwdModifyRequest pwdModifyRequset);
+
+	@Delete("DELETE FROM users WHERE id=#{id}")
+	void deleteUser(String id);
+
+	@Select("SELECT count(*) FROM users WHERE from_id=#{fromId} AND to_id=#{toId}")
+	int selectCountByFromIdAndToId(String fromId, String toId);
+
+	@Delete("DELETE FROM usrs WHERE from_id=#{fromId} AND to_id=#{toId}")
+	void deleteFollow(String fromId, String toId);
+
+	@Insert("INSERT INTO follow VALUES (#{fromId}, #{toId})")
+	void insertFollow(String fromId, String toId);
 
 	
 

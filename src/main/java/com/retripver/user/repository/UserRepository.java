@@ -24,6 +24,14 @@ public interface UserRepository {
 
 	void modifyPassword(PwdModifyRequest pwdModifyRequset);
 
+	void resign(String id);
+
+	boolean isFollow(String fromId, String toId);
+
+	void unfollow(String fromId, String toId);
+
+	void follow(String fromId, String toId);
+
 	
 
 }

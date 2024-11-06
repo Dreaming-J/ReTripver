@@ -20,6 +20,7 @@ import com.retripver.user.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -145,6 +146,30 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 	
+	// 회원 탈퇴
+	@DeleteMapping("/user")
+	public ResponseEntity<?> resign(HttpSession session) {
+		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+		
+		userService.resign(loginUser.getId());
+		
+		// 회원 탍퇴에 성공했습니다 같으 문구 출력?
+		// 오류 발생했을 때도!
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	// 유저 팔로우/언팔로우
+	@PutMapping("/follow/{toId}")
+	public ResponseEntity<?> follow(@PathVariable String toId, HttpSession session) {
+		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+		String fromId = loginUser.getId();
+		
+		boolean isFollow = userService.follow(fromId, toId);
+		
+		
+		return ResponseEntity.ok(isFollow);
+	}
 	
 	
 	
