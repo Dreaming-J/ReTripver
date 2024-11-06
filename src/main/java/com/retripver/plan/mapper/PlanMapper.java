@@ -45,6 +45,7 @@ public interface PlanMapper {
 			SELECT *
 			FROM plans
 			WHERE user_id = #{userId}
+			AND is_public = true
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
@@ -68,6 +69,7 @@ public interface PlanMapper {
 			FROM plan_like pl JOIN plans p
 			ON pl.plan_id = p.id
 			WHERE pl.user_id = #{userId}
+			AND p.is_public = true
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
