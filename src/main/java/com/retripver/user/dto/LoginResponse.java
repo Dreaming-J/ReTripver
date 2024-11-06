@@ -1,6 +1,7 @@
 package com.retripver.user.dto;
 
 public class LoginResponse {
+	
 	private String id;
 	private String profeImg;
 	
