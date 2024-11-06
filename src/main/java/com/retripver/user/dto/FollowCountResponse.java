@@ -2,14 +2,14 @@ package com.retripver.user.dto;
 
 public class FollowCountResponse {
 
-	private int follwerCount;
+	private int followerCount;
 	private int followingCount;
 	
-	public int getFollwerCount() {
-		return follwerCount;
+	public int getFollowerCount() {
+		return followerCount;
 	}
-	public void setFollwerCount(int follwerCount) {
-		this.follwerCount = follwerCount;
+	public void setFollowerCount(int followerCount) {
+		this.followerCount = followerCount;
 	}
 	public int getFollowingCount() {
 		return followingCount;

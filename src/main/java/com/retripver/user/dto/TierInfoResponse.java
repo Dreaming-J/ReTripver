@@ -31,12 +31,5 @@ public class TierInfoResponse {
 	public void setNextTierExp(int nextTierExp) {
 		this.nextTierExp = nextTierExp;
 	}
-	@Override
-	public String toString() {
-		return "TierInfoResponse [tierId=" + tierId + ", tierName=" + tierName + ", tierImg=" + tierImg
-				+ ", nextTierExp=" + nextTierExp + "]";
-	}
-	
-	
 
 }

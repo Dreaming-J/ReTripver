@@ -6,6 +6,8 @@ public class UserInfoResponse {
 	private String profileImg;
 	private String profileDesc;
 	private int exp;
+	private String achievementTable;
+	private int achievementId;
 	private String achievementTitle;
 	private TierInfoResponse tierInfo;
 	
@@ -33,6 +35,18 @@ public class UserInfoResponse {
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
+	public String getAchievementTable() {
+		return achievementTable;
+	}
+	public void setAchievementTable(String achievementTable) {
+		this.achievementTable = achievementTable;
+	}
+	public int getAchievementId() {
+		return achievementId;
+	}
+	public void setAchievementId(int achievementId) {
+		this.achievementId = achievementId;
+	}
 	public String getAchievementTitle() {
 		return achievementTitle;
 	}
@@ -44,11 +58,6 @@ public class UserInfoResponse {
 	}
 	public void setTierInfo(TierInfoResponse tierInfo) {
 		this.tierInfo = tierInfo;
-	}
-	@Override
-	public String toString() {
-		return "UserInfoResponse [id=" + id + ", profileImg=" + profileImg + ", profileDesc=" + profileDesc + ", exp="
-				+ exp + ", achievementTitle=" + achievementTitle + ", tierInfo=" + tierInfo + "]";
 	}
 	
 }

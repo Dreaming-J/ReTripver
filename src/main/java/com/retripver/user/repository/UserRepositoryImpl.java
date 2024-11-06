@@ -90,22 +90,15 @@ public class UserRepositoryImpl implements UserRepository {
 	
 	@Override
 	public StatusUserInfoResponse getStatusInfo(String id) {
+		StatusUserInfoResponse statusInfo = userMapper.selectUserInfoById(id);
 		
+		int achievementId = statusInfo.getUserInfo().getAchievementId();
+		String achievementTable = statusInfo.getUserInfo().getAchievementTable();
 		
-		UserInfoResponse user = userMapper.selectUserById(id);
+		String achievementTitle = userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+		statusInfo.getUserInfo().setAchievementTitle(achievementTitle);
 		
-		// 업적 정보 찾아서 넣기
-		
-		
-		
-		
-		
-		System.out.println(user);
-
-		
-		
-		
-		return null;
+		return statusInfo;
 	}
 
 	

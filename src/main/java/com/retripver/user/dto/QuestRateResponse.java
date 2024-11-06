@@ -2,15 +2,15 @@ package com.retripver.user.dto;
 
 public class QuestRateResponse {
 
-	private int succesQuestRate;
+	private int successQuestRate;
 	private int successQuestCount;
-	private int totalQuestcount;
+	private int totalQuestCount;
 	
-	public int getSuccesQuestRate() {
-		return succesQuestRate;
+	public int getSuccessQuestRate() {
+		return successQuestRate;
 	}
-	public void setSuccesQuestRate(int succesQuestRate) {
-		this.succesQuestRate = succesQuestRate;
+	public void setSuccessQuestRate(int successQuestRate) {
+		this.successQuestRate = successQuestRate;
 	}
 	public int getSuccessQuestCount() {
 		return successQuestCount;
@@ -18,11 +18,11 @@ public class QuestRateResponse {
 	public void setSuccessQuestCount(int successQuestCount) {
 		this.successQuestCount = successQuestCount;
 	}
-	public int getTotalQuestcount() {
-		return totalQuestcount;
+	public int getTotalQuestCount() {
+		return totalQuestCount;
 	}
-	public void setTotalQuestcount(int totalQuestcount) {
-		this.totalQuestcount = totalQuestcount;
+	public void setTotalQuestCount(int totalQuestCount) {
+		this.totalQuestCount = totalQuestCount;
 	}
-	
+
 }
