@@ -7,6 +7,7 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -83,6 +84,11 @@ public class UserServiceImpl implements UserService {
 			
 			return true;
 		}
+	}
+
+	@Override
+	public StatusUserInfoResponse statusUserInfo(String id) {
+		return userRepository.getStatusInfo(id);
 	}
 
 }
