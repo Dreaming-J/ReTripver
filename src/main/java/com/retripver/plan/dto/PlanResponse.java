@@ -11,6 +11,7 @@ public class PlanResponse {
 	private boolean isPublic;
 	private List<CourseResponse> courses;
 	private int likeCount;
+	private int rank;
 	
 	public int getId() {
 		return id;
@@ -59,5 +60,11 @@ public class PlanResponse {
 	}
 	public void setLikeCount(int likeCount) {
 		this.likeCount = likeCount;
+	}
+	public int getRank() {
+		return rank;
+	}
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 }
