@@ -194,7 +194,7 @@ public class UserController {
 	public ResponseEntity<?> statusMap(HttpSession session) {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 		
-		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount("test");
+		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount(loginUser.getId());
 		
 		return ResponseEntity.ok(statusMapCountList);
 	}
