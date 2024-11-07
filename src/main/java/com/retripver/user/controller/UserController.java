@@ -217,8 +217,31 @@ public class UserController {
 	
 	// 전체 경험치에 대한 랭킹
 	@GetMapping("/rank")
-	public ResponseEntity<?> rankUserListBySidoCode() {
+	public ResponseEntity<?> rankUserByExp() {
 		List<UserInfoResponse> userList = userService.getRankByExpUserList();
+		
+		// 에러
+		
+		return ResponseEntity.ok(userList);
+	}
+	
+	// 해당 지역을 가장 많이 방문한 횟수
+	@GetMapping("/rank/{sidoCode}")
+	public ResponseEntity<?> rankUserBySidoCode(@PathVariable int sidoCode) {
+		List<UserInfoResponse> userList = userService.getRankBySidoCodeUserList(sidoCode);
+		
+		// 오류
+		
+		
+		return ResponseEntity.ok(userList);
+	}
+	
+	// 유저 검색
+	@GetMapping("/search/{keyword}")
+	public ResponseEntity<?> searchUser(@PathVariable String keyword) {
+		List<UserInfoResponse> userList = userService.getSearchUserByKeyword(keyword);
+		
+		// 오류
 		
 		return ResponseEntity.ok(userList);
 	}
