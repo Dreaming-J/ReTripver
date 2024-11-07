@@ -16,6 +16,7 @@ import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserAchievementResponse;
+import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -202,6 +203,7 @@ public class UserController {
 		return ResponseEntity.ok(statusMapCountList);
 	}
 	
+	// 업적 확인
 	@GetMapping("/achievement/list")
 	public ResponseEntity<?> achievement(HttpSession session) {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
@@ -211,6 +213,14 @@ public class UserController {
 		// 오류
 		
 		return ResponseEntity.ok(userAchievement);
+	}
+	
+	// 전체 경험치에 대한 랭킹
+	@GetMapping("/rank")
+	public ResponseEntity<?> rankUserListBySidoCode() {
+		List<UserInfoResponse> userList = userService.getRankByExpUserList();
+		
+		return ResponseEntity.ok(userList);
 	}
 	
 }

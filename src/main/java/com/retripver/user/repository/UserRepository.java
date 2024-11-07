@@ -44,4 +44,6 @@ public interface UserRepository {
 
 	UserAchievementResponse getUserAchievement(String id);
 
+	List<UserInfoResponse> getRankByExpUserList();
+
 }

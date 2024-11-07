@@ -12,6 +12,7 @@ import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserAchievementResponse;
+import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -103,6 +104,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserAchievementResponse getUserAchievement(String id) {
 		return userRepository.getUserAchievement(id);
+	}
+
+	@Override
+	public List<UserInfoResponse> getRankByExpUserList() {
+		return userRepository.getRankByExpUserList();
 	}
 
 }

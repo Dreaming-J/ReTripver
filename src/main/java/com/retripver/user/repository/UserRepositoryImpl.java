@@ -125,7 +125,9 @@ public class UserRepositoryImpl implements UserRepository {
 		return userAchievement;
 	}
 
-	
-
+	@Override
+	public List<UserInfoResponse> getRankByExpUserList() {
+		return userMapper.selectUserOrderByExp();
+	}
 	
 }

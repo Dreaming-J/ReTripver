@@ -202,6 +202,14 @@ public interface UserMapper {
 	})
 	List<UserAchievementVisitResponse> selectAchievementVisitById(String id);
 
-	
+	@Select("SELECT * from users ORDER BY exp DESC")
+	@Results({
+		@Result(property = "profileImg", column = "profile_img"),
+		@Result(property = "profileDesc", column = "profile_desc"),
+		@Result(property = "achievementTable", column = "achievement_table"),
+		@Result(property = "achievementId", column = "achievement_id"),
+		@Result(property = "tierInfo", column="tier_no", one = @One(select = "selectTierById"))
+	})
+	List<UserInfoResponse> selectUserOrderByExp();
 
 }
