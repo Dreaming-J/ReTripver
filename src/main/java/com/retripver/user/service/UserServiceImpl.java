@@ -11,6 +11,7 @@ import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.UserAchievementResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -97,6 +98,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<StatusMapCountResponse> statusMapCount(String id) {
 		return userRepository.getStatusMapCount(id);
+	}
+
+	@Override
+	public UserAchievementResponse getUserAchievement(String id) {
+		return userRepository.getUserAchievement(id);
 	}
 
 }

@@ -15,6 +15,7 @@ import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.UserAchievementResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
@@ -196,9 +197,20 @@ public class UserController {
 		
 		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount(loginUser.getId());
 		
+		// 오류 확인
+		
 		return ResponseEntity.ok(statusMapCountList);
 	}
 	
-	
+	@GetMapping("/achievement/list")
+	public ResponseEntity<?> achievement(HttpSession session) {
+		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+		
+		UserAchievementResponse userAchievement = userService.getUserAchievement("test");
+		
+		// 오류
+		
+		return ResponseEntity.ok(userAchievement);
+	}
 	
 }

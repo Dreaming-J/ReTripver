@@ -8,6 +8,7 @@ import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.UserAchievementResponse;
 import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
@@ -40,5 +41,7 @@ public interface UserRepository {
 	StatusUserInfoResponse getStatusInfo(String id);
 
 	List<StatusMapCountResponse> getStatusMapCount(String id);
+
+	UserAchievementResponse getUserAchievement(String id);
 
 }
