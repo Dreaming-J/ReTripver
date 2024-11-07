@@ -1,7 +1,11 @@
 package com.retripver.plan.service;
 
+import static org.assertj.core.api.Assertions.assertThatException;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -10,7 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.exception.NotFoundAttractionException;
 
 @SpringBootTest(properties = { "spring.config.location=classpath:application.properties" })
 public class PlanServiceTest {
@@ -62,6 +68,15 @@ public class PlanServiceTest {
 		assertAll(() -> {
 			assertEquals(10, planList.size());
 			assertEquals(3, planList.get(0).getLikeCount());
+		});
+	}
+	
+	@Test
+	@DisplayName("여행지 정보 불러오기")
+	void getAttraction() {
+		assertAll(() -> {
+			assertNotNull(planService.getAttraction(4486));
+			assertThatThrownBy(() -> planService.getAttraction(-1)).isInstanceOf(NotFoundAttractionException.class);
 		});
 	}
 }
