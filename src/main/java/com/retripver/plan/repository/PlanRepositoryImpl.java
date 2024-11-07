@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.mapper.PlanMapper;
 
@@ -37,5 +38,10 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Override
 	public List<PlanResponse> rankPlanList(Map<String, Object> params) {
 		return planMapper.selectRankPlans(params);
+	}
+
+	@Override
+	public AttractionResponse getAttraction(int attractionNo) {
+		return planMapper.selectAttractionByAttractionNo(attractionNo);
 	}
 }

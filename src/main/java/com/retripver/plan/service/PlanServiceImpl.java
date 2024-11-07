@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
 import static com.retripver.global.constant.Constant.PAGE_SIZE;
@@ -59,8 +61,16 @@ public class PlanServiceImpl implements PlanService {
 		
 		List<PlanResponse> rankPlanList = planRepository.rankPlanList(params);
 		
-		//error
-		
 		return rankPlanList;
+	}
+
+	@Override
+	public AttractionResponse getAttraction(int attractionNo) {
+		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
+		
+		if (attractionResponse == null)
+			throw new NotFoundAttractionException();
+		
+		return attractionResponse;
 	}
 }

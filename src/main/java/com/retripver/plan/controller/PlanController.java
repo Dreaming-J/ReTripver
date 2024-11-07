@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
 import com.retripver.user.dto.LoginResponse;
@@ -54,5 +55,12 @@ public class PlanController {
 		List<PlanResponse> rankPlanList = planService.rankPlanList(page);
 		
 		return ResponseEntity.ok(rankPlanList);
+	}
+	
+	@GetMapping("/attraction/{attractionNo}")
+	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
+		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
+		
+		return ResponseEntity.ok(attractionResponse);
 	}
 }
