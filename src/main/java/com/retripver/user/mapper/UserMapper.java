@@ -218,7 +218,7 @@ public interface UserMapper {
 			JOIN visit_counts 
 			ON id = user_id
 			WHERE sido_code = #{sidoCode}
-			ORDER BY count
+			ORDER BY count DESC
 			""")
 	@Results({
 		@Result(property = "profileImg", column = "profile_img"),
@@ -228,5 +228,15 @@ public interface UserMapper {
 		@Result(property = "tierInfo", column="tier_no", one = @One(select = "selectTierById"))
 	})
 	List<UserInfoResponse> selectUserOrderByVisitCount(int sidoCode);
+
+	@Select("SELECT * from users WHERE id LIKE CONCAT('%', #{keyword}, '%')")
+	@Results({
+		@Result(property = "profileImg", column = "profile_img"),
+		@Result(property = "profileDesc", column = "profile_desc"),
+		@Result(property = "achievementTable", column = "achievement_table"),
+		@Result(property = "achievementId", column = "achievement_id"),
+		@Result(property = "tierInfo", column="tier_no", one = @One(select = "selectTierById"))
+	})
+	List<UserInfoResponse> selectUserSearchByKeyword(String keyword);
 
 }

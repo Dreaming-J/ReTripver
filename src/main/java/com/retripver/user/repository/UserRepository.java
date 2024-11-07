@@ -48,4 +48,6 @@ public interface UserRepository {
 
 	List<UserInfoResponse> getRankBySidoCodeList(int sidoCode);
 
+	List<UserInfoResponse> getSearchUserByKeyword(String keyword);
+
 }

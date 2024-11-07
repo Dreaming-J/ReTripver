@@ -236,4 +236,14 @@ public class UserController {
 		return ResponseEntity.ok(userList);
 	}
 	
+	// 유저 검색
+	@GetMapping("/search/{keyword}")
+	public ResponseEntity<?> searchUser(@PathVariable String keyword) {
+		List<UserInfoResponse> userList = userService.getSearchUserByKeyword(keyword);
+		
+		// 오류
+		
+		return ResponseEntity.ok(userList);
+	}
+	
 }

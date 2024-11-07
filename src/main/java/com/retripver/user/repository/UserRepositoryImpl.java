@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.stringtemplate.v4.compiler.CodeGenerator.conditional_return;
 
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
@@ -99,10 +100,7 @@ public class UserRepositoryImpl implements UserRepository {
 	public StatusUserInfoResponse getStatusInfo(String id) {
 		StatusUserInfoResponse statusInfo = userMapper.selectUserInfoById(id);
 		
-		int achievementId = statusInfo.getUserInfo().getAchievementId();
-		String achievementTable = statusInfo.getUserInfo().getAchievementTable();
-		
-		String achievementTitle = userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+		String achievementTitle = getAchievementTitle(statusInfo.getUserInfo());
 		statusInfo.getUserInfo().setAchievementTitle(achievementTitle);
 		
 		return statusInfo;
@@ -128,7 +126,15 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public List<UserInfoResponse> getRankByExpUserList() {
-		return userMapper.selectUserOrderByExp();
+		List<UserInfoResponse> userList = userMapper.selectUserOrderByExp();
+		
+		for (UserInfoResponse user : userList) {
+			String achievementTitle = getAchievementTitle(user);
+			
+			user.setAchievementTitle(achievementTitle);
+		}
+		
+		return userList;
 	}
 	
 	@Override
@@ -137,10 +143,7 @@ public class UserRepositoryImpl implements UserRepository {
 		List<UserInfoResponse> userList = userMapper.selectUserOrderByVisitCount(sidoCode);
 		
 		for (UserInfoResponse user : userList) {
-			int achievementId = user.getAchievementId();
-			String achievementTable = user.getAchievementTable();
-			
-			String achievementTitle = userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+			String achievementTitle = getAchievementTitle(user);
 			
 			user.setAchievementTitle(achievementTitle);
 		}
@@ -148,4 +151,25 @@ public class UserRepositoryImpl implements UserRepository {
 		return userList;
 	}
 	
+	@Override
+	public List<UserInfoResponse> getSearchUserByKeyword(String keyword) {
+		List<UserInfoResponse> userList = userMapper.selectUserSearchByKeyword(keyword);
+		
+		for (UserInfoResponse user : userList) {
+			String achievementTitle = getAchievementTitle(user);
+			
+			user.setAchievementTitle(achievementTitle);
+		}
+		
+		return userList;
+	}
+	
+	private String getAchievementTitle(UserInfoResponse user) {
+		int achievementId = user.getAchievementId();
+		String achievementTable = user.getAchievementTable();
+		
+		if (achievementId == 0 || achievementTable == null) return null;
+		
+		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+	}
 }

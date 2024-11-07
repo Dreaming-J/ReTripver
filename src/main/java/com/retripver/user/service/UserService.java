@@ -45,4 +45,6 @@ public interface UserService {
 
 	List<UserInfoResponse> getRankBySidoCodeUserList(int sidoCode);
 
+	List<UserInfoResponse> getSearchUserByKeyword(String keyword);
+
 }
