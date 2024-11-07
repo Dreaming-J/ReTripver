@@ -2,8 +2,8 @@ package com.retripver.plan.service;
 
 import java.util.List;
 
+import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
-import com.retripver.plan.exception.NotFoundPlanException;
 
 public interface PlanService {
 
@@ -14,5 +14,7 @@ public interface PlanService {
 	List<PlanResponse> likePlanList(String userId);
 
 	List<PlanResponse> rankPlanList(int page);
+
+	AttractionResponse getAttraction(int attractionNo);
 
 }

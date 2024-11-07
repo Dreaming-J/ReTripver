@@ -11,8 +11,15 @@ import com.retripver.plan.controller.PlanController;
 public class PlanControllerException {
 
 	@ExceptionHandler(NotFoundPlanException.class)
-	public ResponseEntity<?> notFoundPlanHandler(Exception ex) {
+	public ResponseEntity<?> notFoundPlanHandler() {
 		ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.NOT_FOUND_PLAN);
+		
+		return ResponseEntity.internalServerError().body(errorResponse);
+	}
+
+	@ExceptionHandler(NotFoundAttractionException.class)
+	public ResponseEntity<?> notFoundAttractionHandler() {
+		ErrorResponse errorResponse = ErrorResponse.of(ErrorCode.NOT_FOUND_ATTRACTION);
 		
 		return ResponseEntity.internalServerError().body(errorResponse);
 	}

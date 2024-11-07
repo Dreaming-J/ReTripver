@@ -45,6 +45,7 @@ public interface PlanMapper {
 			SELECT *
 			FROM plans
 			WHERE user_id = #{userId}
+			AND is_public = true
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
@@ -68,6 +69,7 @@ public interface PlanMapper {
 			FROM plan_like pl JOIN plans p
 			ON pl.plan_id = p.id
 			WHERE pl.user_id = #{userId}
+			AND p.is_public = true
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
@@ -76,8 +78,10 @@ public interface PlanMapper {
 	List<PlanResponse> selectLikePlansByUserId(String userId);
 
 	@Select("""
-			SELECT p.id, p.user_id, p.title, p.sido_code, COALESCE(COUNT(plan_id), 0) likeCount
-			FROM plans p LEFT JOIN plan_like pl
+			SELECT p.id, p.user_id, p.title, p.sido_code, IFNULL(pl.likeCount, 0) likeCount, ROW_NUMBER() OVER(ORDER BY likeCount DESC) `rank`
+			FROM plans p LEFT JOIN (SELECT plan_id, COUNT(plan_id) likeCount
+									FROM plan_like
+			                        GROUP BY plan_id) as pl
 			ON p.id = pl.plan_id
 			WHERE p.is_public = true
 			GROUP BY p.id
