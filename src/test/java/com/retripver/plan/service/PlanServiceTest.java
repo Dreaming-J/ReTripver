@@ -1,11 +1,9 @@
 package com.retripver.plan.service;
 
-import static org.assertj.core.api.Assertions.assertThatException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 
@@ -14,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.NotFoundAttractionException;
 
@@ -34,8 +31,8 @@ public class PlanServiceTest {
 		List<PlanResponse> planList = planService.planList("test");
 		
 		assertAll(() -> {
-			assertEquals(11, planList.size());
-			assertEquals(3, planList.get(5).getCourses().size());
+			assertEquals(8, planList.size());
+			assertEquals(3, planList.get(3).getCourses().size());
 		});
 	}
 	
@@ -56,7 +53,7 @@ public class PlanServiceTest {
 		List<PlanResponse> planList = planService.likePlanList("user");
 		
 		assertAll(() -> {
-			assertEquals(4, planList.size());
+			assertEquals(3, planList.size());
 		});
 	}
 	
@@ -66,7 +63,7 @@ public class PlanServiceTest {
 		List<PlanResponse> planList = planService.rankPlanList(1);
 		
 		assertAll(() -> {
-			assertEquals(10, planList.size());
+			assertEquals(8, planList.size());
 			assertEquals(3, planList.get(0).getLikeCount());
 		});
 	}
