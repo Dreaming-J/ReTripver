@@ -1,17 +1,17 @@
 package com.retripver.user.exception;
 
-import org.springframework.http.HttpStatus;
+public class UserErrorResponse {
 
-public enum ErrorCode {
-	
-	NOT_FOUND_USER(HttpStatus.INTERNAL_SERVER_ERROR.value(), "사용자를 찾을 수 없습니다.");
-	
 	private Integer httpStatus;
 	private String message;
 	
-	ErrorCode(Integer httpStatus, String message) {
-		this.httpStatus = httpStatus;
-		this.message = message;
+	public UserErrorResponse(UserErrorCode userErrorCode) {
+		this.httpStatus = userErrorCode.getHttpStatus();
+		this.message = userErrorCode.getMessage();
+	}
+	
+	public static UserErrorResponse of(UserErrorCode userErrorCode) {
+		return new UserErrorResponse(userErrorCode);
 	}
 
 	public Integer getHttpStatus() {
@@ -29,4 +29,5 @@ public enum ErrorCode {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
 }

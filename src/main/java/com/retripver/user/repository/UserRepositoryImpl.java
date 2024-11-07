@@ -1,5 +1,7 @@
 package com.retripver.user.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -7,6 +9,7 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.TierInfoResponse;
 import com.retripver.user.dto.UserInfoResponse;
@@ -99,6 +102,11 @@ public class UserRepositoryImpl implements UserRepository {
 		statusInfo.getUserInfo().setAchievementTitle(achievementTitle);
 		
 		return statusInfo;
+	}
+
+	@Override
+	public List<StatusMapCountResponse> getStatusMapCount(String id) {
+		return userMapper.selectVisitCountById(id);
 	}
 
 	

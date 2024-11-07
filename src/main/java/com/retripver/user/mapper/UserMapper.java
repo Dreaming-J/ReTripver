@@ -1,5 +1,7 @@
 package com.retripver.user.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,6 +18,7 @@ import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.QuestRateResponse;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.TierInfoResponse;
 import com.retripver.user.dto.UserInfoResponse;
@@ -138,5 +141,22 @@ public interface UserMapper {
 
 	@SelectProvider(type = SqlProvider.class, method = "selectNameFromAchievementById")
 	String selectNameFromAchievementById(int achievementId, String achievementTable);
+
+	@Select("""
+			SELECT s.sido_code, ifnull(v.count, 0) count
+			FROM sidos s
+			LEFT JOIN (
+				SELECT *
+				FROM visit_counts
+				WHERE user_id = #{id}) v
+			ON s.sido_code = v.sido_code
+			ORDER BY s.no
+			
+			""")
+	@Results({
+		@Result(property = "sidoCode", column = "sido_code"),
+		@Result(property = "visitCount", column = "count")
+	})
+	List<StatusMapCountResponse> selectVisitCountById(String id);
 
 }
