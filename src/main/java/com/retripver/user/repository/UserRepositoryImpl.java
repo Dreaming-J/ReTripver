@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
@@ -128,6 +129,23 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public List<UserInfoResponse> getRankByExpUserList() {
 		return userMapper.selectUserOrderByExp();
+	}
+	
+	@Override
+	@Transactional
+	public List<UserInfoResponse> getRankBySidoCodeList(int sidoCode) {
+		List<UserInfoResponse> userList = userMapper.selectUserOrderByVisitCount(sidoCode);
+		
+		for (UserInfoResponse user : userList) {
+			int achievementId = user.getAchievementId();
+			String achievementTable = user.getAchievementTable();
+			
+			String achievementTitle = userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+			
+			user.setAchievementTitle(achievementTitle);
+		}
+		
+		return userList;
 	}
 	
 }

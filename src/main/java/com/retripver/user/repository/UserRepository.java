@@ -46,4 +46,6 @@ public interface UserRepository {
 
 	List<UserInfoResponse> getRankByExpUserList();
 
+	List<UserInfoResponse> getRankBySidoCodeList(int sidoCode);
+
 }

@@ -111,4 +111,8 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getRankByExpUserList();
 	}
 
+	@Override
+	public List<UserInfoResponse> getRankBySidoCodeUserList(int sidoCode) {
+		return userRepository.getRankBySidoCodeList(sidoCode);
+	}
 }
