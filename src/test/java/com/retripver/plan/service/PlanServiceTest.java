@@ -1,7 +1,9 @@
 package com.retripver.plan.service;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.exception.NotFoundAttractionException;
 
 @SpringBootTest(properties = { "spring.config.location=classpath:application.properties" })
 public class PlanServiceTest {
@@ -28,8 +31,8 @@ public class PlanServiceTest {
 		List<PlanResponse> planList = planService.planList("test");
 		
 		assertAll(() -> {
-			assertEquals(11, planList.size());
-			assertEquals(3, planList.get(5).getCourses().size());
+			assertEquals(8, planList.size());
+			assertEquals(3, planList.get(3).getCourses().size());
 		});
 	}
 	
@@ -50,7 +53,7 @@ public class PlanServiceTest {
 		List<PlanResponse> planList = planService.likePlanList("user");
 		
 		assertAll(() -> {
-			assertEquals(4, planList.size());
+			assertEquals(3, planList.size());
 		});
 	}
 	
@@ -60,8 +63,17 @@ public class PlanServiceTest {
 		List<PlanResponse> planList = planService.rankPlanList(1);
 		
 		assertAll(() -> {
-			assertEquals(10, planList.size());
+			assertEquals(8, planList.size());
 			assertEquals(3, planList.get(0).getLikeCount());
+		});
+	}
+	
+	@Test
+	@DisplayName("여행지 정보 불러오기")
+	void getAttraction() {
+		assertAll(() -> {
+			assertNotNull(planService.getAttraction(4486));
+			assertThatThrownBy(() -> planService.getAttraction(-1)).isInstanceOf(NotFoundAttractionException.class);
 		});
 	}
 }

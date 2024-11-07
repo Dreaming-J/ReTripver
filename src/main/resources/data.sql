@@ -26,8 +26,8 @@ VALUES	('admin','admin','관리자','admin@admin.com','https://cdn4.iconfinder.c
         ('member1','member1','최회원','member1@member.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','활동적인 회원입니다.',320,NULL,NULL,'2024-11-01 05:13:20',4),
         ('newbie1','newbie1','조신입','newbie1@newbie.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','새로 가입한 유저입니다.',20,NULL,NULL,'2024-11-01 05:13:20',1),
         ('pro1','pro1','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),
-        ('test','test','김테스트','test@test.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','안녕하세요',55,NULL,NULL,'2024-11-01 05:13:20',1),
-        ('user','user','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,'Acquire_visit',1,'2024-11-01 05:13:20',3),
+        ('test','test','김테스트','test@test.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','안녕하세요',55,'achievement_visit',1,'2024-11-01 05:13:20',1),
+        ('user','user','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,NULL,NULL,'2024-11-01 05:13:20',3),
         ('user2','user2','김유저','user2@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',180,NULL,NULL,'2024-11-01 05:13:20',2),
         ('vip1','vip1','황VIP','vip1@vip.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','VIP 유저입니다.',800,NULL,NULL,'2024-11-01 05:13:20',5);
 INSERT INTO `follow`
@@ -48,14 +48,14 @@ VALUES	(1,'test','알림이 왔습니다.',0),
 
 INSERT INTO `plans`
 VALUES	(1,'test','신나는 부산 여행!',6,0,1),
-		(2,'test','설렘 가득 제주도 여행!',39,0,1),
+		(2,'test','설렘 가득 제주도 여행!',39,0,0),
 		(3,'test','한적한 강릉 바다 힐링 여행',32,0,1),
-		(4,'test','가을빛 담은 경주 역사 탐방',35,0,1),
+		(4,'test','가을빛 담은 경주 역사 탐방',35,0,0),
 		(5,'test','푸른 물결 속 여수 밤바다 여행',38,0,1),
 		(6,'test','서울에서의 활기찬 문화 체험',1,0,1),
 		(7,'test','속초 설악산 등반과 힐링 투어',32,0,1),
 		(8,'test','대구 별빛 야경 투어',4,0,1),
-		(9,'test','전주의 한옥마을과 전통 맛집 탐방',37,0,1),
+		(9,'test','전주의 한옥마을과 전통 맛집 탐방',37,0,0),
 		(10,'test','고요한 남해의 섬마을 여행',36,0,1),
 		(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
 INSERT INTO `courses`

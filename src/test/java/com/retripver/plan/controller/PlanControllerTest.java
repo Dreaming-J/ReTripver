@@ -16,7 +16,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 
 @AutoConfigureMockMvc
@@ -80,5 +79,15 @@ public class PlanControllerTest {
 	void rankPlanList() throws Exception {
 		mockMvc.perform(get("/plan/rank/1"))
 				.andExpect(status().isOk()).andDo(print());
+	}
+	
+	@Test
+	@DisplayName("여행지 정보 불러오기")
+	@Transactional
+	void getAttraction() throws Exception {
+		mockMvc.perform(get("/plan/attraction/4486"))
+				.andExpect(status().isOk()).andDo(print());
+		mockMvc.perform(get("/plan/attraction/-1"))
+		.andExpect(status().isInternalServerError()).andDo(print());
 	}
 }

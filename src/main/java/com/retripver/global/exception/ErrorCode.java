@@ -1,17 +1,17 @@
-package com.retripver.plan.exception;
+package com.retripver.global.exception;
 
-public class ErrorResponse {
+import org.springframework.http.HttpStatus;
 
+public enum ErrorCode {
+	
+	BAD_REQUEST(HttpStatus.INTERNAL_SERVER_ERROR.value(), "잘못된 경로로 접근하였습니다.");
+	
 	private Integer httpStatus;
 	private String message;
 	
-	public ErrorResponse(ErrorCode errorCode) {
-		this.httpStatus = errorCode.getHttpStatus();
-		this.message = errorCode.getMessage();
-	}
-	
-	public static ErrorResponse of(ErrorCode errorCode) {
-		return new ErrorResponse(errorCode);
+	ErrorCode(Integer httpStatus, String message) {
+		this.httpStatus = httpStatus;
+		this.message = message;
 	}
 
 	public Integer getHttpStatus() {
@@ -29,5 +29,4 @@ public class ErrorResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
 }
