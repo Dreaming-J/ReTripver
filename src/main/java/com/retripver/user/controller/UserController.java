@@ -1,5 +1,7 @@
 package com.retripver.user.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +13,7 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
@@ -177,11 +180,9 @@ public class UserController {
 	// 상태창 유저 정보
 	@GetMapping("/status/info")
 	public ResponseEntity<?> statusUser(HttpSession session) {
-//		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		
-//		StatusUserInfoResponse statusInfo = userService.statusUserInfo(loginUser.getId());
-		
-		StatusUserInfoResponse statusInfo = userService.statusUserInfo("test");
+		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+
+		StatusUserInfoResponse statusInfo = userService.statusUserInfo(loginUser.getId());
 	
 		// 오류 확인
 		
@@ -190,10 +191,12 @@ public class UserController {
 	
 	// 상태창 지도
 	@GetMapping("/status/map")
-	public ResponseEntity<?> statusMap() {
+	public ResponseEntity<?> statusMap(HttpSession session) {
+		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 		
+		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount("test");
 		
-		return null;
+		return ResponseEntity.ok(statusMapCountList);
 	}
 	
 	

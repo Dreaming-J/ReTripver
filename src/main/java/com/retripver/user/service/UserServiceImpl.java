@@ -1,5 +1,7 @@
 package com.retripver.user.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
@@ -89,6 +92,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public StatusUserInfoResponse statusUserInfo(String id) {
 		return userRepository.getStatusInfo(id);
+	}
+
+	@Override
+	public List<StatusMapCountResponse> statusMapCount(String id) {
+		return userRepository.getStatusMapCount(id);
 	}
 
 }

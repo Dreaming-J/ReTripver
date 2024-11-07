@@ -1,9 +1,12 @@
 package com.retripver.user.repository;
 
+import java.util.List;
+
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
@@ -36,6 +39,6 @@ public interface UserRepository {
 	
 	StatusUserInfoResponse getStatusInfo(String id);
 
-	
+	List<StatusMapCountResponse> getStatusMapCount(String id);
 
 }

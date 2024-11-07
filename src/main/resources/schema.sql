@@ -163,7 +163,7 @@ CREATE TABLE `quests` (
     `mission_img`	VARCHAR(255) NOT NULL,
     `user_img`		VARCHAR(255) DEFAULT NULL,
     `exp`			INT NOT NULL DEFAULT 0,
-    `isClear`		BOOLEAN NOT NULL DEFAULT false,
+    `is_clear`		BOOLEAN NOT NULL DEFAULT false,
     
     PRIMARY KEY (`id`),
     FOREIGN KEY (`courses_id`) REFERENCES `courses`(`id`)
