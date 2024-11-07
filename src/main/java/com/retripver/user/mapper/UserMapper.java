@@ -21,11 +21,13 @@ import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.TierInfoResponse;
+import com.retripver.user.dto.UserAchievementTierResponse;
+import com.retripver.user.dto.UserAchievementVisitResponse;
 import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
-import com.retripver.user.repository.SqlProvider;
+import com.retripver.user.repository.UserSqlProvider;
 
 @Mapper
 public interface UserMapper {
@@ -139,7 +141,7 @@ public interface UserMapper {
 	})
 	StatusUserInfoResponse selectUserInfoById(String id);
 
-	@SelectProvider(type = SqlProvider.class, method = "selectNameFromAchievementById")
+	@SelectProvider(type = UserSqlProvider.class, method = "selectNameFromAchievementById")
 	String selectNameFromAchievementById(int achievementId, String achievementTable);
 
 	@Select("""
@@ -158,5 +160,48 @@ public interface UserMapper {
 		@Result(property = "visitCount", column = "count")
 	})
 	List<StatusMapCountResponse> selectVisitCountById(String id);
+
+	@Select("""
+			SELECT ah.name, ah.content, ah.img, ifnull(aq.count, 0) is_acquire
+			FROM achievement_tier ah
+			LEFT JOIN (
+				SELECT achievement_id, count(*) count
+				FROM acquire_tier
+				WHERE user_id = #{id}
+				GROUP BY achievement_id ) aq
+			ON ah.id = aq.achievement_id
+			""")
+	@Results({
+		@Result(property = "achievementName", column = "name"),
+		@Result(property = "achievementContent", column = "content"),
+		@Result(property = "achievementImg", column = "img"),
+		@Result(property = "isAcquire", column = "is_acquire"),
+	})
+	List<UserAchievementTierResponse> selectAchievementTierById(String id);
+
+	
+	@Select("""
+			SELECT ah.name, ah.content, ah.img, vc.count, ah.visit_count, ifnull(aq.count, 0) is_acquire
+			FROM achievement_visit ah
+			LEFT JOIN (
+				SELECT achievement_id, count(*) count
+				FROM acquire_visit
+				WHERE user_id = #{id}
+				GROUP BY achievement_id ) aq
+			ON ah.id = aq.achievement_id
+			JOIN visit_counts vc
+			ON ah.sido_code = vc.sido_code
+			""")
+	@Results({
+		@Result(property = "achievementName", column = "name"),
+		@Result(property = "achievementContent", column = "content"),
+		@Result(property = "achievementImg", column = "img"),
+		@Result(property = "currentVisitCount", column = "count"),
+		@Result(property = "acquireVisitCount", column = "visit_count"),
+		@Result(property = "isAcquire", column = "is_acquire"),
+	})
+	List<UserAchievementVisitResponse> selectAchievementVisitById(String id);
+
+	
 
 }

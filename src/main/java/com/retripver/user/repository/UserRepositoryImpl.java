@@ -12,6 +12,9 @@ import com.retripver.user.dto.SignupRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
 import com.retripver.user.dto.TierInfoResponse;
+import com.retripver.user.dto.UserAchievementResponse;
+import com.retripver.user.dto.UserAchievementTierResponse;
+import com.retripver.user.dto.UserAchievementVisitResponse;
 import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
@@ -107,6 +110,19 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public List<StatusMapCountResponse> getStatusMapCount(String id) {
 		return userMapper.selectVisitCountById(id);
+	}
+
+	@Override
+	public UserAchievementResponse getUserAchievement(String id) {
+		UserAchievementResponse userAchievement = new UserAchievementResponse();
+		
+		List<UserAchievementTierResponse> achievementTierList = userMapper.selectAchievementTierById(id);
+		List<UserAchievementVisitResponse> achievementVisitList = userMapper.selectAchievementVisitById(id);
+		
+		userAchievement.setAchievementTierList(achievementTierList);
+		userAchievement.setAchievementVisitList(achievementVisitList);
+		
+		return userAchievement;
 	}
 
 	
