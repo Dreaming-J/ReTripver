@@ -4,7 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public enum UserErrorCode {
 	
-	NOT_FOUND_USER(HttpStatus.INTERNAL_SERVER_ERROR.value(), "사용자를 찾을 수 없습니다.");
+	NOT_FOUND_USER(HttpStatus.INTERNAL_SERVER_ERROR.value(), "사용자를 찾을 수 없습니다."),
+	NOT_FOUND_LOGIN_USER(HttpStatus.UNAUTHORIZED.value(), "로그인 후 이용 가능합니다.");
 	
 	private Integer httpStatus;
 	private String message;
