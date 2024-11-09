@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
@@ -76,16 +77,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean follow(String fromId, String toId) {
-		boolean isFollow = userRepository.isFollow(fromId, toId);
+	public boolean follow(FollowRequest followRequest) {
+		boolean isFollow = userRepository.isFollow(followRequest);
 		
 		// 이미 팔로우 했다면 취소
 		if (isFollow) {
-			userRepository.unfollow(fromId, toId);
+			userRepository.unfollow(followRequest);
 
 			return false;
 		} else { // 노 팔로우라면 팔로우하기
-			userRepository.follow(fromId, toId);
+			userRepository.follow(followRequest);
 			
 			return true;
 		}

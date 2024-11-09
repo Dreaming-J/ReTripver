@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import com.retripver.user.dto.FollowCountResponse;
+import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
@@ -56,14 +57,14 @@ public interface UserMapper {
 	@Delete("DELETE FROM users WHERE id = #{id}")
 	void deleteUser(String id);
 
-	@Select("SELECT count(*) FROM users WHERE from_id = #{fromId} AND to_id = #{toId}")
-	int selectCountByFromIdAndToId(String fromId, String toId);
+	@Select("SELECT count(*) FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
+	int selectCountByFromIdAndToId(FollowRequest followRequest);
 
-	@Delete("DELETE FROM usrs WHERE from_id = #{fromId} AND to_id = #{toId}")
-	void deleteFollow(String fromId, String toId);
+	@Delete("DELETE FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
+	void deleteFollow(FollowRequest followRequest);
 
 	@Insert("INSERT INTO follow VALUES (#{fromId}, #{toId})")
-	void insertFollow(String fromId, String toId);
+	void insertFollow(FollowRequest followRequest);
 	
 	@Select("""
 			SELECT ct.id, ct.name, ct.img, nt.base_exp
