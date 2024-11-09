@@ -2,6 +2,7 @@ package com.retripver.user.repository;
 
 import java.util.List;
 
+import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
@@ -32,11 +33,11 @@ public interface UserRepository {
 
 	void resign(String id);
 
-	boolean isFollow(String fromId, String toId);
+	boolean isFollow(FollowRequest followRequest);
 
-	void unfollow(String fromId, String toId);
+	void unfollow(FollowRequest followRequest);
 
-	void follow(String fromId, String toId);
+	void follow(FollowRequest followRequest);
 	
 	StatusUserInfoResponse getStatusInfo(String id);
 

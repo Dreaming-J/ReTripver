@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.stringtemplate.v4.compiler.CodeGenerator.conditional_return;
 
+import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
@@ -79,21 +80,21 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public boolean isFollow(String fromId, String toId) {
-		int isFollow = userMapper.selectCountByFromIdAndToId(fromId, toId);
+	public boolean isFollow(FollowRequest followRequest) {
+		int isFollow = userMapper.selectCountByFromIdAndToId(followRequest);
 		
 		if (isFollow == 0) return false;
 		return true;
 	}
 
 	@Override
-	public void unfollow(String fromId, String toId) {
-		userMapper.deleteFollow(fromId, toId);
+	public void unfollow(FollowRequest followRequest) {
+		userMapper.deleteFollow(followRequest);
 	}
 
 	@Override
-	public void follow(String fromId, String toId) {
-		userMapper.insertFollow(fromId, toId);
+	public void follow(FollowRequest followRequest) {
+		userMapper.insertFollow(followRequest);
 	}
 	
 	@Override

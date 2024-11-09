@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
@@ -24,6 +26,7 @@ import com.retripver.user.dto.UserSearchPwdRequest;
 import com.retripver.user.exception.NotFoundUserException;
 import com.retripver.user.service.UserService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,6 +54,13 @@ public class UserController {
 		
 		// 갑자기 생긴 의문
 		// 인스타 st라면 이메일 로그인을 해야하나? 아이디 변경이 가능하니까? 시스템적으로?
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/logout")
+	public ResponseEntity<?> logout(HttpSession session) {
+		session.invalidate();
 		
 		return ResponseEntity.ok().build();
 	}
@@ -171,7 +181,7 @@ public class UserController {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 		String fromId = loginUser.getId();
 		
-		boolean isFollow = userService.follow(fromId, toId);
+		boolean isFollow = userService.follow(new FollowRequest(fromId, toId));
 		
 		// 실패도 하기
 		

@@ -2,6 +2,7 @@ package com.retripver.user.service;
 
 import java.util.List;
 
+import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
 import com.retripver.user.dto.PwdModifyRequest;
@@ -33,7 +34,7 @@ public interface UserService {
 
 	void resign(String id);
 
-	boolean follow(String fromId, String toId);
+	boolean follow(FollowRequest followRequest);
 
 	StatusUserInfoResponse statusUserInfo(String id);
 
