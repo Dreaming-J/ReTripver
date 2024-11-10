@@ -24,10 +24,14 @@ public class LoginInterceptor implements HandlerInterceptor {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 
 		if (session == null || loginUser == null) {
-			response.setStatus(UserErrorResponse.of(UserErrorCode.NOT_FOUND_LOGIN_USER).getHttpStatus());
+			UserErrorResponse userErrorResponse = UserErrorResponse.of(UserErrorCode.NOT_FOUND_USER);
+			String bodyMessage = "{\"message\": \"" + userErrorResponse.getMessage() + "\"}";
+			
+			response.setStatus(userErrorResponse.getHttpStatus());
 			response.setContentType("application/json");
-			response.getWriter().write("{\"message\": \"Unauthorized - Please login first.\"}");
+			response.getWriter().write(bodyMessage);
 
+	
 //			response.sendRedirect(request.getContextPath() + "/user/login?redirectURL=" + requestURI);
 			
 			return false;

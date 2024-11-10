@@ -40,16 +40,25 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	@Transactional
 	public void signup(SignupRequest signupRequest) {
 		userMapper.insert(signupRequest);
 	}
 	
 	@Override
-	public boolean idCheck(String id) {
-		int isDuplicated = userMapper.selectCountById(id);
+	public boolean isExistId(String id) {
+		int isExisted = userMapper.selectCountById(id);
 		
-		if (isDuplicated == 1) return true;
-		return false;
+		if (isExisted == 0) return false;
+		return true;
+	}
+	
+	@Override
+	public boolean isExistEmail(String email) {
+		int isExisted = userMapper.selectCountByEmail(email);
+		
+		if (isExisted == 0) return false;
+		return true;
 	}
 
 	@Override

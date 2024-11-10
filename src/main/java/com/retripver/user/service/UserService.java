@@ -22,7 +22,9 @@ public interface UserService {
 
 	void signup(SignupRequest signupRequest);
 	
-	boolean idCheck(String id);
+	boolean isExistId(String id);
+	
+	boolean isExistEmail(String email);
 
 	void profileUpload(UserProfileRequest userProfileRequest);
 

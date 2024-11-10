@@ -21,7 +21,9 @@ public interface UserRepository {
 
 	void signup(SignupRequest signupRequest);
 	
-	boolean idCheck(String id);
+	boolean isExistId(String id);
+	
+	boolean isExistEmail(String email);
 
 	void modifyProfile(UserProfileRequest userProfileRequest);
 

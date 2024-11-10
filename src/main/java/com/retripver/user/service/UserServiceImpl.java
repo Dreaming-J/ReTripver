@@ -17,6 +17,8 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.exception.DuplicateSignupException;
+import com.retripver.user.exception.InvalidSignupException;
 import com.retripver.user.exception.NotFoundUserException;
 import com.retripver.user.repository.UserRepository;
 
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public LoginResponse login(LoginRequest loginRequest) throws NotFoundUserException {
+	public LoginResponse login(LoginRequest loginRequest) {
 		LoginResponse loginResponse = userRepository.login(loginRequest);
 		
 		if (loginResponse == null) {
@@ -43,17 +45,30 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void signup(SignupRequest signupRequest) {
+		if (!UserSignupValidator.isValid(signupRequest)) {
+			throw new InvalidSignupException();
+		}
+		
+		if (isExistId(signupRequest.getId()) || isExistEmail(signupRequest.getEmail())) {
+			throw new DuplicateSignupException();
+		}
+	
 		userRepository.signup(signupRequest);
+	}
+	
+	@Override
+	public boolean isExistId(String id) {
+		return userRepository.isExistId(id);
+	}
+	
+	@Override
+	public boolean isExistEmail(String email) {
+		return userRepository.isExistEmail(email);
 	}
 
 	@Override
 	public void profileUpload(UserProfileRequest userProfileRequest) {
 		userRepository.modifyProfile(userProfileRequest);
-	}
-
-	@Override
-	public boolean idCheck(String id) {
-		return userRepository.idCheck(id);
 	}
 
 	@Override

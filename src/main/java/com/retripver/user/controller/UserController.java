@@ -46,18 +46,18 @@ public class UserController {
 	}
 	
 	// 로그인
-	@PostMapping
+	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
 		LoginResponse loginResponse = userService.login(loginRequest);
 		
 		session.setAttribute("loginUser", loginResponse);
 		
-		// 갑자기 생긴 의문
-		// 인스타 st라면 이메일 로그인을 해야하나? 아이디 변경이 가능하니까? 시스템적으로?
-		
+		// 세션저장? 해시 저장? jwt저장?
+
 		return ResponseEntity.ok().build();
 	}
 	
+	// 로그아웃
 	@GetMapping("/logout")
 	public ResponseEntity<?> logout(HttpSession session) {
 		session.invalidate();
@@ -73,6 +73,7 @@ public class UserController {
 		// 1. 비어있는 값이 있는 지
 		// 2. 비밀번호와 비밀번호 체크가 같은지
 		// 3. 존재하지 않는 아이디인지
+		// 4. 등록된 이메일인지
 		
 		
 		userService.signup(signupRequest);
@@ -85,7 +86,7 @@ public class UserController {
 	// 아이디 중복 체크
 	@GetMapping("/check/{id}")
 	public ResponseEntity<?> idCheck(@PathVariable String id) {
-		boolean isDuplicated = userService.idCheck(id);
+		boolean isDuplicated = userService.isExistId(id);
 		
 		return ResponseEntity.ok(isDuplicated);
 	}
@@ -252,6 +253,13 @@ public class UserController {
 		List<UserInfoResponse> userList = userService.getSearchUserByKeyword(keyword);
 		
 		// 오류
+//		
+//		select * from users u
+//		where u.id like '%m%'
+//		order by case
+//		when u.id like 'm%' then 1
+//		when u.id like '%m%' then 2
+//		else 3 end, u.id asc;
 		
 		return ResponseEntity.ok(userList);
 	}

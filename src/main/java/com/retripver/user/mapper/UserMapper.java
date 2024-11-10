@@ -28,7 +28,6 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
-import com.retripver.user.repository.UserSqlProvider;
 
 @Mapper
 public interface UserMapper {
@@ -41,7 +40,10 @@ public interface UserMapper {
 	
 	@Select("SELECT count(*) FROM users WHERE id = #{id}")
 	int selectCountById(String id);
-
+	
+	@Select("SELECT count(*) FROM users WHERE email = #{email}")
+	int selectCountByEmail(String email);
+	
 	@Update("UPDATE users SET profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
 	void updateProfile(UserProfileRequest userProfileRequest);
 
