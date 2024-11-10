@@ -29,6 +29,7 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.dto.UserSearchPwdRequest;
 
 @Mapper
 public interface UserMapper {
@@ -50,6 +51,9 @@ public interface UserMapper {
 
 	@Select("SELECT id FROM users WHERE name = #{name} AND email = #{email}")
 	String selectByNameAndEmail(UserSearchIdRequest userSearchIdRequest);
+	
+	@Select("SELECT password users WHERE id = #{id} AND name = #{name} AND email = #{email}")
+	String selectByIdAndNameAndEmail(UserSearchPwdRequest userSearchPwdRequest);
 
 	@Update("UPDATE users SET name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
 	void update(UserModifyRequest userModifyRequest) throws SQLException;

@@ -131,13 +131,20 @@ public class UserController {
 	@PostMapping("/search/password")
 	public ResponseEntity<?> searchPassword(@RequestBody UserSearchPwdRequest userSearchPwdRequest) {
 		// 해당 정보의 유저가 존재하는 지 확인
+		boolean isExistUser = userService.searchPassword(userSearchPwdRequest);
+		
+		if (!isExistUser) {
+			// 유저가 존재하지 않으면 존재하지 않는다고 보내기
+			
+			return ResponseEntity.ok("존재하지 않는 회원입니다.");
+		}
 		
 		
 		// 존재한다면 임시 비밀번호 이메일로 전송
 		
 		// 회원 정보가 존재하지 않을 때
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok("임시 비밀번호를 이메일로 전송했습니다.");
 	}
 	
 	// 회원 정보 수정

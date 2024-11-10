@@ -23,6 +23,7 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.dto.UserSearchPwdRequest;
 import com.retripver.user.exception.UserSQLException;
 import com.retripver.user.mapper.UserMapper;
 
@@ -85,6 +86,17 @@ public class UserRepositoryImpl implements UserRepository {
 		}
 		
 		return id;
+	}
+	
+	@Override
+	public boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest) {
+		String password = userMapper.selectByIdAndNameAndEmail(userSearchPwdRequest);
+		
+		if (password == null) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override

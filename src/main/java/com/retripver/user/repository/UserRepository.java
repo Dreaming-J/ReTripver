@@ -14,6 +14,7 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.dto.UserSearchPwdRequest;
 import com.retripver.user.exception.UserSQLException;
 
 public interface UserRepository {
@@ -29,6 +30,8 @@ public interface UserRepository {
 	void modifyProfile(UserProfileRequest userProfileRequest);
 
 	String searchId(UserSearchIdRequest userSearchIdRequest);
+	
+	boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest);
 
 	void modify(UserModifyRequest userModifyRequest);
 

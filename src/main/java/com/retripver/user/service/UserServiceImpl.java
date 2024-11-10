@@ -17,6 +17,7 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.dto.UserSearchPwdRequest;
 import com.retripver.user.exception.DuplicateSignupException;
 import com.retripver.user.exception.InvalidSignupException;
 import com.retripver.user.exception.NotFoundUserException;
@@ -75,6 +76,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String searchId(UserSearchIdRequest userSearchIdRequest) {
 		return userRepository.searchId(userSearchIdRequest);
+	}
+	
+	@Override
+	public boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest) {
+		return userRepository.searchPassword(userSearchPwdRequest);
 	}
 
 	@Override
