@@ -14,6 +14,7 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.dto.UserSearchPwdRequest;
 import com.retripver.user.exception.NotFoundUserException;
 
 public interface UserService {
@@ -22,11 +23,15 @@ public interface UserService {
 
 	void signup(SignupRequest signupRequest);
 	
-	boolean idCheck(String id);
+	boolean isExistId(String id);
+	
+	boolean isExistEmail(String email);
 
 	void profileUpload(UserProfileRequest userProfileRequest);
 
 	String searchId(UserSearchIdRequest userSearchIdRequest);
+	
+	boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest);
 
 	void modify(UserModifyRequest userModifyRequest);
 

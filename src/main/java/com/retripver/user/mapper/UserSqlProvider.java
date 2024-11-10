@@ -1,4 +1,4 @@
-package com.retripver.user.repository;
+package com.retripver.user.mapper;
 
 public class UserSqlProvider {
 

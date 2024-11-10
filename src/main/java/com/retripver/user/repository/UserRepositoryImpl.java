@@ -1,27 +1,14 @@
 package com.retripver.user.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.stringtemplate.v4.compiler.CodeGenerator.conditional_return;
 
-import com.retripver.user.dto.FollowRequest;
-import com.retripver.user.dto.LoginRequest;
-import com.retripver.user.dto.LoginResponse;
-import com.retripver.user.dto.PwdModifyRequest;
-import com.retripver.user.dto.SignupRequest;
-import com.retripver.user.dto.StatusMapCountResponse;
-import com.retripver.user.dto.StatusUserInfoResponse;
-import com.retripver.user.dto.TierInfoResponse;
-import com.retripver.user.dto.UserAchievementResponse;
-import com.retripver.user.dto.UserAchievementTierResponse;
-import com.retripver.user.dto.UserAchievementVisitResponse;
-import com.retripver.user.dto.UserInfoResponse;
-import com.retripver.user.dto.UserModifyRequest;
-import com.retripver.user.dto.UserProfileRequest;
-import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.dto.*;
+import com.retripver.user.exception.*;
 import com.retripver.user.mapper.UserMapper;
 
 @Repository
@@ -41,42 +28,84 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void signup(SignupRequest signupRequest) {
-		userMapper.insert(signupRequest);
+		try {
+			userMapper.insert(signupRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 	
 	@Override
-	public boolean idCheck(String id) {
-		int isDuplicated = userMapper.selectCountById(id);
+	public boolean isExistId(String id) {
+		int isExisted = userMapper.selectCountById(id);
 		
-		if (isDuplicated == 1) return true;
-		return false;
+		if (isExisted == 0) return false;
+		return true;
+	}
+	
+	@Override
+	public boolean isExistEmail(String email) {
+		int isExisted = userMapper.selectCountByEmail(email);
+		
+		if (isExisted == 0) return false;
+		return true;
 	}
 
 	@Override
 	public void modifyProfile(UserProfileRequest userProfileRequest) {
-		userMapper.updateProfile(userProfileRequest);
+		try {
+			userMapper.updateProfile(userProfileRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
 	public String searchId(UserSearchIdRequest userSearchIdRequest) {
-		String id = userMapper.selectByNameAndEmail(userSearchIdRequest);
+		return userMapper.selectByNameAndEmail(userSearchIdRequest);
+	}
+	
+	@Override
+	public boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest) {
+		String password = userMapper.selectByIdAndNameAndEmail(userSearchPwdRequest);
 		
-		return id;
+		if (password == null) {
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
 	public void modify(UserModifyRequest userModifyRequest) {
-		userMapper.update(userModifyRequest);
+		try {
+			userMapper.update(userModifyRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
 	public void modifyPassword(PwdModifyRequest pwdModifyRequset) {
-		userMapper.updatePassword(pwdModifyRequset);
+		try {
+			userMapper.updatePassword(pwdModifyRequset);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
+	}
+	
+	@Override
+	public String selectPasswordById(String id) {
+		return userMapper.selectPasswordById(id);
 	}
 
 	@Override
 	public void resign(String id) {
-		userMapper.deleteUser(id);
+		try {
+			userMapper.deleteUser(id);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
@@ -89,12 +118,20 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void unfollow(FollowRequest followRequest) {
-		userMapper.deleteFollow(followRequest);
+		try {
+			userMapper.deleteFollow(followRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
 	public void follow(FollowRequest followRequest) {
-		userMapper.insertFollow(followRequest);
+		try {
+			userMapper.insertFollow(followRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 	
 	@Override
@@ -173,4 +210,5 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
 	}
+
 }

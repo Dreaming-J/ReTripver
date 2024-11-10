@@ -4,34 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.retripver.user.dto.FollowRequest;
-import com.retripver.user.dto.LoginRequest;
-import com.retripver.user.dto.LoginResponse;
-import com.retripver.user.dto.PwdModifyRequest;
-import com.retripver.user.dto.SignupRequest;
-import com.retripver.user.dto.StatusMapCountResponse;
-import com.retripver.user.dto.StatusUserInfoResponse;
-import com.retripver.user.dto.UserAchievementResponse;
-import com.retripver.user.dto.UserInfoResponse;
-import com.retripver.user.dto.UserModifyRequest;
-import com.retripver.user.dto.UserProfileRequest;
-import com.retripver.user.dto.UserSearchIdRequest;
-import com.retripver.user.dto.UserSearchPwdRequest;
-import com.retripver.user.exception.NotFoundUserException;
-import com.retripver.user.service.UserService;
+import com.retripver.user.dto.*;
+import com.retripver.user.service.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 
 @RestController
@@ -39,25 +17,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UserController {
 	
 	private final UserService userService;
+	private final EmailService emailService;
 	
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, EmailService emailService) {
 		this.userService = userService;
+		this.emailService = emailService;
 	}
 	
 	// 로그인
-	@PostMapping
+	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
 		LoginResponse loginResponse = userService.login(loginRequest);
 		
 		session.setAttribute("loginUser", loginResponse);
 		
-		// 갑자기 생긴 의문
-		// 인스타 st라면 이메일 로그인을 해야하나? 아이디 변경이 가능하니까? 시스템적으로?
-		
+		// 세션저장? 해시 저장? jwt저장?
+
 		return ResponseEntity.ok().build();
 	}
 	
+	// 로그아웃
 	@GetMapping("/logout")
 	public ResponseEntity<?> logout(HttpSession session) {
 		session.invalidate();
@@ -68,27 +48,37 @@ public class UserController {
 	// 회원가입
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
-		
-		// 유효성 검사하기
-		// 1. 비어있는 값이 있는 지
-		// 2. 비밀번호와 비밀번호 체크가 같은지
-		// 3. 존재하지 않는 아이디인지
-		
-		
 		userService.signup(signupRequest);
-		
-		// 회원가입 만들기 실패 시 오류 생성
-		
+
 		return ResponseEntity.ok().build();
 	}
 	
 	// 아이디 중복 체크
-	@GetMapping("/check/{id}")
-	public ResponseEntity<?> idCheck(@PathVariable String id) {
-		boolean isDuplicated = userService.idCheck(id);
+	@GetMapping("/exist/id/{id}")
+	public ResponseEntity<?> existId(@PathVariable String id) {
+		boolean isExistId = userService.isExistId(id);
 		
-		return ResponseEntity.ok(isDuplicated);
+		return ResponseEntity.ok(isExistId);
 	}
+	
+	// 이메일 중복 체크
+	@GetMapping("/exist/email/{email}")
+	public ResponseEntity<?> existEmail(@PathVariable String email) {
+		boolean isExistEmail = userService.isExistEmail(email);
+		
+		return ResponseEntity.ok(isExistEmail);
+	}
+	
+	// 이메일 인증
+	@PostMapping("/email")
+	public ResponseEntity<?> emailAuth(String email) {
+		String result = emailService.sendEmailAuth(email);
+		
+		return ResponseEntity.ok(result);
+	}
+
+	
+	
 	
 	// 프로필 등록
 	@PutMapping("/profile")
@@ -111,8 +101,10 @@ public class UserController {
 	public ResponseEntity<?> searchId(@RequestBody UserSearchIdRequest userSearchIdRequest) {
 		String id = userService.searchId(userSearchIdRequest);
 		
-		// 회원 정보가 존재하지 않을 때
-		
+		if (id == null) {
+			return ResponseEntity.ok("존재하지 않는 회원입니다.");
+		}
+
 		return ResponseEntity.ok(id);
 	}
 
@@ -120,28 +112,42 @@ public class UserController {
 	@PostMapping("/search/password")
 	public ResponseEntity<?> searchPassword(@RequestBody UserSearchPwdRequest userSearchPwdRequest) {
 		// 해당 정보의 유저가 존재하는 지 확인
+		boolean isExistUser = userService.searchPassword(userSearchPwdRequest);
+		
+		if (!isExistUser) {
+			// 유저가 존재하지 않으면 존재하지 않는다고 보내기
+			
+			return ResponseEntity.ok("존재하지 않는 회원입니다.");
+		}
 		
 		
 		// 존재한다면 임시 비밀번호 이메일로 전송
 		
-		// 회원 정보가 존재하지 않을 때
-		
-		return ResponseEntity.ok().build();
+
+		return ResponseEntity.ok("임시 비밀번호를 이메일로 전송했습니다.");
 	}
 	
 	// 회원 정보 수정
 	@PutMapping
 	public ResponseEntity<?> modify(@RequestBody UserModifyRequest userModifyRequest, HttpSession session) {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		userModifyRequest.setId(loginUser.getId());
+		userModifyRequest.setCurId(loginUser.getId());
 		
 		// 아이디를 수정하는 경우 이전의 아이디로 정보를 찾아야해서 cur과 new를 구분해야 한다!
 		
+		
 		// 추후 이미지 String을 image 파일로 변경하기!!!!
+		
+		
+		userService.modify(userModifyRequest);
 		
 		// 오류 추가!
 		
-		userService.modify(userModifyRequest);
+		// 다시 세센에 바뀐 아이디 정보로 로그인하기?
+		
+		loginUser.setId(userModifyRequest.getNewId());
+		session.setAttribute("loginUser", loginUser);
+		
 		
 		return ResponseEntity.ok().build();
 	}
@@ -163,16 +169,13 @@ public class UserController {
 	}
 	
 	// 회원 탈퇴
-	@DeleteMapping("/user")
+	@DeleteMapping
 	public ResponseEntity<?> resign(HttpSession session) {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 		
 		userService.resign(loginUser.getId());
 		
-		// 회원 탍퇴에 성공했습니다 같으 문구 출력?
-		// 오류 발생했을 때도!
-		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok("회원 탈퇴에 성공했습니다.");
 	}
 	
 	// 유저 팔로우/언팔로우
@@ -183,9 +186,6 @@ public class UserController {
 		
 		boolean isFollow = userService.follow(new FollowRequest(fromId, toId));
 		
-		// 실패도 하기
-		
-		
 		return ResponseEntity.ok(isFollow);
 	}
 	
@@ -195,8 +195,6 @@ public class UserController {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 
 		StatusUserInfoResponse statusInfo = userService.statusUserInfo(loginUser.getId());
-	
-		// 오류 확인
 		
 		return ResponseEntity.ok(statusInfo);
 	}
@@ -208,8 +206,6 @@ public class UserController {
 		
 		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount(loginUser.getId());
 		
-		// 오류 확인
-		
 		return ResponseEntity.ok(statusMapCountList);
 	}
 	
@@ -218,9 +214,7 @@ public class UserController {
 	public ResponseEntity<?> achievement(HttpSession session) {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 		
-		UserAchievementResponse userAchievement = userService.getUserAchievement("test");
-		
-		// 오류
+		UserAchievementResponse userAchievement = userService.getUserAchievement(loginUser.getId());
 		
 		return ResponseEntity.ok(userAchievement);
 	}
@@ -229,9 +223,7 @@ public class UserController {
 	@GetMapping("/rank")
 	public ResponseEntity<?> rankUserByExp() {
 		List<UserInfoResponse> userList = userService.getRankByExpUserList();
-		
-		// 에러
-		
+
 		return ResponseEntity.ok(userList);
 	}
 	
@@ -240,9 +232,6 @@ public class UserController {
 	public ResponseEntity<?> rankUserBySidoCode(@PathVariable int sidoCode) {
 		List<UserInfoResponse> userList = userService.getRankBySidoCodeUserList(sidoCode);
 		
-		// 오류
-		
-		
 		return ResponseEntity.ok(userList);
 	}
 	
@@ -250,8 +239,6 @@ public class UserController {
 	@GetMapping("/search/{keyword}")
 	public ResponseEntity<?> searchUser(@PathVariable String keyword) {
 		List<UserInfoResponse> userList = userService.getSearchUserByKeyword(keyword);
-		
-		// 오류
 		
 		return ResponseEntity.ok(userList);
 	}

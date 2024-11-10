@@ -2,17 +2,24 @@ package com.retripver.user.dto;
 
 public class UserModifyRequest {
 
-	private String id;
+	private String curId;
+	private String newId;
 	private String name;
 	private String email;
 	private String profileImg;
 	private String profileDesc;
 	
-	public String getId() {
-		return id;
+	public String getCurId() {
+		return curId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setCurId(String curId) {
+		this.curId = curId;
+	}
+	public String getNewId() {
+		return newId;
+	}
+	public void setNewId(String newId) {
+		this.newId = newId;
 	}
 	public String getName() {
 		return name;
@@ -38,5 +45,5 @@ public class UserModifyRequest {
 	public void setProfileDesc(String profileDesc) {
 		this.profileDesc = profileDesc;
 	}
-	
+
 }

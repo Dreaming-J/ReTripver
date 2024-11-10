@@ -1,34 +1,11 @@
 package com.retripver.user.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
-import com.retripver.user.dto.FollowCountResponse;
-import com.retripver.user.dto.FollowRequest;
-import com.retripver.user.dto.LoginRequest;
-import com.retripver.user.dto.LoginResponse;
-import com.retripver.user.dto.PwdModifyRequest;
-import com.retripver.user.dto.QuestRateResponse;
-import com.retripver.user.dto.SignupRequest;
-import com.retripver.user.dto.StatusMapCountResponse;
-import com.retripver.user.dto.StatusUserInfoResponse;
-import com.retripver.user.dto.TierInfoResponse;
-import com.retripver.user.dto.UserAchievementTierResponse;
-import com.retripver.user.dto.UserAchievementVisitResponse;
-import com.retripver.user.dto.UserInfoResponse;
-import com.retripver.user.dto.UserModifyRequest;
-import com.retripver.user.dto.UserProfileRequest;
-import com.retripver.user.dto.UserSearchIdRequest;
-import com.retripver.user.repository.UserSqlProvider;
+import com.retripver.user.dto.*;
 
 @Mapper
 public interface UserMapper {
@@ -37,34 +14,43 @@ public interface UserMapper {
 	LoginResponse selectByIdAndPassword(LoginRequest loginRequest);
 
 	@Insert("INSERT INTO users (id, password, name, email) VALUES (#{id}, #{password}, #{name}, #{email})")
-	void insert(SignupRequest signupRequest);
+	void insert(SignupRequest signupRequest) throws SQLException;
 	
 	@Select("SELECT count(*) FROM users WHERE id = #{id}")
 	int selectCountById(String id);
-
+	
+	@Select("SELECT count(*) FROM users WHERE email = #{email}")
+	int selectCountByEmail(String email);
+	
 	@Update("UPDATE users SET profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
-	void updateProfile(UserProfileRequest userProfileRequest);
+	void updateProfile(UserProfileRequest userProfileRequest) throws SQLException;
 
 	@Select("SELECT id FROM users WHERE name = #{name} AND email = #{email}")
 	String selectByNameAndEmail(UserSearchIdRequest userSearchIdRequest);
+	
+	@Select("SELECT password users WHERE id = #{id} AND name = #{name} AND email = #{email}")
+	String selectByIdAndNameAndEmail(UserSearchPwdRequest userSearchPwdRequest);
 
-	@Update("UPDATE users SET name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
-	void update(UserModifyRequest userModifyRequest);
+	@Update("UPDATE users SET id = #{id}, name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{curId}")
+	void update(UserModifyRequest userModifyRequest) throws SQLException;
 
 	@Update("UPDATE users SET password = #{newPassword} WHERE id = #{id}")
-	void updatePassword(PwdModifyRequest pwdModifyRequset);
+	void updatePassword(PwdModifyRequest pwdModifyRequset) throws SQLException;
+	
+	@Select("SELECT passowrd FROM users WHERE id = #{id}")
+	String selectPasswordById(String id);
 
 	@Delete("DELETE FROM users WHERE id = #{id}")
-	void deleteUser(String id);
+	void deleteUser(String id) throws SQLException;
 
 	@Select("SELECT count(*) FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
 	int selectCountByFromIdAndToId(FollowRequest followRequest);
 
 	@Delete("DELETE FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
-	void deleteFollow(FollowRequest followRequest);
+	void deleteFollow(FollowRequest followRequest) throws SQLException;
 
 	@Insert("INSERT INTO follow VALUES (#{fromId}, #{toId})")
-	void insertFollow(FollowRequest followRequest);
+	void insertFollow(FollowRequest followRequest) throws SQLException;
 	
 	@Select("""
 			SELECT ct.id, ct.name, ct.img, nt.base_exp
@@ -230,7 +216,18 @@ public interface UserMapper {
 	})
 	List<UserInfoResponse> selectUserOrderByVisitCount(int sidoCode);
 
-	@Select("SELECT * from users WHERE id LIKE CONCAT('%', #{keyword}, '%')")
+//	@Select("SELECT * from users WHERE id LIKE CONCAT('%', #{keyword}, '%')")
+	
+	@Select("""
+			SELECT * 
+			FROM users
+			WHERE id LIKE CONCAT('%', #{keyword}, '%') 
+			ORDER BY
+				CASE
+					WHEN id LIKE CONCAT(#{keyword}, '%') THEN 1
+					WHEN id LIKE CONCAT('%', #{keyword}, '%') THEN 2
+					ELSE 3 END, id asc;
+			""")
 	@Results({
 		@Result(property = "profileImg", column = "profile_img"),
 		@Result(property = "profileDesc", column = "profile_desc"),
