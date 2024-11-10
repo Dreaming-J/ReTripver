@@ -1,6 +1,8 @@
 package com.retripver.user.service;
 
+import com.retripver.user.dto.PwdModifyRequest;
 import com.retripver.user.dto.SignupRequest;
+import com.retripver.user.dto.UserModifyRequest;
 
 public class UserSignupValidator {
 
@@ -9,6 +11,16 @@ public class UserSignupValidator {
 			   isValidPassword(signupReqeust.getPassword(), signupReqeust.getPsswordCheck()) &&
 			   isValidName(signupReqeust.getName()) &&
 			   isValidEmail(signupReqeust.getEmail());
+	}
+	
+	public static boolean isValid(UserModifyRequest userModifyRequest) {
+		return isValidId(userModifyRequest.getNewId()) &&
+				   isValidName(userModifyRequest.getName()) &&
+				   isValidEmail(userModifyRequest.getEmail());
+	}
+	
+	public static boolean isValidPassword(PwdModifyRequest pwdModifyRequset) {
+		return isValidPassword(pwdModifyRequset.getNewPassword(), pwdModifyRequset.getNewPasswordCheck());
 	}
 	
 	private static boolean isValidId(String id) {

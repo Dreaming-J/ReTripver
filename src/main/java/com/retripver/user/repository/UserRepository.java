@@ -36,6 +36,8 @@ public interface UserRepository {
 	void modify(UserModifyRequest userModifyRequest);
 
 	void modifyPassword(PwdModifyRequest pwdModifyRequset);
+	
+	String selectPasswordById(String id);
 
 	void resign(String id);
 

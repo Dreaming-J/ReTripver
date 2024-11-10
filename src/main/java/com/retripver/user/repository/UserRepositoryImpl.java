@@ -6,25 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.stringtemplate.v4.compiler.CodeGenerator.conditional_return;
 
-import com.retripver.user.dto.FollowRequest;
-import com.retripver.user.dto.LoginRequest;
-import com.retripver.user.dto.LoginResponse;
-import com.retripver.user.dto.PwdModifyRequest;
-import com.retripver.user.dto.SignupRequest;
-import com.retripver.user.dto.StatusMapCountResponse;
-import com.retripver.user.dto.StatusUserInfoResponse;
-import com.retripver.user.dto.TierInfoResponse;
-import com.retripver.user.dto.UserAchievementResponse;
-import com.retripver.user.dto.UserAchievementTierResponse;
-import com.retripver.user.dto.UserAchievementVisitResponse;
-import com.retripver.user.dto.UserInfoResponse;
-import com.retripver.user.dto.UserModifyRequest;
-import com.retripver.user.dto.UserProfileRequest;
-import com.retripver.user.dto.UserSearchIdRequest;
-import com.retripver.user.dto.UserSearchPwdRequest;
-import com.retripver.user.exception.UserSQLException;
+import com.retripver.user.dto.*;
+import com.retripver.user.exception.*;
 import com.retripver.user.mapper.UserMapper;
 
 @Repository
@@ -43,7 +27,6 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	@Transactional
 	public void signup(SignupRequest signupRequest) {
 		try {
 			userMapper.insert(signupRequest);
@@ -79,13 +62,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public String searchId(UserSearchIdRequest userSearchIdRequest) {
-		String id = userMapper.selectByNameAndEmail(userSearchIdRequest);
-		
-		if (id == null) {
-			return "존재하지 않는 회원입니다.";
-		}
-		
-		return id;
+		return userMapper.selectByNameAndEmail(userSearchIdRequest);
 	}
 	
 	@Override
@@ -115,6 +92,11 @@ public class UserRepositoryImpl implements UserRepository {
 		} catch (SQLException e) {
 			throw new UserSQLException();
 		}
+	}
+	
+	@Override
+	public String selectPasswordById(String id) {
+		return userMapper.selectPasswordById(id);
 	}
 
 	@Override
@@ -228,4 +210,5 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
 	}
+
 }
