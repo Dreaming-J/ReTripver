@@ -24,6 +24,7 @@ import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
 import com.retripver.user.dto.UserSearchPwdRequest;
 import com.retripver.user.exception.NotFoundUserException;
+import com.retripver.user.service.EmailService;
 import com.retripver.user.service.UserService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,10 +40,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UserController {
 	
 	private final UserService userService;
+	private final EmailService emailService;
 	
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, EmailService emailService) {
 		this.userService = userService;
+		this.emailService = emailService;
 	}
 	
 	// 로그인
@@ -69,8 +72,6 @@ public class UserController {
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
 		userService.signup(signupRequest);
-		
-		// 이메일 인증
 
 		return ResponseEntity.ok().build();
 	}
@@ -89,6 +90,14 @@ public class UserController {
 		boolean isExistEmail = userService.isExistEmail(email);
 		
 		return ResponseEntity.ok(isExistEmail);
+	}
+	
+	// 이메일 인증
+	@PostMapping("/email")
+	public ResponseEntity<?> emailAuth(String email) {
+		String result = emailService.sendEmailAuth(email);
+		
+		return ResponseEntity.ok(result);
 	}
 
 	
