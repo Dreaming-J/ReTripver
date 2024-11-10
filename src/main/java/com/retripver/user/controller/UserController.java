@@ -68,27 +68,27 @@ public class UserController {
 	// 회원가입
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
-		
-		// 유효성 검사하기
-		// 1. 비어있는 값이 있는 지
-		// 2. 비밀번호와 비밀번호 체크가 같은지
-		// 3. 존재하지 않는 아이디인지
-		// 4. 등록된 이메일인지
-		
-		
 		userService.signup(signupRequest);
 		
-		// 회원가입 만들기 실패 시 오류 생성
-		
+		// 이메일 인증
+
 		return ResponseEntity.ok().build();
 	}
 	
 	// 아이디 중복 체크
-	@GetMapping("/check/{id}")
-	public ResponseEntity<?> idCheck(@PathVariable String id) {
-		boolean isDuplicated = userService.isExistId(id);
+	@GetMapping("/exist/id/{id}")
+	public ResponseEntity<?> existId(@PathVariable String id) {
+		boolean isExistId = userService.isExistId(id);
 		
-		return ResponseEntity.ok(isDuplicated);
+		return ResponseEntity.ok(isExistId);
+	}
+	
+	// 이메일 중복 체크
+	@GetMapping("/exist/email/{email}")
+	public ResponseEntity<?> existEmail(@PathVariable String email) {
+		boolean isExistEmail = userService.isExistEmail(email);
+		
+		return ResponseEntity.ok(isExistEmail);
 	}
 	
 	// 프로필 등록
