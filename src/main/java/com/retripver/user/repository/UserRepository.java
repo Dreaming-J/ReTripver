@@ -14,12 +14,13 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.exception.UserSQLException;
 
 public interface UserRepository {
 
 	LoginResponse login(LoginRequest loginRequest);
 
-	void signup(SignupRequest signupRequest);
+	void signup(SignupRequest signupRequest) throws UserSQLException;
 	
 	boolean isExistId(String id);
 	

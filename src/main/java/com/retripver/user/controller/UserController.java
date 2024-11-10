@@ -119,6 +119,8 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 	
+	
+	
 	// 아이디 찾기
 	@PostMapping("/search/id")
 	public ResponseEntity<?> searchId(@RequestBody UserSearchIdRequest userSearchIdRequest) {

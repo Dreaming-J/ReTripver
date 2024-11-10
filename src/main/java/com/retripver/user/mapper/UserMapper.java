@@ -1,5 +1,6 @@
 package com.retripver.user.mapper;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -36,7 +37,7 @@ public interface UserMapper {
 	LoginResponse selectByIdAndPassword(LoginRequest loginRequest);
 
 	@Insert("INSERT INTO users (id, password, name, email) VALUES (#{id}, #{password}, #{name}, #{email})")
-	void insert(SignupRequest signupRequest);
+	void insert(SignupRequest signupRequest) throws SQLException;
 	
 	@Select("SELECT count(*) FROM users WHERE id = #{id}")
 	int selectCountById(String id);
@@ -45,28 +46,28 @@ public interface UserMapper {
 	int selectCountByEmail(String email);
 	
 	@Update("UPDATE users SET profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
-	void updateProfile(UserProfileRequest userProfileRequest);
+	void updateProfile(UserProfileRequest userProfileRequest) throws SQLException;
 
 	@Select("SELECT id FROM users WHERE name = #{name} AND email = #{email}")
 	String selectByNameAndEmail(UserSearchIdRequest userSearchIdRequest);
 
 	@Update("UPDATE users SET name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
-	void update(UserModifyRequest userModifyRequest);
+	void update(UserModifyRequest userModifyRequest) throws SQLException;
 
 	@Update("UPDATE users SET password = #{newPassword} WHERE id = #{id}")
-	void updatePassword(PwdModifyRequest pwdModifyRequset);
+	void updatePassword(PwdModifyRequest pwdModifyRequset) throws SQLException;
 
 	@Delete("DELETE FROM users WHERE id = #{id}")
-	void deleteUser(String id);
+	void deleteUser(String id) throws SQLException;
 
 	@Select("SELECT count(*) FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
 	int selectCountByFromIdAndToId(FollowRequest followRequest);
 
 	@Delete("DELETE FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
-	void deleteFollow(FollowRequest followRequest);
+	void deleteFollow(FollowRequest followRequest) throws SQLException;
 
 	@Insert("INSERT INTO follow VALUES (#{fromId}, #{toId})")
-	void insertFollow(FollowRequest followRequest);
+	void insertFollow(FollowRequest followRequest) throws SQLException;
 	
 	@Select("""
 			SELECT ct.id, ct.name, ct.img, nt.base_exp

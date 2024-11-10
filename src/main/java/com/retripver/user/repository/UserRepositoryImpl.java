@@ -1,5 +1,6 @@
 package com.retripver.user.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
+import com.retripver.user.exception.UserSQLException;
 import com.retripver.user.mapper.UserMapper;
 
 @Repository
@@ -42,7 +44,11 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	@Transactional
 	public void signup(SignupRequest signupRequest) {
-		userMapper.insert(signupRequest);
+		try {
+			userMapper.insert(signupRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 	
 	@Override
@@ -63,7 +69,11 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void modifyProfile(UserProfileRequest userProfileRequest) {
-		userMapper.updateProfile(userProfileRequest);
+		try {
+			userMapper.updateProfile(userProfileRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
@@ -75,17 +85,29 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void modify(UserModifyRequest userModifyRequest) {
-		userMapper.update(userModifyRequest);
+		try {
+			userMapper.update(userModifyRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
 	public void modifyPassword(PwdModifyRequest pwdModifyRequset) {
-		userMapper.updatePassword(pwdModifyRequset);
+		try {
+			userMapper.updatePassword(pwdModifyRequset);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
 	public void resign(String id) {
-		userMapper.deleteUser(id);
+		try {
+			userMapper.deleteUser(id);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
@@ -98,12 +120,20 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@Override
 	public void unfollow(FollowRequest followRequest) {
-		userMapper.deleteFollow(followRequest);
+		try {
+			userMapper.deleteFollow(followRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 
 	@Override
 	public void follow(FollowRequest followRequest) {
-		userMapper.insertFollow(followRequest);
+		try {
+			userMapper.insertFollow(followRequest);
+		} catch (SQLException e) {
+			throw new UserSQLException();
+		}
 	}
 	
 	@Override

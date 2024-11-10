@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		if (isExistId(signupRequest.getId()) || isExistEmail(signupRequest.getEmail())) {
+
 			throw new DuplicateSignupException();
 		}
 	
