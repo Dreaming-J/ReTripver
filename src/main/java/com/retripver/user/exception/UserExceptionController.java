@@ -25,4 +25,11 @@ public class UserExceptionController {
 		
 		return ResponseEntity.internalServerError().body(userErrorResponse);
 	}
+	
+	@ExceptionHandler(DuplicateSignupException.class)
+	public ResponseEntity<?> duplicateSignupHandler() {
+		UserErrorResponse userErrorResponse = UserErrorResponse.of(UserErrorCode.DUPLICATE_SIGNUP_USER);
+		
+		return ResponseEntity.internalServerError().body(userErrorResponse);
+	}
 }

@@ -90,6 +90,9 @@ public class UserController {
 		
 		return ResponseEntity.ok(isExistEmail);
 	}
+
+	
+	
 	
 	// 프로필 등록
 	@PutMapping("/profile")
