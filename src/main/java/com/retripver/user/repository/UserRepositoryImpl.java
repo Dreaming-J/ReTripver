@@ -80,6 +80,10 @@ public class UserRepositoryImpl implements UserRepository {
 	public String searchId(UserSearchIdRequest userSearchIdRequest) {
 		String id = userMapper.selectByNameAndEmail(userSearchIdRequest);
 		
+		if (id == null) {
+			return "존재하지 않는 회원입니다.";
+		}
+		
 		return id;
 	}
 

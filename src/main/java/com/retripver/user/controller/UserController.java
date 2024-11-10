@@ -119,15 +119,11 @@ public class UserController {
 		return ResponseEntity.ok().build();
 	}
 	
-	
-	
 	// 아이디 찾기
 	@PostMapping("/search/id")
 	public ResponseEntity<?> searchId(@RequestBody UserSearchIdRequest userSearchIdRequest) {
 		String id = userService.searchId(userSearchIdRequest);
-		
-		// 회원 정보가 존재하지 않을 때
-		
+
 		return ResponseEntity.ok(id);
 	}
 
