@@ -72,6 +72,7 @@ public class UserController {
 	// 이메일 인증
 	@PostMapping("/email")
 	public ResponseEntity<?> emailAuth(String email) {
+		System.out.println("email " + email);
 		String result = emailService.sendEmailAuth(email);
 		
 		return ResponseEntity.ok(result);

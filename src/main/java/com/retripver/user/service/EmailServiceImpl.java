@@ -28,6 +28,7 @@ public class EmailServiceImpl implements EmailService {
 	
 	public String sendEmailAuth(String email) {
 		try {
+			System.out.println("email 전송할게!");
 			sendEmail(email, EMAIL_AUTH_SUBJECT, EMAIL_AUTH_PASSWORD);
 			
 			return "이메일로 인증 코드를 전송했습니다.";
@@ -38,29 +39,31 @@ public class EmailServiceImpl implements EmailService {
 	
 	public void sendEmail(String to, String subject, String text) throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+//		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 		
-		helper.setTo(to); // 인증 메일을 보낼 사용자 메일 주소
-		helper.setSubject(subject); // 이메일 제목
-		helper.setText(text, true); // 이메일 내용
+//		message.setFrom("ReTripver@gmail.com");
+		message.setFrom("ReTripver@gmail.com"); // 인증 메일을 보낼 사용자 메일 주소
+		message.setRecipients(MimeMessage.RecipientType.TO, to);
+		message.setSubject(subject); // 이메일 제목
+		message.setText(text, "UTF-8", "html"); // 이메일 내용
 		
 		mailSender.send(message);
 	}
 	
-	 private JavaMailSender createMailSender() {
-	        JavaMailSenderImpl sender = new JavaMailSenderImpl();
-	        sender.setHost("smtp.gmail.com");
-	        sender.setPort(587);  // 587 포트는 STARTTLS를 사용하기 위한 포트입니다.
-	        sender.setUsername("your-email@gmail.com");  // 본인의 이메일로 설정
-	        sender.setPassword("your-email-password");  // 본인의 이메일 비밀번호 설정
-
-	        Properties properties = new Properties();
-	        properties.put("mail.smtp.auth", "true");
-	        properties.put("mail.smtp.starttls.enable", "true"); // STARTTLS 활성화
-	        properties.put("mail.smtp.starttls.required", "true"); // STARTTLS 사용 강제
-
-	        sender.setJavaMailProperties(properties);
-	        return sender;
-	    }
+//	 private JavaMailSender createMailSender() {
+//	        JavaMailSenderImpl sender = new JavaMailSenderImpl();
+//	        sender.setHost("smtp.gmail.com");
+//	        sender.setPort(587);  // 587 포트는 STARTTLS를 사용하기 위한 포트입니다.
+//	        sender.setUsername("your-email@gmail.com");  // 본인의 이메일로 설정
+//	        sender.setPassword("your-email-password");  // 본인의 이메일 비밀번호 설정
+//
+//	        Properties properties = new Properties();
+//	        properties.put("mail.smtp.auth", "true");
+//	        properties.put("mail.smtp.starttls.enable", "true"); // STARTTLS 활성화
+//	        properties.put("mail.smtp.starttls.required", "true"); // STARTTLS 사용 강제
+//
+//	        sender.setJavaMailProperties(properties);
+//	        return sender;
+//	   }
 
 }
