@@ -2,18 +2,11 @@ package com.retripver.user.dto;
 
 import java.sql.Timestamp;
 
-public class EmailCodeRequest {
+public class EmailAuthResponse {
 
 	private String email;
 	private String code;
 	private Timestamp completeTime;
-	
-	public EmailCodeRequest() { }
-	public EmailCodeRequest(String email, String code, Timestamp completeTime) {
-		this.email = email;
-		this.code = code;
-		this.completeTime = completeTime;
-	}
 	
 	public String getEmail() {
 		return email;
@@ -27,11 +20,11 @@ public class EmailCodeRequest {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public Timestamp getCompleteTime() {
+	public Timestamp getSendTime() {
 		return completeTime;
 	}
-	public void setCompleteTime(Timestamp completeTime) {
-		this.completeTime = completeTime;
+	public void setSendTime(Timestamp sendTime) {
+		this.completeTime = sendTime;
 	}
 	
 }

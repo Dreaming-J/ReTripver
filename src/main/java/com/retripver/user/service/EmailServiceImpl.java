@@ -1,6 +1,7 @@
 package com.retripver.user.service;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.Properties;
 import java.util.Random;
@@ -12,8 +13,11 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.retripver.user.dto.EmailAuthResponse;
 import com.retripver.user.dto.EmailAuthVerifyRequest;
+import com.retripver.user.dto.EmailAuthVerifyResponse;
 import com.retripver.user.dto.EmailCodeRequest;
+import com.retripver.user.mapper.EmailMapper;
 import com.retripver.user.repository.EmailRepository;
 
 import jakarta.mail.MessagingException;
@@ -23,10 +27,10 @@ import jakarta.mail.internet.MimeMessage;
 public class EmailServiceImpl implements EmailService {
 	
 	private final String EMAIL_AUTH_SUBJECT = "[ReTripver] 이메일 인증";
-	private final String EMAIL_AUTH_PASSWORD = "\nReTripver 회원가입 이메일 인증\n\n"
-								   	   + "회원가입을 위해 등록한 이메일 주소가 올바른지 확인하기 위한 인증번호입니다.\n"
-									   + "아래의 인증번호를 통해 이메일 인증을 완료해 주세요.\n\n"
-								   	   + "인증 코드 \n";
+	private final String EMAIL_AUTH_PASSWORD = "<h3>ReTripver 회원가입 이메일 인증</h3>"
+								   	   + "회원가입을 위해 등록한 이메일 주소가 올바른지 확인하기 위한 인증번호입니다.<br>"
+									   + "아래의 인증번호를 통해 이메일 인증을 완료해 주세요.<br>"
+								   	   + "인증 코드<br>";
 	
 	private final EmailRepository emailRepository;
 	private final JavaMailSender mailSender;
@@ -41,10 +45,11 @@ public class EmailServiceImpl implements EmailService {
 	public String sendEmailAuth(String email) {
 		try {
 			String code = generateAuthCode();
+			Timestamp completeTime = getAuthCompleteTime();
 			
-			emailRepository.sendEmailAuth(new EmailCodeRequest(email, code));
+			emailRepository.sendEmailAuth(new EmailCodeRequest(email, code, completeTime));
 			
-//			sendEmail(email, EMAIL_AUTH_SUBJECT, EMAIL_AUTH_PASSWORD + code);
+			sendEmail(email, EMAIL_AUTH_SUBJECT, EMAIL_AUTH_PASSWORD + code);
 			
 			return "이메일로 인증 코드를 전송했습니다.";
 		} catch (Exception e) {
@@ -53,22 +58,21 @@ public class EmailServiceImpl implements EmailService {
 	}
 	
 	@Override
-	public boolean verifyEmailAuth(EmailAuthVerifyRequest emailAuthVerifyRequest) {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+	public EmailAuthVerifyResponse verifyEmailAuth(EmailAuthVerifyRequest emailAuthVerifyRequest) {
+		EmailAuthResponse emailAuthResponse = emailRepository.verifyEmailAuth(emailAuthVerifyRequest.getEmail());
 		
+		if (isCompleteAuthTime(emailAuthResponse.getSendTime())) {// 시간이 만료되었다면
+			return new EmailAuthVerifyResponse(false, "인증 시간이 지났습니다. 이메일 인증을 다시 시도해주세요.");
+		}
 		
-		Calendar cal = Calendar.getInstance();
-		cal.setTimeInMillis(timestamp.getTime());
-		cal.add(Calendar.SECOND, 60 * 3);
+		String generatedCode = emailAuthResponse.getCode();
+		String requestCode = emailAuthVerifyRequest.getCode();
 		
-		Timestamp later = new Timestamp(cal.getTime().getTime());
-		
-		
-		System.out.println(timestamp);
-		System.out.println(later);
-		
-		
-		return false;
+		if (!generatedCode.equals(requestCode)) {
+			return new EmailAuthVerifyResponse(false, "인증 코드가 다릅니다. 다시 입력해주세요.");
+		}
+
+		return new EmailAuthVerifyResponse(true, "인증이 확인되었습니다.");
 	}
 	
 	private void sendEmail(String to, String subject, String text) throws MessagingException {
@@ -88,6 +92,31 @@ public class EmailServiceImpl implements EmailService {
 		int code = 100000 + random.nextInt(900000);
 		
 		return String.valueOf(code);
+	}
+	
+	private Timestamp getAuthCompleteTime() {
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+	
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(currentTime.getTime());
+		cal.add(Calendar.SECOND, 60 * 3);
+		
+		Timestamp completeTime = new Timestamp(cal.getTime().getTime());
+		
+		return completeTime;
+	}
+	
+	private boolean isCompleteAuthTime(Timestamp completeTime) {
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+		
+		Instant currentTimeInstat = currentTime.toInstant();
+		Instant complateTimeInstat = completeTime.toInstant();
+		
+		if (currentTimeInstat.isAfter(complateTimeInstat)) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

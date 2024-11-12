@@ -3,6 +3,9 @@ package com.retripver.user.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.retripver.user.dto.EmailAuthResponse;
+import com.retripver.user.dto.EmailAuthVerifyRequest;
+import com.retripver.user.dto.EmailAuthVerifyResponse;
 import com.retripver.user.dto.EmailCodeRequest;
 import com.retripver.user.mapper.EmailMapper;
 
@@ -25,6 +28,11 @@ public class EmailRepositoryImpl implements EmailRepository {
 		}
 		
 		emailMapper.insert(emailCodeRequest);
+	}
+
+	@Override
+	public EmailAuthResponse verifyEmailAuth(String email) {
+		return emailMapper.selectById(email);		
 	}
 
 }

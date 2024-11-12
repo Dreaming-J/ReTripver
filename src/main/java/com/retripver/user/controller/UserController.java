@@ -80,7 +80,7 @@ public class UserController {
 	// 이메일 인증 확인 
 	@PostMapping("/email/verify")
 	public ResponseEntity<?> emailAuthVerify(EmailAuthVerifyRequest emailAuthVerifyReqeust) {
-		boolean result = emailService.verifyEmailAuth(emailAuthVerifyReqeust);
+		EmailAuthVerifyResponse result = emailService.verifyEmailAuth(emailAuthVerifyReqeust);
 		
 		return ResponseEntity.ok(result);
 	}

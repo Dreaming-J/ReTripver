@@ -230,7 +230,7 @@ CREATE TABLE `acquire_tier` (
 CREATE TABLE `email_auth` (
     `email`			VARCHAR(16) NOT NULL,
     `code`			VARCHAR(16) NOT NULL,
-    `send_time`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `complete_time`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 
