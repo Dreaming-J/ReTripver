@@ -35,7 +35,7 @@ public class UserController {
 		// 세션저장? 해시 저장? jwt저장?
 
 		return ResponseEntity.ok().build();
-	}
+	} 
 	
 	// 로그아웃
 	@GetMapping("/logout")
@@ -69,15 +69,21 @@ public class UserController {
 		return ResponseEntity.ok(isExistEmail);
 	}
 	
-	// 이메일 인증
+	// 이메일 인증 전송
 	@PostMapping("/email")
 	public ResponseEntity<?> emailAuth(String email) {
-		System.out.println("email " + email);
 		String result = emailService.sendEmailAuth(email);
 		
 		return ResponseEntity.ok(result);
 	}
-
+	
+	// 이메일 인증 확인 
+	@PostMapping("/email/verify")
+	public ResponseEntity<?> emailAuthVerify(EmailAuthVerifyRequest emailAuthVerifyReqeust) {
+		boolean result = emailService.verifyEmailAuth(emailAuthVerifyReqeust);
+		
+		return ResponseEntity.ok(result);
+	}
 	
 	
 	

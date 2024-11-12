@@ -1,12 +1,16 @@
 package com.retripver.user.service;
 
 import java.util.Properties;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import com.retripver.user.dto.EmailAuthVerifyRequest;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -17,7 +21,8 @@ public class EmailServiceImpl implements EmailService {
 	private final String EMAIL_AUTH_SUBJECT = "[ReTripver] 이메일 인증";
 	private final String EMAIL_AUTH_PASSWORD = "\nReTripver 회원가입 이메일 인증\n\n"
 								   	   + "회원가입을 위해 등록한 이메일 주소가 올바른지 확인하기 위한 인증번호입니다.\n"
-									   + "아래의 인증번호를 통해 이메일 인증을 완료해 주세요.\n\n";
+									   + "아래의 인증번호를 통해 이메일 인증을 완료해 주세요.\n\n"
+								   	   + "인증 코드 \n";
 	
 	private final JavaMailSender mailSender;
 	
@@ -25,11 +30,16 @@ public class EmailServiceImpl implements EmailService {
 	public EmailServiceImpl(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
-	
+
+	@Override
 	public String sendEmailAuth(String email) {
 		try {
-			System.out.println("email 전송할게!");
-			sendEmail(email, EMAIL_AUTH_SUBJECT, EMAIL_AUTH_PASSWORD);
+			String code = generateAuthCode();
+			
+			String redisKey = "email:auth:" + email;
+
+			// 전송
+			sendEmail(email, EMAIL_AUTH_SUBJECT, EMAIL_AUTH_PASSWORD + code);
 			
 			return "이메일로 인증 코드를 전송했습니다.";
 		} catch (MessagingException e) {
@@ -37,11 +47,10 @@ public class EmailServiceImpl implements EmailService {
 		}
 	}
 	
+	@Override
 	public void sendEmail(String to, String subject, String text) throws MessagingException {
 		MimeMessage message = mailSender.createMimeMessage();
-//		MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-		
-//		message.setFrom("ReTripver@gmail.com");
+
 		message.setFrom("ReTripver@gmail.com"); // 인증 메일을 보낼 사용자 메일 주소
 		message.setRecipients(MimeMessage.RecipientType.TO, to);
 		message.setSubject(subject); // 이메일 제목
@@ -50,20 +59,18 @@ public class EmailServiceImpl implements EmailService {
 		mailSender.send(message);
 	}
 	
-//	 private JavaMailSender createMailSender() {
-//	        JavaMailSenderImpl sender = new JavaMailSenderImpl();
-//	        sender.setHost("smtp.gmail.com");
-//	        sender.setPort(587);  // 587 포트는 STARTTLS를 사용하기 위한 포트입니다.
-//	        sender.setUsername("your-email@gmail.com");  // 본인의 이메일로 설정
-//	        sender.setPassword("your-email-password");  // 본인의 이메일 비밀번호 설정
-//
-//	        Properties properties = new Properties();
-//	        properties.put("mail.smtp.auth", "true");
-//	        properties.put("mail.smtp.starttls.enable", "true"); // STARTTLS 활성화
-//	        properties.put("mail.smtp.starttls.required", "true"); // STARTTLS 사용 강제
-//
-//	        sender.setJavaMailProperties(properties);
-//	        return sender;
-//	   }
+	private String generateAuthCode() {
+		Random random = new Random();
+		
+		int code = 100000 + random.nextInt(900000);
+		
+		return String.valueOf(code);
+	}
+
+	@Override
+	public boolean verifyEmailAuth(EmailAuthVerifyRequest emailAuthVerifyRequest) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
