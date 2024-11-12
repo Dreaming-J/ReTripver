@@ -7,6 +7,5 @@ import jakarta.mail.MessagingException;
 public interface EmailService {
 
 	String sendEmailAuth(String email);
-	void sendEmail(String to, String subject, String text) throws MessagingException;
 	boolean verifyEmailAuth(EmailAuthVerifyRequest emailAuthVerifyRequest);
 }

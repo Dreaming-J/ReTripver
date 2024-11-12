@@ -222,3 +222,15 @@ CREATE TABLE `acquire_tier` (
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
     FOREIGN KEY (`achievement_id`) REFERENCES `achievement_tier`(`id`)
 );
+
+-- -----------------------------------
+-- 이메일 인증 관련 TABLE
+-- -----------------------------------
+
+CREATE TABLE `email_auth` (
+    `email`			VARCHAR(16) NOT NULL,
+    `code`			VARCHAR(16) NOT NULL,
+    `send_time`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
