@@ -61,10 +61,9 @@ public class PlanController {
 	
 	@GetMapping("/like/{planId}")
 	public ResponseEntity<?> likePlan(@PathVariable("planId") int planId, HttpSession httpSession) {
-//		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
-//		
-//		boolean isLike = planService.likePlan(planId, loginResponse.getId());
-		boolean isLike = planService.likePlan(planId, "user");
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		boolean isLike = planService.likePlan(planId, loginResponse.getId());
 		
 		return ResponseEntity.ok(isLike);
 	}

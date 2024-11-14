@@ -98,4 +98,14 @@ public class PlanControllerTest {
 		mockMvc.perform(get("/plan/attraction/-1"))
 		.andExpect(status().isInternalServerError()).andDo(print());
 	}
+	
+	@Test
+	@DisplayName("여행 계획 좋아요/취소")
+	@Transactional
+	void likePlan() throws Exception {
+		mockMvc.perform(get("/plan/like/8").session(session))
+				.andExpect(status().isOk()).andDo(print());
+		mockMvc.perform(get("/plan/like/8").session(session))
+				.andExpect(status().isOk()).andDo(print());
+	}
 }
