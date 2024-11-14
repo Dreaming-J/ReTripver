@@ -34,6 +34,13 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	public List<PlanResponse> myPlanList(String userId) {
+		List<PlanResponse> planList = planRepository.myPlanList(userId);
+		
+		return planList;
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public PlanResponse getPlan(int planId) {
 		PlanResponse planResponse = planRepository.getPlan(planId);

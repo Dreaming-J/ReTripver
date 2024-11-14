@@ -26,6 +26,11 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
+	public List<PlanResponse> myPlanList(String userId) {
+		return planMapper.selectMyPlansByUserId(userId);
+	}
+
+	@Override
 	public PlanResponse getPlan(int planId) {
 		return planMapper.selectPlanByPlanId(planId);
 	}

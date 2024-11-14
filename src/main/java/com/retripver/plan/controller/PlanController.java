@@ -34,6 +34,15 @@ public class PlanController {
 		return ResponseEntity.ok(planList);
 	}
 	
+	@GetMapping("/mylist")
+	public ResponseEntity<?> myList(HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		List<PlanResponse> planList = planService.myPlanList(loginResponse.getId());
+		
+		return ResponseEntity.ok(planList);
+	}
+	
 	@GetMapping("/copy/{planId}")
 	public ResponseEntity<?> copyPlan(@PathVariable("planId") int planId) {
 		PlanResponse planResponse = planService.getPlan(planId);

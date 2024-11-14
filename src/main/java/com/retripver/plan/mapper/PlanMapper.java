@@ -53,6 +53,18 @@ public interface PlanMapper {
 	    })
 	List<PlanResponse> selectPlansByUserId(String userId);
 
+	@Select("""
+			SELECT *
+			FROM plans
+			WHERE user_id = #{userId}
+			""")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+
+	List<PlanResponse> selectMyPlansByUserId(String userId);
+
     @Select("""
     		SELECT *
     		FROM plans
