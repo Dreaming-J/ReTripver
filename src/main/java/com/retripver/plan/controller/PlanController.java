@@ -59,6 +59,16 @@ public class PlanController {
 		return ResponseEntity.ok(likePlanList);
 	}
 	
+	@GetMapping("/like/{planId}")
+	public ResponseEntity<?> likePlan(@PathVariable("planId") int planId, HttpSession httpSession) {
+//		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+//		
+//		boolean isLike = planService.likePlan(planId, loginResponse.getId());
+		boolean isLike = planService.likePlan(planId, "user");
+		
+		return ResponseEntity.ok(isLike);
+	}
+	
 	@GetMapping("/rank/{page}")
 	public ResponseEntity<?> rank(@PathVariable("page") int page) {
 		List<PlanResponse> rankPlanList = planService.rankPlanList(page);

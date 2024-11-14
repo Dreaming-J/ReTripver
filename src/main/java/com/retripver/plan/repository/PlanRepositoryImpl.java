@@ -41,6 +41,11 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
+	public int existPlanLike(Map<String, Object> params) {
+		return planMapper.selectLikePlanByUserIdAndPlanId(params);
+	}
+
+	@Override
 	public List<PlanResponse> rankPlanList(Map<String, Object> params) {
 		return planMapper.selectRankPlans(params);
 	}
@@ -48,5 +53,15 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Override
 	public AttractionResponse getAttraction(int attractionNo) {
 		return planMapper.selectAttractionByAttractionNo(attractionNo);
+	}
+
+	@Override
+	public int addPlanLike(Map<String, Object> params) {
+		return planMapper.insertPlanLike(params);
+	}
+
+	@Override
+	public int canclePlanLike(Map<String, Object> params) {
+		return planMapper.deletePlanLike(params);
 	}
 }

@@ -15,6 +15,8 @@ public interface PlanService {
 
 	List<PlanResponse> likePlanList(String userId);
 
+	boolean likePlan(int planId, String userId);
+
 	List<PlanResponse> rankPlanList(int page);
 
 	AttractionResponse getAttraction(int attractionNo);

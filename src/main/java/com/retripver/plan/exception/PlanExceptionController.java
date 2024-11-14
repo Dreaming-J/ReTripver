@@ -25,4 +25,18 @@ public class PlanExceptionController {
 		
 		return ResponseEntity.internalServerError().body(planErrorResponse);
 	}
+
+	@ExceptionHandler(FailAddPlanLikeException.class)
+	public ResponseEntity<?> failAddPlanLikeHandler() {
+		PlanErrorResponse planErrorResponse = PlanErrorResponse.of(PlanErrorCode.FAIL_ADD_PLAN_LIKE);
+		
+		return ResponseEntity.internalServerError().body(planErrorResponse);
+	}
+
+	@ExceptionHandler(FailDeletePlanLikeException.class)
+	public ResponseEntity<?> faillDeletePlanLikeHandler() {
+		PlanErrorResponse planErrorResponse = PlanErrorResponse.of(PlanErrorCode.FAIL_DELETE_PLAN_LIKE);
+		
+		return ResponseEntity.internalServerError().body(planErrorResponse);
+	}
 }

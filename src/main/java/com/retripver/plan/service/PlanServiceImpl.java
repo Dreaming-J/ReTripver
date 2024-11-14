@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.exception.FailAddPlanLikeException;
+import com.retripver.plan.exception.FailDeletePlanLikeException;
 import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
@@ -34,6 +36,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<PlanResponse> myPlanList(String userId) {
 		List<PlanResponse> planList = planRepository.myPlanList(userId);
 		
@@ -60,6 +63,29 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = {FailAddPlanLikeException.class, FailDeletePlanLikeException.class})
+	public boolean likePlan(int planId, String userId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("planId", planId);
+		params.put("userId", userId);
+		
+		boolean existLike = planRepository.existPlanLike(params) == 1;
+		
+		if (existLike) {
+			int result = planRepository.canclePlanLike(params);
+			if (result != 1)
+				throw new FailDeletePlanLikeException();
+		}
+		else {
+			int result = planRepository.addPlanLike(params);
+			if (result != 1)
+				throw new FailAddPlanLikeException();
+		}
+		
+		return !existLike;
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public List<PlanResponse> rankPlanList(int page) {
 		Map<String, Object> params = new HashMap<>();
@@ -72,6 +98,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public AttractionResponse getAttraction(int attractionNo) {
 		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
 		
