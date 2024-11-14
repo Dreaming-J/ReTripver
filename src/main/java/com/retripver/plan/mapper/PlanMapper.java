@@ -21,8 +21,7 @@ public interface PlanMapper {
 	
     @Select("""
     		SELECT *
-    		FROM courses c JOIN quests q
-    		ON c.id = q.id
+    		FROM courses
     		WHERE plan_id = #{planId}
             ORDER BY course_order
     		""")

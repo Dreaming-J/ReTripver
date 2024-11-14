@@ -151,22 +151,14 @@ CREATE TABLE `courses` (
     `plan_id`		INT NOT NULL,
     `attraction_no`	INT NOT NULL,
     `course_order`	INT NOT NULL DEFAULT 0,
-    
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`),
-    FOREIGN KEY (`attraction_no`) REFERENCES `attractions`(`no`)
-);
-
-CREATE TABLE `quests` (
-    `id`			INT NOT NULL AUTO_INCREMENT,
-    `courses_id`	INT NOT NULL,
     `mission_img`	VARCHAR(255) NOT NULL,
     `user_img`		VARCHAR(255) DEFAULT NULL,
     `exp`			INT NOT NULL DEFAULT 0,
     `is_clear`		BOOLEAN NOT NULL DEFAULT false,
     
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`courses_id`) REFERENCES `courses`(`id`)
+    FOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`),
+    FOREIGN KEY (`attraction_no`) REFERENCES `attractions`(`no`)
 );
 
 CREATE TABLE `plan_like` (

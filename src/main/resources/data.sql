@@ -59,13 +59,9 @@ VALUES	(1,'test','신나는 부산 여행!',6,0,1),
 		(10,'test','고요한 남해의 섬마을 여행',36,0,1),
 		(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
 INSERT INTO `courses`
-VALUES	(1,6,3837,0),
-		(2,6,4486,1),
-		(3,6,3931,2);
-INSERT INTO `quests`
-VALUES	(0, 1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
-		(0, 2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
-		(0, 3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0);
+VALUES	(1,6,3837,0,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
+		(2,6,4486,1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
+		(3,6,3931,2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0);
 INSERT INTO `plan_like`
 VALUES	(6,'admin'),
 		(8,'admin'),
