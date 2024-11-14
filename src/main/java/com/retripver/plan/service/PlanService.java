@@ -9,9 +9,13 @@ public interface PlanService {
 
 	List<PlanResponse> planList(String userId);
 
+	List<PlanResponse> myPlanList(String userId);
+
 	PlanResponse getPlan(int planId);
 
 	List<PlanResponse> likePlanList(String userId);
+
+	boolean likePlan(int planId, String userId);
 
 	List<PlanResponse> rankPlanList(int page);
 

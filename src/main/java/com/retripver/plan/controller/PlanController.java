@@ -34,6 +34,15 @@ public class PlanController {
 		return ResponseEntity.ok(planList);
 	}
 	
+	@GetMapping("/mylist")
+	public ResponseEntity<?> myList(HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		List<PlanResponse> planList = planService.myPlanList(loginResponse.getId());
+		
+		return ResponseEntity.ok(planList);
+	}
+	
 	@GetMapping("/copy/{planId}")
 	public ResponseEntity<?> copyPlan(@PathVariable("planId") int planId) {
 		PlanResponse planResponse = planService.getPlan(planId);
@@ -48,6 +57,15 @@ public class PlanController {
 		List<PlanResponse> likePlanList = planService.likePlanList(loginResponse.getId());
 		
 		return ResponseEntity.ok(likePlanList);
+	}
+	
+	@GetMapping("/like/{planId}")
+	public ResponseEntity<?> likePlan(@PathVariable("planId") int planId, HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		boolean isLike = planService.likePlan(planId, loginResponse.getId());
+		
+		return ResponseEntity.ok(isLike);
 	}
 	
 	@GetMapping("/rank/{page}")

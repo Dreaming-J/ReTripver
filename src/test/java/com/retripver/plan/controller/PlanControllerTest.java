@@ -55,6 +55,14 @@ public class PlanControllerTest {
 	void planList() throws Exception {
 		mockMvc.perform(get("/plan/list/test")).andExpect(status().isOk()).andDo(print());
 	}
+	
+	@Test
+	@DisplayName("내 여행 계획 목록 불러오기")
+	@Transactional
+	void myPlanList() throws Exception {
+		mockMvc.perform(get("/plan/mylist").session(session)).andExpect(status().isOk()).andDo(print());
+	}
+
 
 	@Test
 	@DisplayName("특정 여행 계획 복사하기")
@@ -89,5 +97,15 @@ public class PlanControllerTest {
 				.andExpect(status().isOk()).andDo(print());
 		mockMvc.perform(get("/plan/attraction/-1"))
 		.andExpect(status().isInternalServerError()).andDo(print());
+	}
+	
+	@Test
+	@DisplayName("여행 계획 좋아요/취소")
+	@Transactional
+	void likePlan() throws Exception {
+		mockMvc.perform(get("/plan/like/8").session(session))
+				.andExpect(status().isOk()).andDo(print());
+		mockMvc.perform(get("/plan/like/8").session(session))
+				.andExpect(status().isOk()).andDo(print());
 	}
 }

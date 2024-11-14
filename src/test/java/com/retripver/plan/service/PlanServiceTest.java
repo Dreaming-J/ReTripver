@@ -3,7 +3,9 @@ package com.retripver.plan.service;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
@@ -33,6 +35,17 @@ public class PlanServiceTest {
 		assertAll(() -> {
 			assertEquals(8, planList.size());
 			assertEquals(3, planList.get(3).getCourses().size());
+		});
+	}
+	
+	@Test
+	@DisplayName("내 여행 계획 목록 불러오기")
+	void listMyPlan() {
+		List<PlanResponse> planList = planService.myPlanList("test");
+		
+		assertAll(() -> {
+			assertEquals(11, planList.size());
+			assertEquals(3, planList.get(5).getCourses().size());
 		});
 	}
 	
@@ -74,6 +87,15 @@ public class PlanServiceTest {
 		assertAll(() -> {
 			assertNotNull(planService.getAttraction(4486));
 			assertThatThrownBy(() -> planService.getAttraction(-1)).isInstanceOf(NotFoundAttractionException.class);
+		});
+	}
+	
+	@Test
+	@DisplayName("여행 계획 좋아요/취소")
+	void likePlan() {
+		assertAll(() -> {
+			assertTrue(planService.likePlan(8, "user"));
+			assertFalse(planService.likePlan(8, "user"));
 		});
 	}
 }

@@ -10,11 +10,19 @@ public interface PlanRepository {
 
 	List<PlanResponse> planList(String userId);
 
+	List<PlanResponse> myPlanList(String userId);
+
 	PlanResponse getPlan(int planId);
 
 	List<PlanResponse> likePlanList(String userId);
 
+	int existPlanLike(Map<String, Object> params);
+
 	List<PlanResponse> rankPlanList(Map<String, Object> params);
 
 	AttractionResponse getAttraction(int attractionNo);
+
+	int addPlanLike(Map<String, Object> params);
+
+	int canclePlanLike(Map<String, Object> params);
 }

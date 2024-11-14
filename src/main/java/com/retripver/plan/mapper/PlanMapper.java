@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
@@ -19,8 +21,7 @@ public interface PlanMapper {
 	
     @Select("""
     		SELECT *
-    		FROM courses c JOIN quests q
-    		ON c.id = q.id
+    		FROM courses
     		WHERE plan_id = #{planId}
             ORDER BY course_order
     		""")
@@ -53,6 +54,18 @@ public interface PlanMapper {
 	    })
 	List<PlanResponse> selectPlansByUserId(String userId);
 
+	@Select("""
+			SELECT *
+			FROM plans
+			WHERE user_id = #{userId}
+			""")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+
+	List<PlanResponse> selectMyPlansByUserId(String userId);
+
     @Select("""
     		SELECT *
     		FROM plans
@@ -78,6 +91,14 @@ public interface PlanMapper {
 	List<PlanResponse> selectLikePlansByUserId(String userId);
 
 	@Select("""
+			SELECT COUNT(*)
+			FROM plan_like
+			WHERE user_id = #{userId}
+			AND plan_id = #{planId}
+			""")
+	int selectLikePlanByUserIdAndPlanId(Map<String, Object> params);
+
+	@Select("""
 			SELECT p.id, p.user_id, p.title, p.sido_code, IFNULL(pl.likeCount, 0) likeCount, ROW_NUMBER() OVER(ORDER BY likeCount DESC) `rank`
 			FROM plans p LEFT JOIN (SELECT plan_id, COUNT(plan_id) likeCount
 									FROM plan_like
@@ -93,4 +114,17 @@ public interface PlanMapper {
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
 	List<PlanResponse> selectRankPlans(Map<String, Object> params);
+
+	@Insert("""
+			INSERT INTO plan_like(plan_id, user_id)
+			VALUES (#{planId}, #{userId})
+			""")
+	int insertPlanLike(Map<String, Object> params);
+
+	@Delete("""
+			DELETE FROM plan_like
+			WHERE plan_id = #{planId}
+			AND user_id = #{userId}
+			""")
+	int deletePlanLike(Map<String, Object> params);
 }
