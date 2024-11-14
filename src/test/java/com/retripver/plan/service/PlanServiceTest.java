@@ -37,6 +37,17 @@ public class PlanServiceTest {
 	}
 	
 	@Test
+	@DisplayName("내 여행 계획 목록 불러오기")
+	void listMyPlan() {
+		List<PlanResponse> planList = planService.myPlanList("test");
+		
+		assertAll(() -> {
+			assertEquals(11, planList.size());
+			assertEquals(3, planList.get(5).getCourses().size());
+		});
+	}
+	
+	@Test
 	@DisplayName("특정 여행 계획 복사하기")
 	void copyPlan() {
 		PlanResponse planResponse = planService.getPlan(6);

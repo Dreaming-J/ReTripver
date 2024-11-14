@@ -55,6 +55,14 @@ public class PlanControllerTest {
 	void planList() throws Exception {
 		mockMvc.perform(get("/plan/list/test")).andExpect(status().isOk()).andDo(print());
 	}
+	
+	@Test
+	@DisplayName("내 여행 계획 목록 불러오기")
+	@Transactional
+	void myPlanList() throws Exception {
+		mockMvc.perform(get("/plan/mylist").session(session)).andExpect(status().isOk()).andDo(print());
+	}
+
 
 	@Test
 	@DisplayName("특정 여행 계획 복사하기")
