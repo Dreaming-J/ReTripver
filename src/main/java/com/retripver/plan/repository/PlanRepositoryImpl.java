@@ -81,4 +81,24 @@ public class PlanRepositoryImpl implements PlanRepository {
 	public List<PlanResponse> sidoPlanList(int sidoCode) {
 		return planMapper.selectPlansBySidoCode(sidoCode);
 	}
+
+	@Override
+	public int getCourseSize(int planId) {
+		return planMapper.selectCourseSizeByPlanId(planId);
+	}
+
+	@Override
+	public int getCarryOutCourseSize(int planId) {
+		return planMapper.selectCarryOutCourseSizeByPlanId(planId);
+	}
+
+	@Override
+	public int getSumExpOfClearCourses(int planId) {
+		return planMapper.selectSumExpOfClearCoursesByPlanId(planId);
+	}
+
+	@Override
+	public void gainExp(int gainExp, String userId) {
+		planMapper.updateExpByUserId(gainExp, userId);
+	}
 }

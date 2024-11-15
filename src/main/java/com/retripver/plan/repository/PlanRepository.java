@@ -32,4 +32,12 @@ public interface PlanRepository {
 	void makePlan(PlanRequest planRequest);
 
 	List<PlanResponse> sidoPlanList(int sidoCode);
+
+	int getCourseSize(int planId);
+
+	int getCarryOutCourseSize(int planId);
+
+	int getSumExpOfClearCourses(int planId);
+
+	void gainExp(int gainExp, String userId);
 }

@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.CourseRequest;
@@ -172,4 +173,35 @@ public interface PlanMapper {
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
 	List<PlanResponse> selectPlansBySidoCode(int sidoCode);
+
+    @Select("""
+    		SELECT COUNT(*)
+    		FROM courses
+    		WHERE plan_id = #{planId}
+    		""")
+	int selectCourseSizeByPlanId(int planId);
+    
+    @Select("""
+    		SELECT COUNT(*)
+    		FROM courses
+    		WHERE plan_id = #{planId}
+    		AND user_img IS NOT NULL
+    		""")
+	int selectCarryOutCourseSizeByPlanId(int planId);
+
+    @Select("""
+    		SELECT SUM(exp)
+    		FROM courses
+    		WHERE plan_id = #{planId}
+    		AND is_clear = TRUE
+    		GROUP BY plan_id
+    		""")
+	int selectSumExpOfClearCoursesByPlanId(int planId);
+
+    @Update("""
+    		UPDATE users
+    		SET exp = exp + #{gainExp}
+    		WHERE id = #{userId}
+    		""")
+	void updateExpByUserId(int gainExp, String userId);
 }

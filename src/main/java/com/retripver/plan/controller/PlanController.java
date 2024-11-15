@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -108,5 +109,14 @@ public class PlanController {
 		List<PlanResponse> planList = planService.sidoPlanList(sidoCode);
 		
 		return ResponseEntity.ok(planList);
+	}
+	
+	@PatchMapping("/quest-clear")
+	public ResponseEntity<?> questClear(@RequestBody int planId, HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		planService.questClear(planId, loginResponse.getId());
+		
+		return ResponseEntity.ok(null);
 	}
 }

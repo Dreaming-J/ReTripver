@@ -15,6 +15,7 @@ import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.FailAddPlanLikeException;
 import com.retripver.plan.exception.FailDeletePlanLikeException;
+import com.retripver.plan.exception.NoCarryOutCourseInPlanException;
 import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
@@ -130,7 +131,27 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<PlanResponse> sidoPlanList(int sidoCode) {
 		return planRepository.sidoPlanList(sidoCode);
+	}
+
+	@Override
+	@Transactional
+	public void questClear(int planId, String userId) {
+		int carryOutCourseSize = planRepository.getCarryOutCourseSize(planId);
+		if (carryOutCourseSize == 0)
+			throw new NoCarryOutCourseInPlanException();
+		
+		int gainExp = planRepository.getSumExpOfClearCourses(planId);
+		if (gainExp > 0)
+			planRepository.gainExp(gainExp, userId);
+		
+//		boolean result = planRepository.questClear(planId);
+//		
+//		if (!result)
+//			throw new FailQuestClearException();
+		
+		//업적, 방문 횟수, 티어 상승 처리
 	}
 }

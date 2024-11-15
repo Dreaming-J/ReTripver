@@ -28,4 +28,6 @@ public interface PlanService {
 
 	List<PlanResponse> sidoPlanList(int sidoCode);
 
+	void questClear(int planId, String userId);
+
 }
