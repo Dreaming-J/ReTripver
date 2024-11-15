@@ -1,11 +1,10 @@
 package com.retripver.plan.service;
 
-import java.sql.SQLException;
+import static com.retripver.global.constant.Constant.PAGE_SIZE;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import com.retripver.plan.exception.FailDeletePlanLikeException;
 import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
-import static com.retripver.global.constant.Constant.PAGE_SIZE;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -29,6 +27,17 @@ public class PlanServiceImpl implements PlanService {
 	@Autowired
 	public PlanServiceImpl(PlanRepository planRepository) {
 		this.planRepository = planRepository;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public AttractionResponse getAttraction(int attractionNo) {
+		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
+		
+		if (attractionResponse == null)
+			throw new NotFoundAttractionException();
+		
+		return attractionResponse;
 	}
 
 	@Override
@@ -99,17 +108,6 @@ public class PlanServiceImpl implements PlanService {
 		List<PlanResponse> rankPlanList = planRepository.rankPlanList(params);
 		
 		return rankPlanList;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public AttractionResponse getAttraction(int attractionNo) {
-		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
-		
-		if (attractionResponse == null)
-			throw new NotFoundAttractionException();
-		
-		return attractionResponse;
 	}
 
 	@Override

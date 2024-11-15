@@ -8,6 +8,8 @@ import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanService {
 
+	AttractionResponse getAttraction(int attractionNo);
+
 	List<PlanResponse> planList(String userId);
 
 	List<PlanResponse> myPlanList(String userId);
@@ -19,8 +21,6 @@ public interface PlanService {
 	boolean likePlan(int planId, String userId);
 
 	List<PlanResponse> rankPlanList(int page);
-
-	AttractionResponse getAttraction(int attractionNo);
 
 	void makePlan(PlanRequest planRequest);
 

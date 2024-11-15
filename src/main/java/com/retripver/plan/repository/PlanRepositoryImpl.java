@@ -1,6 +1,5 @@
 package com.retripver.plan.repository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,11 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Autowired
 	public PlanRepositoryImpl(PlanMapper planMapper) {
 		this.planMapper = planMapper;
+	}
+
+	@Override
+	public AttractionResponse getAttraction(int attractionNo) {
+		return planMapper.selectAttractionByAttractionNo(attractionNo);
 	}
 
 	@Override
@@ -50,11 +54,6 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Override
 	public List<PlanResponse> rankPlanList(Map<String, Object> params) {
 		return planMapper.selectRankPlans(params);
-	}
-
-	@Override
-	public AttractionResponse getAttraction(int attractionNo) {
-		return planMapper.selectAttractionByAttractionNo(attractionNo);
 	}
 
 	@Override

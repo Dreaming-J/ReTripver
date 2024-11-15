@@ -30,6 +30,13 @@ public class PlanController {
 		this.planService = planService;
 	}
 	
+	@GetMapping("/attraction/search/{attractionNo}")
+	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
+		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
+		
+		return ResponseEntity.ok(attractionResponse);
+	}
+	
 	@GetMapping("/list/{userId}")
 	public ResponseEntity<?> planList(@PathVariable("userId") String userId) {
 		List<PlanResponse> planList = planService.planList(userId);
@@ -76,13 +83,6 @@ public class PlanController {
 		List<PlanResponse> rankPlanList = planService.rankPlanList(page);
 		
 		return ResponseEntity.ok(rankPlanList);
-	}
-	
-	@GetMapping("/attraction/{attractionNo}")
-	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
-		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
-		
-		return ResponseEntity.ok(attractionResponse);
 	}
 	
 	@PostMapping("/make")

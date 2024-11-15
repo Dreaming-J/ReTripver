@@ -1,6 +1,5 @@
 package com.retripver.plan.repository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,8 @@ import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanRepository {
+
+	AttractionResponse getAttraction(int attractionNo);
 
 	List<PlanResponse> planList(String userId);
 
@@ -21,8 +22,6 @@ public interface PlanRepository {
 	int existPlanLike(Map<String, Object> params);
 
 	List<PlanResponse> rankPlanList(Map<String, Object> params);
-
-	AttractionResponse getAttraction(int attractionNo);
 
 	int addPlanLike(Map<String, Object> params);
 
