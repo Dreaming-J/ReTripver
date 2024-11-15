@@ -1,11 +1,15 @@
 <script setup>
 import SelectedListItem from '@/components/plan/make/SelectedListItem.vue';
+import OptimizeDialog from '@/components/plan/make/OptimizeDialog.vue';
 
 import Button from "primevue/button";
 
 import ConfirmDialog from 'primevue/confirmdialog';
+import Dialog from 'primevue/dialog';
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
+
+import { ref } from "vue";
 
 const confirm = useConfirm();
 const toast = useToast();
@@ -14,19 +18,7 @@ const showTemplate = () => {
     confirm.require({
         group: 'templating',
         header: '  ',
-        message: 'Please confirm to proceed moving forward.',
         icon: 'pi pi-exclamation-circle',
-        rejectProps: {
-            label: 'Cancel',
-            icon: 'pi pi-times',
-            outlined: true,
-            size: 'small'
-        },
-        acceptProps: {
-            label: 'Save',
-            icon: 'pi pi-check',
-            size: 'small'
-        },
         accept: () => {
             toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
         },
@@ -35,6 +27,9 @@ const showTemplate = () => {
         }
     });
 };
+
+
+const visible = ref(false);
 
 
 </script>
@@ -49,32 +44,14 @@ const showTemplate = () => {
             여행 장소 선택
         </div>
         <div class="header-item">
-            <Button label="코스 최적화" severity="warn" variant="outlined" />
-<!-- 
-                ConfirmDialog 컴포넌트
-                <ConfirmDialog group="templating">
-                <template #message="slotProps">
-                    <div class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
-                    <!-- 컴포넌트 삽입 -->
-                    <!-- <OptimizationDialog /> -->
-                    <!-- </div>
-                </template> -->
-                <!-- </ConfirmDialog> -->
-                
-                <!-- <Button @click="showTemplate()" label="Save"></Button> --> 
+            <Button label="코스 최적화" @click="visible = true"
+                    severity="warn" variant="outlined" />
 
-
-                <!-- <ConfirmDialog group="templating">
-                    <template #message="slotProps">
-                        <div class="flex flex-col items-center w-full gap-4 border-b border-surface-200 dark:border-surface-700">
-                            <i :class="slotProps.message.icon" class="!text-6xl text-primary-500"></i>
-                            <p>{{ slotProps.message.message }}</p>
-                        </div>
-                    </template>
-                </ConfirmDialog>
-                <Button @click="showTemplate()" label="Save"></Button> -->
-
-
+                <div class="card flex justify-center">
+                    <Dialog v-model:visible="visible" modal header=" ">
+                        <OptimizeDialog />
+                    </Dialog>
+                </div>
         </div>
     </div>
     <div class="select-list">
