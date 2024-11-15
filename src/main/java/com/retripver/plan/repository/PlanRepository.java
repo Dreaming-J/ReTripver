@@ -11,6 +11,8 @@ public interface PlanRepository {
 
 	AttractionResponse getAttraction(int attractionNo);
 
+	List<AttractionResponse> getAttractions(Map<String, Object> params);
+
 	List<PlanResponse> planList(String userId);
 
 	List<PlanResponse> myPlanList(String userId);

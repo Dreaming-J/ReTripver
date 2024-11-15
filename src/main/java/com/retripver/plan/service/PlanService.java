@@ -10,6 +10,8 @@ public interface PlanService {
 
 	AttractionResponse getAttraction(int attractionNo);
 
+	List<AttractionResponse> getAttractions(int sidoCode, int page);
+
 	List<PlanResponse> planList(String userId);
 
 	List<PlanResponse> myPlanList(String userId);

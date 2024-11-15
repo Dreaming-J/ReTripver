@@ -42,6 +42,19 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	@Transactional(readOnly = true)
+	public List<AttractionResponse> getAttractions(int sidoCode, int page) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("sidoCode", sidoCode);
+		params.put("page", (page - 1) * PAGE_SIZE);
+		params.put("size", PAGE_SIZE);
+		
+		List<AttractionResponse> attractionList = planRepository.getAttractions(params);
+		
+		return attractionList;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public List<PlanResponse> planList(String userId) {
 		List<PlanResponse> planList = planRepository.planList(userId);
 		

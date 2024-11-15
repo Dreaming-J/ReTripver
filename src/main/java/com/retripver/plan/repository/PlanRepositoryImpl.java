@@ -27,6 +27,11 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
+	public List<AttractionResponse> getAttractions(Map<String, Object> params) {
+		return planMapper.selectAttractionsBySidoCode(params);
+	}
+
+	@Override
 	public List<PlanResponse> planList(String userId) {
 		return planMapper.selectPlansByUserId(userId);
 	}

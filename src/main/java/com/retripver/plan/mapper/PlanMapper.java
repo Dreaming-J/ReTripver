@@ -45,6 +45,18 @@ public interface PlanMapper {
     		""")
     AttractionResponse selectAttractionByAttractionNo(int attractionNo);
 
+    @Select("""
+    		SELECT *
+    		FROM attractions a
+    		JOIN sidos s ON a.area_code = s.sido_code
+    		JOIN guguns g ON a.area_code = g.sido_code AND a.si_gun_gu_code = g.gugun_code
+    		JOIN contenttypes c ON a.content_type_id = c.content_type_id
+    		WHERE a.area_code = #{sidoCode}
+    		AND a.first_image1 <> ''
+    		LIMIT #{page}, #{size}
+    		""")
+	List<AttractionResponse> selectAttractionsBySidoCode(Map<String, Object> params);
+
 	@Select("""
 			SELECT *
 			FROM plans

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.plan.dto.AttractionResponse;
@@ -30,11 +31,18 @@ public class PlanController {
 		this.planService = planService;
 	}
 	
-	@GetMapping("/attraction/search/{attractionNo}")
+	@GetMapping("/attraction/info/{attractionNo}")
 	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
 		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
 		
 		return ResponseEntity.ok(attractionResponse);
+	}
+	
+	@GetMapping("/attraction/search")
+	public ResponseEntity<?> attractionList(@RequestParam int sidoCode, @RequestParam int page) {
+		List<AttractionResponse> attractionList = planService.getAttractions(sidoCode, page);
+		
+		return ResponseEntity.ok(attractionList);
 	}
 	
 	@GetMapping("/list/{userId}")
