@@ -26,4 +26,6 @@ public interface PlanService {
 
 	void makePlan(PlanRequest planRequest);
 
+	List<PlanResponse> sidoPlanList(int sidoCode);
+
 }

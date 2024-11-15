@@ -128,4 +128,9 @@ public class PlanServiceImpl implements PlanService {
 	public void makePlan(PlanRequest planRequest) {
 		planRepository.makePlan(planRequest);
 	}
+
+	@Override
+	public List<PlanResponse> sidoPlanList(int sidoCode) {
+		return planRepository.sidoPlanList(sidoCode);
+	}
 }

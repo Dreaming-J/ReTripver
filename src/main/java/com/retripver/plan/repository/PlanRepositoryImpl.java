@@ -76,4 +76,9 @@ public class PlanRepositoryImpl implements PlanRepository {
 		planMapper.insertPlan(planRequest);
 		planMapper.insertCourses(planRequest.getId(), planRequest.getCourses());
 	}
+
+	@Override
+	public List<PlanResponse> sidoPlanList(int sidoCode) {
+		return planMapper.selectPlansBySidoCode(sidoCode);
+	}
 }

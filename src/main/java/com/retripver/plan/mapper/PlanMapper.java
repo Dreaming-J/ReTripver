@@ -160,4 +160,16 @@ public interface PlanMapper {
 			</script>
 			""")
 	int insertCourses(int planId, List<CourseRequest> courses);
+
+	@Select("""
+			SELECT *
+			FROM plans
+			WHERE sido_code = #{sidoCode}
+			AND is_public = true
+			""")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+	List<PlanResponse> selectPlansBySidoCode(int sidoCode);
 }

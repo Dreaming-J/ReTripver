@@ -102,4 +102,11 @@ public class PlanController {
 		
 		return ResponseEntity.ok(null);
 	}
+	
+	@GetMapping("/search/{sidoCode}")
+	public ResponseEntity<?> search(@PathVariable("sidoCode") int sidoCode) {
+		List<PlanResponse> planList = planService.sidoPlanList(sidoCode);
+		
+		return ResponseEntity.ok(planList);
+	}
 }
