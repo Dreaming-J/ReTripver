@@ -6,14 +6,20 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 
+// fontawesome - 아이콘 관련 설정
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 
+// primevue -  관련 설정
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css'
 
 library.add(fas, far, fab);
 
@@ -30,6 +36,8 @@ app.use(PrimeVue, {
     },
   },
 });
+app.use(ConfirmationService);
+app.use(ToastService);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 

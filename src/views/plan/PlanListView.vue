@@ -5,7 +5,7 @@ import PlanListItem from "@/components/plan/PlanListItem.vue";
 <template>
   <div>
     <div>
-      <h1 class="text-base">다른 유저들이 올린 여행 계획들</h1>
+      <h1>다른 유저들이 올린 여행 계획들</h1>
     </div>
     <div>
       <div>
