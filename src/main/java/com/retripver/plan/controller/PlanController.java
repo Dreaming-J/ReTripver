@@ -38,8 +38,8 @@ public class PlanController {
 		return ResponseEntity.ok(attractionResponse);
 	}
 	
-	@GetMapping("/attraction/search")
-	public ResponseEntity<?> attractionList(@RequestParam int sidoCode, @RequestParam int page) {
+	@GetMapping("/attraction/search/{sidoCode}")
+	public ResponseEntity<?> attractionList(@PathVariable("sidoCode") int sidoCode, @RequestParam int page) {
 		List<AttractionResponse> attractionList = planService.getAttractions(sidoCode, page);
 		
 		return ResponseEntity.ok(attractionList);
@@ -86,8 +86,8 @@ public class PlanController {
 		return ResponseEntity.ok(isLike);
 	}
 	
-	@GetMapping("/rank/{page}")
-	public ResponseEntity<?> rank(@PathVariable("page") int page) {
+	@GetMapping("/rank")
+	public ResponseEntity<?> rank(@RequestParam int page) {
 		List<PlanResponse> rankPlanList = planService.rankPlanList(page);
 		
 		return ResponseEntity.ok(rankPlanList);

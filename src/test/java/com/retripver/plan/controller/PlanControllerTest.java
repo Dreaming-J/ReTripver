@@ -85,7 +85,7 @@ public class PlanControllerTest {
 	@DisplayName("인기 여행 계획 불러오기")
 	@Transactional
 	void rankPlanList() throws Exception {
-		mockMvc.perform(get("/plan/rank/1"))
+		mockMvc.perform(get("/plan/rank?page=1"))
 				.andExpect(status().isOk()).andDo(print());
 	}
 	
@@ -95,7 +95,7 @@ public class PlanControllerTest {
 	void getAttraction() throws Exception {
 		mockMvc.perform(get("/plan/attraction/info/4486"))
 				.andExpect(status().isOk()).andDo(print());
-		mockMvc.perform(get("/plan/attraction/-1"))
+		mockMvc.perform(get("/plan/attraction/info/-1"))
 		.andExpect(status().isInternalServerError()).andDo(print());
 	}
 	
