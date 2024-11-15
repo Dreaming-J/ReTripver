@@ -3,17 +3,20 @@ package com.retripver.plan.mapper;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.plan.dto.CourseRequest;
 import com.retripver.plan.dto.CourseResponse;
+import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
 @Mapper
@@ -127,4 +130,22 @@ public interface PlanMapper {
 			AND user_id = #{userId}
 			""")
 	int deletePlanLike(Map<String, Object> params);
+
+	@Insert("""
+			INSERT INTO plans(user_id, title, sido_code, is_public)
+			VALUES (#{userId}, #{title}, #{sidoCode}, #{isPublic})
+			""")
+	@Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+	int insertPlan(PlanRequest planRequest);
+
+	@Insert("""
+			<script>
+				INSERT INTO courses(plan_id, attraction_no, course_order, mission_img, exp)
+				VALUES
+				<foreach collection='courses' item='course' separator=','>
+					(#{planId}, #{course.attractionNo}, #{course.courseOrder}, #{course.missionImg}, #{course.exp})
+				</foreach>
+			</script>
+			""")
+	int insertCourses(int planId, List<CourseRequest> courses);
 }

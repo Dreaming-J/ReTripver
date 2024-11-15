@@ -1,9 +1,11 @@
 package com.retripver.plan.repository;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanRepository {
@@ -25,4 +27,6 @@ public interface PlanRepository {
 	int addPlanLike(Map<String, Object> params);
 
 	int canclePlanLike(Map<String, Object> params);
+
+	void makePlan(PlanRequest planRequest);
 }

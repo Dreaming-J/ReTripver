@@ -1,14 +1,18 @@
 package com.retripver.plan.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.FailAddPlanLikeException;
 import com.retripver.plan.exception.FailDeletePlanLikeException;
@@ -106,5 +110,11 @@ public class PlanServiceImpl implements PlanService {
 			throw new NotFoundAttractionException();
 		
 		return attractionResponse;
+	}
+
+	@Override
+	@Transactional
+	public void makePlan(PlanRequest planRequest) {
+		planRepository.makePlan(planRequest);
 	}
 }
