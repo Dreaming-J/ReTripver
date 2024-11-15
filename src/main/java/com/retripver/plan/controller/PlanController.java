@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
 import com.retripver.user.dto.LoginResponse;
@@ -80,5 +83,15 @@ public class PlanController {
 		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
 		
 		return ResponseEntity.ok(attractionResponse);
+	}
+	
+	@PostMapping("/make")
+	public ResponseEntity<?> makePlan(@RequestBody PlanRequest planRequest, HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		planRequest.setUserId(loginResponse.getId());
+		planService.makePlan(planRequest);
+		
+		return ResponseEntity.ok(null);
 	}
 }
