@@ -1,8 +1,9 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
   <div>
-    <h1>로그인 화면</h1>
+    검색 내용들
   </div>
 </template>
 

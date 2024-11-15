@@ -19,4 +19,19 @@ import { RouterView } from "vue-router";
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+header {
+ width: 100%;
+ height: 100px;
+}
+
+main {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer {
+  width: 100%;
+  height: 80px;
+}
+</style>

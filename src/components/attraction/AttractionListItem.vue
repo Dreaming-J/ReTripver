@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1>로그인 화면</h1>
+    <h3>여행지 세부 내용</h3>
   </div>
 </template>
 

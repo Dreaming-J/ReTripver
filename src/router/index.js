@@ -48,6 +48,14 @@ const router = createRouter({
       path: "/attraction",
       name: "attraction",
       component: () => import("@/views/attraction/AttractionView.vue"),
+      redirect: "/attraction/list",
+      children:[
+        {
+          path: "list",
+          name: "attraction-list",
+          component: () => import("@/views/attraction/AttractionListView.vue"),
+        }
+      ]
     },
     {
       path: "/user",

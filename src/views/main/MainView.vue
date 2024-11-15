@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1 class="text-base">메인 페이지</h1>
+    <h1>메인 페이지</h1>
   </div>
 </template>
 

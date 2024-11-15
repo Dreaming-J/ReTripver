@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <h1 class="text-base">회원가입 화면</h1>
+    <h1>회원가입 화면</h1>
   </div>
 </template>
 

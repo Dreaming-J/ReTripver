@@ -1,8 +1,10 @@
-<script setup></script>
+<script setup>
+import { RouterView } from "vue-router";
+</script>
 
 <template>
   <div>
-    <h1 class="text-base">여행지 정보들</h1>
+    <RouterView />
   </div>
 </template>
 
