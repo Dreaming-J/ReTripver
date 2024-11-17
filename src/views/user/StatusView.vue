@@ -1,9 +1,21 @@
-<script setup></script>
+<script setup>
+import StatusInfo from '@/components/user/status/StatusInfo.vue';
+import StatusMap from '@/components/user/status/StatusMap.vue';
+</script>
 
 <template>
-  <div>
-    <h1>스탯창 화면</h1>
+  <div class="status-container">
+    <div>
+      <StatusInfo />
+    </div>
+    <div>
+      <StatusMap />
+    </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.status-container {
+  display: flex;
+}
+</style>
