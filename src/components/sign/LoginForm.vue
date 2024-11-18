@@ -1,6 +1,6 @@
 <script setup>
 import { InputText, Button, Message } from "primevue"
-import { ref, computed } from "vue"
+import { ref } from "vue"
 import { storeToRefs } from "pinia"
 import { useRouter } from "vue-router"
 import { useUserStore } from "@/stores/user"
@@ -15,15 +15,7 @@ const loginForm = ref({
   password: "",
 })
 
-const validMessage = computed(() => {
-  if (!loginForm.value.id) return "아이디를 작성해주세요."
-  if (!loginForm.value.password) return "비밀번호를 작성해주세요"
-  return ""
-})
-
-const validCheck = computed(() => {
-  return !loginForm.value.id || !loginForm.value.password;
-})
+const validMessage = ref("");
 
 const login = async () => {
   await userLogin(loginForm.value)
@@ -32,11 +24,34 @@ const login = async () => {
     router.replace("/")
   }
 }
+
+const handleSubmit = async() => {
+  if(!loginForm.value.id) {
+    validMessage.value = "아이디를 작성해주세요.";
+    return;
+  }
+
+  if (!loginForm.value.password) {
+    validMessage.value = "비밀번호를 작성해주세요.";
+    return;
+  }
+
+  validMessage.value = "";
+
+  console.log("로그인 하러 감!");
+
+  await userLogin(loginForm.value)
+  console.log("isLogin: " + isLogin.value)
+  if (isLogin.value) {
+    router.replace("/")
+  }
+}
+
 </script>
 
 <template>
   <div>
-    <Form class="container">
+    <form class="container" @submit.prevent="handleSubmit">
       <div class="input-group">
         <div class="text-xs input-label">ID</div>
         <div>
@@ -60,8 +75,7 @@ const login = async () => {
       <div>
         <div class="message">
           <Message
-            class="text-valid"
-            v-if="validCheck"
+            class="text-sm"
             severity="error"
             variant="simple"
           >
@@ -69,7 +83,7 @@ const login = async () => {
           </Message>
         </div>
         <div>
-          <Button class="w-full" label="Login" severity="warn" @click="login" />
+          <Button type="submit" class="w-full" label="Login" severity="warn"  />  <!-- @click="login" -->
         </div>
       </div>
 
@@ -81,7 +95,7 @@ const login = async () => {
           </RouterLink>
         </div>
       </div>
-    </Form>
+    </form>
   </div>
 </template>
 
@@ -106,12 +120,16 @@ const login = async () => {
 .link-forgot {
   display: flex;
   justify-content: flex-end;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
 }
 
 .message {
-  padding-bottom: 10px;
+  padding-bottom: 20px;
   padding-left: 10px;
+}
+
+:deep(.p-message .p-message-text) {
+  font-size: 0.75rem;
 }
 
 .signup-group {

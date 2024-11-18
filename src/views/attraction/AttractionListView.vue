@@ -5,7 +5,7 @@ import AttractionListItem from "@/components/attraction/AttractionListItem.vue"
 <template>
   <div>
     <div>
-        <h1>다른 유저들이 올린 여행 계획들</h1>
+        <h1>여행지 리스트</h1>
     </div>
     <div>
         <div>

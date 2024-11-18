@@ -1,33 +1,176 @@
 <script setup>
-import { InputText, Button } from "primevue";
+import { InputText, Button , Message } from "primevue";
+import { ref } from "vue";
+
+const signupForm = ref({
+  id: "",
+  password: "",
+  passwordCheck: "",
+  name: "",
+  email: ""
+})
+
+const idValidMessage = ref("");
+const validateId = (id) => {
+  if (!id) return "아이디를 작성해주세요.";
+  if (id.length < 4 || id.length > 20) return "8~20자 사이여야 합니다.";
+  if (!(/^[a-zA-Z0-9_.-]+$/.test(id))) return "영문, 숫자, 특수문자(_.-)만 사용 가능합니다.";
+
+  return "";
+}
+const idValidBlur = () => {
+  idValidMessage.value = validateId(signupForm.value.id)
+}
+
+const passwordValidMessage = ref("");
+const validatePassword = (password) => {
+  if (!password) return "비밀번호를 작성해주세요.";
+  
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const validChars = /^[a-zA-Z0-9~!@#*?]+$/.test(password);
+  
+  if (!hasLetter || !hasNumber || !validChars) {
+    return "영문, 숫자, 특수문자(~!@#*?)를 포함해야 합니다.";
+  }
+  
+  return "";
+};
+const passwordValidBlur = () => {
+  passwordValidMessage.value = validatePassword(signupForm.value.password)
+}
+
+const passwordCheckValidMessage = ref("");
+const validatePasswordCheck = (passwordCheck) => {
+  if (signupForm.value.password !== passwordCheck) return "비밀번호가 일치하지 않습니다.";
+  
+  return "";
+};
+const passwordCheckValidBlur = () => {
+  passwordCheckValidMessage.value = validatePasswordCheck(signupForm.value.passwordCheck)
+}
+
+const nameValidMessage = ref("");
+const validateName = (name) => {
+  if (!name) return "이름을 작성해주세요.";
+ 
+  if (!(/^[a-zA-Z가-힣\s]+$/.test(name))) {
+    return "한글, 영문, 공백만 사용 가능합니다.";
+  }
+  
+  return "";
+}
+const nameValidBlur = () => {
+  nameValidMessage.value = validateName(signupForm.value.name)
+}
+
+const emailValidMessage = ref("");
+const validateEmail = (email) => {
+  if (!email) return "이메일을 작성해주세요.";
+  if (!email.includes('@')) return "올바른 이메일 형식이 아닙니다.";
+
+  return "";
+}
+const emailValidBlur = () => {
+  emailValidMessage.value = validateEmail(signupForm.value.email)
+}
+
+const handleSubmit = async() => {
+  if (validateId(signupForm.value.id) !== '') return;
+  if (validatePassword(signupForm.value.password) !== '') return;
+  if (validatePasswordCheck(signupForm.value.passwordCheck) !== '') return;
+  if (validateName(signupForm.value.name) !== '') return;
+  if (validateEmail(signupForm.value.email) !== '') return;
+  
+  console.log("회원가입 하러 감!!");
+}
+
 </script>
 
 <template>
   <div>
-    <form class="container">
+    <form class="container" @submit.prevent="handleSubmit">
       <div class="input-group">
         <div class="text-xs input-label">ID</div>
-        <div><InputText class="w-full" type="text" /></div>
+        <div class="id-group">
+          <div class="col-9 p-0 pr-1">
+            <InputText class="w-full" type="text" v-model="signupForm.id" @blur="idValidBlur"/>
+          </div>
+          <div class="col-3 p-0 pl-1">
+            <Button
+              class="w-full"
+              label="확인"
+              severity="warn"
+              variant="outlined"
+            />
+          </div>
+        </div>
+        <div class="text-valid">
+          <Message
+            v-if="idValidMessage !== ''"
+            class="text-sm"
+            severity="error"
+            variant="simple"
+          >
+            {{ idValidMessage }}
+          </Message>
+        </div>
       </div>
 
       <div class="input-group">
         <div class="text-xs input-label">Password</div>
         <div>
-          <InputText class="w-full" type="text" />
+          <div>
+            <InputText class="w-full" type="text" v-model="signupForm.password" @blur="passwordValidBlur"/>
+          </div>
+          <div class="text-valid">
+            <Message
+              v-if="passwordValidMessage !== ''"
+              class="text-sm"
+              severity="error"
+              variant="simple"
+            >
+              {{ passwordValidMessage }}
+            </Message>
+          </div>
         </div>
       </div>
 
       <div class="input-group">
         <div class="text-xs input-label">Check Password</div>
         <div>
-          <InputText class="w-full" type="text" />
+          <div>
+            <InputText class="w-full" type="text" v-model="signupForm.passwordCheck" @blur="passwordCheckValidBlur"/>
+          </div>
+          <div class="text-valid">
+            <Message
+              v-if="passwordCheckValidMessage !== ''"
+              class="text-sm"
+              severity="error"
+              variant="simple"
+            >
+              {{ passwordCheckValidMessage }}
+            </Message>
+          </div>
         </div>
       </div>
 
       <div class="input-group">
         <div class="text-xs input-label">Name</div>
         <div>
-          <InputText class="w-full" type="text" />
+          <div>
+            <InputText class="w-full" type="text" v-model="signupForm.name" @blur="nameValidBlur"/>
+          </div>
+          <div class="text-valid">
+            <Message
+              v-if="nameValidMessage !== ''"
+              class="text-sm"
+              severity="error"
+              variant="simple"
+            >
+              {{ nameValidMessage }}
+            </Message>
+          </div>
         </div>
       </div>
 
@@ -35,7 +178,7 @@ import { InputText, Button } from "primevue";
         <div class="text-xs input-label">Email</div>
         <div class="email-group">
           <div class="col-9 p-0 pr-1">
-            <InputText class="w-full" type="text" />
+            <InputText class="w-full" type="text" v-model="signupForm.email" @blur="emailValidBlur"/>
           </div>
           <div class="col-3 p-0 pl-1">
             <Button
@@ -46,10 +189,20 @@ import { InputText, Button } from "primevue";
             />
           </div>
         </div>
+        <div class="text-valid">
+            <Message
+              v-if="emailValidMessage !== ''"
+              class="text-sm"
+              severity="error"
+              variant="simple"
+            >
+              {{ emailValidMessage }}
+            </Message>
+          </div>
       </div>
 
       <div class="btn-signup">
-        <Button class="w-full" label="Sign Up" severity="warn" />
+        <Button type="submit" class="w-full" label="Sign Up" severity="warn" />
       </div>
 
       <div class="login-group">
@@ -65,6 +218,20 @@ import { InputText, Button } from "primevue";
 </template>
 
 <style scoped>
+.text-valid {
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+:deep(.p-message .p-message-text) {
+  font-size: 0.75rem;
+}
+
+.id-group {
+  display: flex;
+  width: 100%;
+}
+
 .link-text {
   text-decoration: none;
   color: darkblue;
