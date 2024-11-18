@@ -29,6 +29,6 @@ import Logo from "@/assets/img/logo.png";
   border-radius: 10px;
   width: 600px;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 20px;
 }
 </style>
