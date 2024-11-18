@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.retripver.global.service.FileManageService;
 import com.retripver.user.dto.*;
 import com.retripver.user.service.*;
 
@@ -18,11 +20,13 @@ public class UserController {
 	
 	private final UserService userService;
 	private final EmailService emailService;
+	private final FileManageService fileManageService;
 	
 	@Autowired
-	public UserController(UserService userService, EmailService emailService) {
+	public UserController(UserService userService, EmailService emailService, FileManageService fileManageService) {
 		this.userService = userService;
 		this.emailService = emailService;
+		this.fileManageService = fileManageService;
 	}
 	
 	// 로그인
@@ -85,16 +89,14 @@ public class UserController {
 		return ResponseEntity.ok(result);
 	}
 	
-	
-	
 	// 프로필 등록
 	@PutMapping("/profile")
-	public ResponseEntity<?> profileUpload(@RequestBody UserProfileRequest userProfileRequest, HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		userProfileRequest.setId(loginUser.getId());
+	public ResponseEntity<?> profileUpload(@RequestPart UserProfileRequest userProfileRequest, @RequestPart(value="profileImg", required=false) MultipartFile multipartFile, HttpSession session) {
+//		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+//		userProfileRequest.setId(loginUser.getId());
 		
-		// 추후 이미지를 String에서 파일로 바꾸어야 함!!!
-		// crud 확인을 위해 String으로 보낸 것임
+		String profileImg = fileManageService.uploadFile(multipartFile);
+		userProfileRequest.setProfileImg(profileImg);
 		
 		userService.profileUpload(userProfileRequest);
 		
