@@ -2,7 +2,7 @@
 import SelectedListItem from "@/components/plan/make/SelectedListItem.vue";
 import OptimizeDialog from "@/components/plan/make/OptimizeDialog.vue";
 
-import { Button, Dialog } from "primevue/button";
+import { Button, Dialog } from "primevue";
 
 import { ref } from "vue";
 

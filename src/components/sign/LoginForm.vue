@@ -1,19 +1,38 @@
 <script setup>
-import { InputText, Button } from "primevue";
+import { InputText, Button, Message } from "primevue";
+
+import { ref, computed } from "vue";
+
+const loginForm = ref({
+  id: "",
+  password: "",
+});
+
+const validMessage = computed(() => {
+  if (!loginForm.value.id) return "아이디를 작성해주세요.";
+  if (!loginForm.value.password) return "비밀번호를 작성해주세요";
+  return "";
+});
+
+const validCheck = computed(() => {
+  return !loginForm.value.id || !loginForm.value.password;
+});
 </script>
 
 <template>
   <div>
-    <form class="container">
+    <Form class="container">
       <div class="input-group">
         <div class="text-xs input-label">ID</div>
-        <div><InputText class="w-full" type="text" /></div>
+        <div>
+          <InputText v-model="loginForm.id" class="w-full" type="text" />
+        </div>
       </div>
 
       <div class="input-group">
         <div class="text-xs input-label">Password</div>
         <div>
-          <InputText class="w-full" type="text" />
+          <InputText v-model="loginForm.password" class="w-full" type="text" />
         </div>
       </div>
 
@@ -24,7 +43,19 @@ import { InputText, Button } from "primevue";
       </div>
 
       <div>
-        <Button class="w-full" label="Login" severity="warn" />
+        <div class="message">
+          <Message
+            class="text-valid"
+            v-if="validCheck"
+            severity="error"
+            variant="simple"
+          >
+            {{ validMessage }}
+          </Message>
+        </div>
+        <div>
+          <Button class="w-full" label="Login" severity="warn" />
+        </div>
       </div>
 
       <div class="signup-group">
@@ -35,7 +66,7 @@ import { InputText, Button } from "primevue";
           </RouterLink>
         </div>
       </div>
-    </form>
+    </Form>
   </div>
 </template>
 
@@ -61,6 +92,11 @@ import { InputText, Button } from "primevue";
   display: flex;
   justify-content: flex-end;
   padding-bottom: 40px;
+}
+
+.message {
+  padding-bottom: 10px;
+  padding-left: 10px;
 }
 
 .signup-group {
