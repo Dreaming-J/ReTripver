@@ -32,11 +32,14 @@ public class UserController {
 	// 로그인
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
+		System.out.println("!!!");
 		LoginResponse loginResponse = userService.login(loginRequest);
 		
 		session.setAttribute("loginUser", loginResponse);
 		
 		// 세션저장? 해시 저장? jwt저장?
+		
+		System.out.println(loginResponse.getId());
 
 		return ResponseEntity.ok().build();
 	} 
