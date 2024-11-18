@@ -1,22 +1,37 @@
 <script setup>
-import { InputText, Button, Message } from "primevue";
+import { InputText, Button, Message } from "primevue"
+import { ref, computed } from "vue"
+import { storeToRefs } from "pinia"
+import { useRouter } from "vue-router"
+import { useUserStore } from "@/stores/user"
 
-import { ref, computed } from "vue";
+const router = useRouter()
+const userStore = useUserStore()
+const { isLogin, isLoginError } = storeToRefs(userStore)
+const { userLogin } = userStore
 
 const loginForm = ref({
   id: "",
   password: "",
-});
+})
 
 const validMessage = computed(() => {
-  if (!loginForm.value.id) return "아이디를 작성해주세요.";
-  if (!loginForm.value.password) return "비밀번호를 작성해주세요";
-  return "";
-});
+  if (!loginForm.value.id) return "아이디를 작성해주세요."
+  if (!loginForm.value.password) return "비밀번호를 작성해주세요"
+  return ""
+})
 
 const validCheck = computed(() => {
   return !loginForm.value.id || !loginForm.value.password;
-});
+})
+
+const login = async () => {
+  await userLogin(loginForm.value)
+  console.log("isLogin: " + isLogin.value)
+  if (isLogin.value) {
+    router.replace("/")
+  }
+}
 </script>
 
 <template>
@@ -54,7 +69,7 @@ const validCheck = computed(() => {
           </Message>
         </div>
         <div>
-          <Button class="w-full" label="Login" severity="warn" />
+          <Button class="w-full" label="Login" severity="warn" @click="login" />
         </div>
       </div>
 
