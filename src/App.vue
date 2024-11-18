@@ -2,18 +2,20 @@
 import Header from "@/components/common/header/Header.vue";
 import Footer from "@/components/common/Footer.vue";
 
-import { RouterView } from "vue-router";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 </script>
 
 <template>
   <div>
-    <header>
+    <header v-if="route.meta.layout !== 'empty'">
       <Header />
     </header>
     <main>
       <RouterView />
     </main>
-    <footer>
+    <footer v-if="route.meta.layout !== 'empty'">
       <Footer />
     </footer>
   </div>

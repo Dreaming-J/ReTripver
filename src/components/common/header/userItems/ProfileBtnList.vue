@@ -1,5 +1,5 @@
 <script setup>
-import NoticeList from "@/components/common/header/NoticeList.vue";
+import NoticeList from "@/components/common/header/userItems/NoticeList.vue";
 
 import ProfileImg from "@/assets/img/profile.jpg";
 

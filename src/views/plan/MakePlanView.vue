@@ -1,30 +1,36 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-import SelectedList from '@/components/plan/make/SelectedList.vue';
-import SearchList from '@/components/plan/make/SearchList.vue';
-import MapContent from '@/components/plan/make/MapContent.vue';
+import SelectedList from "@/components/plan/make/SelectedList.vue";
+import SearchList from "@/components/plan/make/SearchList.vue";
+import MapContent from "@/components/plan/make/MapContent.vue";
 
-import Button from 'primevue/button';
+import Button from "primevue/button";
 
 const isSearchVisible = ref(true);
-
 </script>
 
 <template>
-  <div class="container"> 
+  <div class="container">
     <div class="seletced-list-container">
       <div class="seletced-list">
         <SelectedList />
       </div>
-      
-      <div :class="['search-list', {'search-list-hide': !isSearchVisible}]">
+
+      <div :class="['search-list', { 'search-list-hide': !isSearchVisible }]">
         <div>
           <SearchList />
         </div>
+
         <div class="btn-search-toggle">
-          <Button class="btn-toggle" :icon="isSearchVisible ? 'pi pi-chevron-left' : 'pi pi-chevron-right'"
-                  severity="secondary" @click="isSearchVisible = !isSearchVisible"/>
+          <Button
+            class="btn-toggle"
+            :icon="
+              isSearchVisible ? 'pi pi-chevron-left' : 'pi pi-chevron-right'
+            "
+            severity="secondary"
+            @click="isSearchVisible = !isSearchVisible"
+          />
         </div>
       </div>
     </div>
@@ -32,15 +38,12 @@ const isSearchVisible = ref(true);
     <div class="map-content">
       <MapContent />
     </div>
-
-
-
   </div>
 </template>
 
 <style scoped>
 .container {
-   display: flex;
+  display: flex;
 }
 
 .seletced-list-container {
@@ -66,7 +69,7 @@ const isSearchVisible = ref(true);
   height: 100%;
   left: 510px;
   position: absolute;
-  transition: .4s;
+  transition: 0.4s;
 }
 
 .search-list-hide {
@@ -76,7 +79,7 @@ const isSearchVisible = ref(true);
 .btn-search-toggle {
   position: absolute;
   top: 40%;
-  left : 100%;
+  left: 100%;
 }
 
 .btn-toggle {
@@ -92,5 +95,4 @@ const isSearchVisible = ref(true);
   height: 1200px;
   background-color: lightblue;
 }
-
 </style>

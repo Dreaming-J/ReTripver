@@ -1,114 +1,92 @@
 <script setup>
-import SelectedListItem from '@/components/plan/make/SelectedListItem.vue';
-import OptimizeDialog from '@/components/plan/make/OptimizeDialog.vue';
+import SelectedListItem from "@/components/plan/make/SelectedListItem.vue";
+import OptimizeDialog from "@/components/plan/make/OptimizeDialog.vue";
 
-import Button from "primevue/button";
-
-import ConfirmDialog from 'primevue/confirmdialog';
-import Dialog from 'primevue/dialog';
-import { useConfirm } from "primevue/useconfirm";
-import { useToast } from "primevue/usetoast";
+import { Button, Dialog } from "primevue/button";
 
 import { ref } from "vue";
 
-const confirm = useConfirm();
-const toast = useToast();
-
-const showTemplate = () => {
-    confirm.require({
-        group: 'templating',
-        header: '  ',
-        icon: 'pi pi-exclamation-circle',
-        accept: () => {
-            toast.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted', life: 3000 });
-        },
-        reject: () => {
-            toast.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-        }
-    });
-};
-
-
 const visible = ref(false);
-
-
 </script>
 
 <template>
   <div class="container">
     <div class="seleted-header">
-        <div class="header-item fa-lg">
-            <font-awesome-icon :icon="['fas', 'location-dot']" />
-        </div>
-        <div class="header-item fa-lg">
-            여행 장소 선택
-        </div>
-        <div class="header-item">
-            <Button label="코스 최적화" @click="visible = true"
-                    severity="warn" variant="outlined" />
+      <div class="header-item fa-lg">
+        <font-awesome-icon :icon="['fas', 'location-dot']" />
+      </div>
 
-                <div class="card flex justify-center">
-                    <Dialog v-model:visible="visible" modal header=" ">
-                        <OptimizeDialog />
-                    </Dialog>
-                </div>
+      <div class="header-item fa-lg">여행 장소 선택</div>
+
+      <div class="header-item">
+        <Button
+          label="코스 최적화"
+          @click="visible = true"
+          severity="warn"
+          variant="outlined"
+        />
+
+        <div class="card flex justify-center">
+          <Dialog v-model:visible="visible" modal header=" ">
+            <OptimizeDialog />
+          </Dialog>
         </div>
+      </div>
     </div>
+
     <div class="select-list">
-        <div class="selected-list-item">
-            <SelectedListItem />
-        </div>
-        <div class="selected-list-item">
-            <SelectedListItem />
-        </div>
-        <div class="selected-list-item">
-            <SelectedListItem />
-        </div>
-        <div class="selected-list-item">
-            <SelectedListItem />
-        </div>
+      <div class="selected-list-item">
+        <SelectedListItem />
+      </div>
+      <div class="selected-list-item">
+        <SelectedListItem />
+      </div>
+      <div class="selected-list-item">
+        <SelectedListItem />
+      </div>
+      <div class="selected-list-item">
+        <SelectedListItem />
+      </div>
     </div>
-    
   </div>
+
   <div class="select-btn">
     <Button label="여행 만들기" severity="warn" variant="outlined" />
   </div>
 </template>
 
 <style scoped>
-
 .seleted-header {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    padding: 5px;
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 5px;
 }
 
 .header-item {
-    padding: 0px 10px;
-    margin-right: 5px;
+  padding: 0px 10px;
+  margin-right: 5px;
 }
 
 .header-item:last-child {
-    margin-right: 0px;
-    margin-left: auto;
+  margin-right: 0px;
+  margin-left: auto;
 }
 
 .select-list {
-    padding: 5px;
+  padding: 5px;
 }
 
 .selected-list-item {
-    border: 1px solid lightgray;
-    margin: 10px;
-    height: 80px;
-    border-radius: 5px;
+  border: 1px solid lightgray;
+  margin: 10px;
+  height: 80px;
+  border-radius: 5px;
 }
 
 .select-btn {
-    display: flex;
-    justify-content: flex-end;
-    padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
 }
-
 </style>

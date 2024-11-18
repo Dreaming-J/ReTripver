@@ -10,12 +10,16 @@ import Logo from "@/assets/img/logo.png";
           <img :src="Logo" width="200px" />
         </RouterLink>
       </div>
+
       <div class="nav-items">
         <RouterLink :to="{ name: 'plan' }" class="nav-item"> Plans </RouterLink>
+
         <RouterLink :to="{ name: 'attraction' }" class="nav-item">
           Attractions
         </RouterLink>
+
         <RouterLink :to="{ name: 'user' }" class="nav-item"> Rank </RouterLink>
+
         <RouterLink :to="{ name: 'status' }" class="nav-item">
           My Status
         </RouterLink>
