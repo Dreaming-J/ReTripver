@@ -12,6 +12,7 @@ const router = createRouter({
       path: "/sign",
       name: "",
       redirect: "/sign/login",
+      meta: { layout: "empty" },
       component: () => import("@/views/sign/SignView.vue"),
       children: [
         {
@@ -49,13 +50,13 @@ const router = createRouter({
       name: "attraction",
       component: () => import("@/views/attraction/AttractionView.vue"),
       redirect: "/attraction/list",
-      children:[
+      children: [
         {
           path: "list",
           name: "attraction-list",
           component: () => import("@/views/attraction/AttractionListView.vue"),
-        }
-      ]
+        },
+      ],
     },
     {
       path: "/user",
