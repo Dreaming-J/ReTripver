@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.plan.dto.AttractionResponse;
@@ -28,6 +30,20 @@ public class PlanController {
 	@Autowired
 	public PlanController(PlanService planService) {
 		this.planService = planService;
+	}
+	
+	@GetMapping("/attraction/info/{attractionNo}")
+	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
+		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
+		
+		return ResponseEntity.ok(attractionResponse);
+	}
+	
+	@GetMapping("/attraction/search/{sidoCode}")
+	public ResponseEntity<?> attractionList(@PathVariable("sidoCode") int sidoCode, @RequestParam int page) {
+		List<AttractionResponse> attractionList = planService.getAttractions(sidoCode, page);
+		
+		return ResponseEntity.ok(attractionList);
 	}
 	
 	@GetMapping("/list/{userId}")
@@ -71,18 +87,11 @@ public class PlanController {
 		return ResponseEntity.ok(isLike);
 	}
 	
-	@GetMapping("/rank/{page}")
-	public ResponseEntity<?> rank(@PathVariable("page") int page) {
+	@GetMapping("/rank")
+	public ResponseEntity<?> rank(@RequestParam int page) {
 		List<PlanResponse> rankPlanList = planService.rankPlanList(page);
 		
 		return ResponseEntity.ok(rankPlanList);
-	}
-	
-	@GetMapping("/attraction/{attractionNo}")
-	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
-		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
-		
-		return ResponseEntity.ok(attractionResponse);
 	}
 	
 	@PostMapping("/make")
@@ -91,6 +100,22 @@ public class PlanController {
 		
 		planRequest.setUserId(loginResponse.getId());
 		planService.makePlan(planRequest);
+		
+		return ResponseEntity.ok(null);
+	}
+	
+	@GetMapping("/search/{sidoCode}")
+	public ResponseEntity<?> search(@PathVariable("sidoCode") int sidoCode) {
+		List<PlanResponse> planList = planService.sidoPlanList(sidoCode);
+		
+		return ResponseEntity.ok(planList);
+	}
+	
+	@PatchMapping("/quest-clear")
+	public ResponseEntity<?> questClear(@RequestBody int planId, HttpSession httpSession) {
+		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+		
+		planService.questClear(planId, loginResponse.getId());
 		
 		return ResponseEntity.ok(null);
 	}

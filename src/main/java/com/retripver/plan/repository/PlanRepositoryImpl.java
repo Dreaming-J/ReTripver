@@ -1,6 +1,5 @@
 package com.retripver.plan.repository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +19,16 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Autowired
 	public PlanRepositoryImpl(PlanMapper planMapper) {
 		this.planMapper = planMapper;
+	}
+
+	@Override
+	public AttractionResponse getAttraction(int attractionNo) {
+		return planMapper.selectAttractionByAttractionNo(attractionNo);
+	}
+
+	@Override
+	public List<AttractionResponse> getAttractions(Map<String, Object> params) {
+		return planMapper.selectAttractionsBySidoCode(params);
 	}
 
 	@Override
@@ -53,11 +62,6 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
-	public AttractionResponse getAttraction(int attractionNo) {
-		return planMapper.selectAttractionByAttractionNo(attractionNo);
-	}
-
-	@Override
 	public int addPlanLike(Map<String, Object> params) {
 		return planMapper.insertPlanLike(params);
 	}
@@ -71,5 +75,30 @@ public class PlanRepositoryImpl implements PlanRepository {
 	public void makePlan(PlanRequest planRequest) {
 		planMapper.insertPlan(planRequest);
 		planMapper.insertCourses(planRequest.getId(), planRequest.getCourses());
+	}
+
+	@Override
+	public List<PlanResponse> sidoPlanList(int sidoCode) {
+		return planMapper.selectPlansBySidoCode(sidoCode);
+	}
+
+	@Override
+	public int getCourseSize(int planId) {
+		return planMapper.selectCourseSizeByPlanId(planId);
+	}
+
+	@Override
+	public int getCarryOutCourseSize(int planId) {
+		return planMapper.selectCarryOutCourseSizeByPlanId(planId);
+	}
+
+	@Override
+	public int getSumExpOfClearCourses(int planId) {
+		return planMapper.selectSumExpOfClearCoursesByPlanId(planId);
+	}
+
+	@Override
+	public void gainExp(int gainExp, String userId) {
+		planMapper.updateExpByUserId(gainExp, userId);
 	}
 }

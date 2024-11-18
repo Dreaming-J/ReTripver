@@ -1,11 +1,10 @@
 package com.retripver.plan.service;
 
-import java.sql.SQLException;
+import static com.retripver.global.constant.Constant.PAGE_SIZE;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +15,10 @@ import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.FailAddPlanLikeException;
 import com.retripver.plan.exception.FailDeletePlanLikeException;
+import com.retripver.plan.exception.NoCarryOutCourseInPlanException;
 import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
-import static com.retripver.global.constant.Constant.PAGE_SIZE;
 
 @Service
 public class PlanServiceImpl implements PlanService {
@@ -29,6 +28,30 @@ public class PlanServiceImpl implements PlanService {
 	@Autowired
 	public PlanServiceImpl(PlanRepository planRepository) {
 		this.planRepository = planRepository;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public AttractionResponse getAttraction(int attractionNo) {
+		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
+		
+		if (attractionResponse == null)
+			throw new NotFoundAttractionException();
+		
+		return attractionResponse;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<AttractionResponse> getAttractions(int sidoCode, int page) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("sidoCode", sidoCode);
+		params.put("page", (page - 1) * PAGE_SIZE);
+		params.put("size", PAGE_SIZE);
+		
+		List<AttractionResponse> attractionList = planRepository.getAttractions(params);
+		
+		return attractionList;
 	}
 
 	@Override
@@ -102,19 +125,33 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
+	@Transactional
+	public void makePlan(PlanRequest planRequest) {
+		planRepository.makePlan(planRequest);
+	}
+
+	@Override
 	@Transactional(readOnly = true)
-	public AttractionResponse getAttraction(int attractionNo) {
-		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
-		
-		if (attractionResponse == null)
-			throw new NotFoundAttractionException();
-		
-		return attractionResponse;
+	public List<PlanResponse> sidoPlanList(int sidoCode) {
+		return planRepository.sidoPlanList(sidoCode);
 	}
 
 	@Override
 	@Transactional
-	public void makePlan(PlanRequest planRequest) {
-		planRepository.makePlan(planRequest);
+	public void questClear(int planId, String userId) {
+		int carryOutCourseSize = planRepository.getCarryOutCourseSize(planId);
+		if (carryOutCourseSize == 0)
+			throw new NoCarryOutCourseInPlanException();
+		
+		int gainExp = planRepository.getSumExpOfClearCourses(planId);
+		if (gainExp > 0)
+			planRepository.gainExp(gainExp, userId);
+		
+//		boolean result = planRepository.questClear(planId);
+//		
+//		if (!result)
+//			throw new FailQuestClearException();
+		
+		//업적, 방문 횟수, 티어 상승 처리
 	}
 }

@@ -8,6 +8,10 @@ import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanService {
 
+	AttractionResponse getAttraction(int attractionNo);
+
+	List<AttractionResponse> getAttractions(int sidoCode, int page);
+
 	List<PlanResponse> planList(String userId);
 
 	List<PlanResponse> myPlanList(String userId);
@@ -20,8 +24,10 @@ public interface PlanService {
 
 	List<PlanResponse> rankPlanList(int page);
 
-	AttractionResponse getAttraction(int attractionNo);
-
 	void makePlan(PlanRequest planRequest);
+
+	List<PlanResponse> sidoPlanList(int sidoCode);
+
+	void questClear(int planId, String userId);
 
 }

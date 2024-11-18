@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.CourseRequest;
@@ -44,6 +45,18 @@ public interface PlanMapper {
     		WHERE a.no = #{attractionNo}
     		""")
     AttractionResponse selectAttractionByAttractionNo(int attractionNo);
+
+    @Select("""
+    		SELECT *
+    		FROM attractions a
+    		JOIN sidos s ON a.area_code = s.sido_code
+    		JOIN guguns g ON a.area_code = g.sido_code AND a.si_gun_gu_code = g.gugun_code
+    		JOIN contenttypes c ON a.content_type_id = c.content_type_id
+    		WHERE a.area_code = #{sidoCode}
+    		AND a.first_image1 <> ''
+    		LIMIT #{page}, #{size}
+    		""")
+	List<AttractionResponse> selectAttractionsBySidoCode(Map<String, Object> params);
 
 	@Select("""
 			SELECT *
@@ -148,4 +161,47 @@ public interface PlanMapper {
 			</script>
 			""")
 	int insertCourses(int planId, List<CourseRequest> courses);
+
+	@Select("""
+			SELECT *
+			FROM plans
+			WHERE sido_code = #{sidoCode}
+			AND is_public = true
+			""")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+	List<PlanResponse> selectPlansBySidoCode(int sidoCode);
+
+    @Select("""
+    		SELECT COUNT(*)
+    		FROM courses
+    		WHERE plan_id = #{planId}
+    		""")
+	int selectCourseSizeByPlanId(int planId);
+    
+    @Select("""
+    		SELECT COUNT(*)
+    		FROM courses
+    		WHERE plan_id = #{planId}
+    		AND user_img IS NOT NULL
+    		""")
+	int selectCarryOutCourseSizeByPlanId(int planId);
+
+    @Select("""
+    		SELECT SUM(exp)
+    		FROM courses
+    		WHERE plan_id = #{planId}
+    		AND is_clear = TRUE
+    		GROUP BY plan_id
+    		""")
+	int selectSumExpOfClearCoursesByPlanId(int planId);
+
+    @Update("""
+    		UPDATE users
+    		SET exp = exp + #{gainExp}
+    		WHERE id = #{userId}
+    		""")
+	void updateExpByUserId(int gainExp, String userId);
 }

@@ -39,4 +39,18 @@ public class PlanExceptionController {
 		
 		return ResponseEntity.internalServerError().body(planErrorResponse);
 	}
+	
+	@ExceptionHandler(NoCarryOutCourseInPlanException.class)
+	public ResponseEntity<?> noCarryOutCourseInPlanHandler() {
+		PlanErrorResponse planErrorResponse = PlanErrorResponse.of(PlanErrorCode.NO_CARRY_OUT_COURSE_IN_PLAN);
+		
+		return ResponseEntity.internalServerError().body(planErrorResponse);
+	}
+	
+	@ExceptionHandler(FailQuestClearException.class)
+	public ResponseEntity<?> failQuestClearHandler() {
+		PlanErrorResponse planErrorResponse = PlanErrorResponse.of(PlanErrorCode.FAIL_QUEST_CLEAR);
+		
+		return ResponseEntity.internalServerError().body(planErrorResponse);
+	}
 }

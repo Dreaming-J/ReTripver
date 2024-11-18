@@ -1,6 +1,5 @@
 package com.retripver.plan.repository;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +8,10 @@ import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanRepository {
+
+	AttractionResponse getAttraction(int attractionNo);
+
+	List<AttractionResponse> getAttractions(Map<String, Object> params);
 
 	List<PlanResponse> planList(String userId);
 
@@ -22,11 +25,19 @@ public interface PlanRepository {
 
 	List<PlanResponse> rankPlanList(Map<String, Object> params);
 
-	AttractionResponse getAttraction(int attractionNo);
-
 	int addPlanLike(Map<String, Object> params);
 
 	int canclePlanLike(Map<String, Object> params);
 
 	void makePlan(PlanRequest planRequest);
+
+	List<PlanResponse> sidoPlanList(int sidoCode);
+
+	int getCourseSize(int planId);
+
+	int getCarryOutCourseSize(int planId);
+
+	int getSumExpOfClearCourses(int planId);
+
+	void gainExp(int gainExp, String userId);
 }
