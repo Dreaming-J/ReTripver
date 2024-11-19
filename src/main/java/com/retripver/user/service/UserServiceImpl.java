@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.retripver.global.exception.InvalidTokenException;
 import com.retripver.global.util.HashUtil;
 import com.retripver.global.util.JWTUtil;
 import com.retripver.user.dto.*;
@@ -25,13 +26,36 @@ public class UserServiceImpl implements UserService {
 		this.jwtUtil = jwtUtil;
 	}
 
+    @Override
+    public String createAccessToken(String refreshToken) throws InvalidTokenException {
+        String userId = jwtUtil.extractUserId(refreshToken, true);
+
+        return jwtUtil.createAccessToken(userId);
+    }
+
 	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
+		String salt = userRepository.findSaltById(loginRequest.getId());
+		
+		if (salt == null) {
+			throw new NotFoundUserException();
+		}
+		
+		String hashedPassword = hashUtil.encrypt(loginRequest.getPassword(), salt);
+		loginRequest.setPassword(hashedPassword);
+		
 		LoginResponse loginResponse = userRepository.login(loginRequest);
 		
 		if (loginResponse == null) {
 			throw new NotFoundUserException();
 		}
+		
+        String accessToken = jwtUtil.createAccessToken(loginResponse.getId());
+        String refreshToken = jwtUtil.createRefreshToken(loginResponse.getId());
+        loginResponse.setAccessToken(accessToken);
+        
+        loginResponse.setRefreshToken(refreshToken);
+        loginResponse.setMaxAge(jwtUtil.getMaxAge());
 		
 		return loginResponse;
 	}

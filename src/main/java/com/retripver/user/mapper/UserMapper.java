@@ -240,4 +240,11 @@ public interface UserMapper {
 	})
 	List<UserInfoResponse> selectUserSearchByKeyword(String keyword);
 
+	@Select("""
+			SELECT salt
+			FROM users
+			WHERE id = #{id}
+			""")
+	String selectSaltById(String id);
+
 }

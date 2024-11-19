@@ -92,7 +92,7 @@ CREATE TABLE `users` (
     FOREIGN KEY (`tier_no`) REFERENCES `tier`(`id`)
 );
 
-CREATE TABLE `token` (
+CREATE TABLE `black_list` (
 	`id`		VARCHAR(16) NOT NULL,
 	`token`		VARCHAR(1000) NOT NULL,
 	`expired_at`	DATETIME NOT NULL,

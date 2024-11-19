@@ -217,4 +217,9 @@ public class UserRepositoryImpl implements UserRepository {
 		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
 	}
 
+	@Override
+	public String findSaltById(String id) {
+		return userMapper.selectSaltById(id);
+	}
+
 }

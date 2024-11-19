@@ -61,4 +61,6 @@ public interface UserRepository {
 
 	List<UserInfoResponse> getSearchUserByKeyword(String keyword);
 
+	String findSaltById(String id);
+
 }
