@@ -7,10 +7,15 @@ import { Button, Drawer, Menu } from "primevue";
 
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 const visibleNotice = ref(false);
 
 const router = useRouter();
+
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
 
 const menu = ref();
 const items = ref([
@@ -61,7 +66,7 @@ const toggle = (event) => {
       </Drawer>
     </div>
     <div class="profile-item">
-      <img :src="ProfileImg" class="profile-img" />
+      <img :src="userInfo.profileImg" class="profile-img" />
     </div>
     <div class="profile-item">
       <Button
@@ -73,7 +78,7 @@ const toggle = (event) => {
         aria-haspopup="true"
         aria-controls="overlay_menu"
       >
-        Jim_JJong
+        {{ userInfo.id }}
         <font-awesome-icon
           class="profile-icon"
           :icon="['fas', 'chevron-down']"
