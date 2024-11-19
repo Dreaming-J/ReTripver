@@ -5,7 +5,8 @@ import { ref } from "vue";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
-const isLogin = userStore.isLogin;
+// const isLogin = userStore.isLogin;
+const isLogin = true;
 </script>
 
 <template>
