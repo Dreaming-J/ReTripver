@@ -2,6 +2,7 @@ package com.retripver.user.service;
 
 import java.util.List;
 
+import com.retripver.global.exception.InvalidTokenException;
 import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.LoginRequest;
 import com.retripver.user.dto.LoginResponse;
@@ -15,9 +16,10 @@ import com.retripver.user.dto.UserModifyRequest;
 import com.retripver.user.dto.UserProfileRequest;
 import com.retripver.user.dto.UserSearchIdRequest;
 import com.retripver.user.dto.UserSearchPwdRequest;
-import com.retripver.user.exception.NotFoundUserException;
 
 public interface UserService {
+
+	String createAccessToken(String refreshToken) throws InvalidTokenException;
 
 	LoginResponse login(LoginRequest loginRequest);
 

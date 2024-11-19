@@ -76,7 +76,8 @@ CREATE TABLE `tier` (
 
 CREATE TABLE `users` (
     `id`				VARCHAR(16) NOT NULL,
-    `password`			VARCHAR(20) NOT NULL,
+    `password`			VARCHAR(128) NOT NULL,
+    `salt`				VARCHAR(32) NOT NULL,
     `name`				VARCHAR(16) NOT NULL,
     `email`				VARCHAR(100) NOT NULL,
     `profile_img`		VARCHAR(1000) DEFAULT NULL,
@@ -89,6 +90,14 @@ CREATE TABLE `users` (
     
     PRIMARY KEY (`id`),
     FOREIGN KEY (`tier_no`) REFERENCES `tier`(`id`)
+);
+
+CREATE TABLE `black_list` (
+	`id`		VARCHAR(16) NOT NULL,
+	`token`		VARCHAR(1000) NOT NULL,
+	`expired_at`	DATETIME NOT NULL,
+	
+	FOREIGN KEY (`id`) REFERENCES `users`(`id`)
 );
 
 CREATE TABLE `follow` (
@@ -224,5 +233,3 @@ CREATE TABLE `email_auth` (
     `code`			VARCHAR(16) NOT NULL,
     `complete_time`		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
-

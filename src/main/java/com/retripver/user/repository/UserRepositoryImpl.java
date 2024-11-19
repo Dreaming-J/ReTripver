@@ -22,6 +22,12 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
+	public void deleteExpiredTokens() {
+		userMapper.deleteExpiredTokens();
+	}
+
+	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		return userMapper.selectByIdAndPassword(loginRequest);
 	}
@@ -209,6 +215,11 @@ public class UserRepositoryImpl implements UserRepository {
 		if (achievementId == 0 || achievementTable == null) return null;
 		
 		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+	}
+
+	@Override
+	public String findSaltById(String id) {
+		return userMapper.selectSaltById(id);
 	}
 
 }

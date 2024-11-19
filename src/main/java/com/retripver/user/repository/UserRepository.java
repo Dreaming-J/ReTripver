@@ -19,6 +19,8 @@ import com.retripver.user.exception.UserSQLException;
 
 public interface UserRepository {
 
+	void deleteExpiredTokens();
+
 	LoginResponse login(LoginRequest loginRequest);
 
 	void signup(SignupRequest signupRequest) throws UserSQLException;
@@ -58,5 +60,7 @@ public interface UserRepository {
 	List<UserInfoResponse> getRankBySidoCodeList(int sidoCode);
 
 	List<UserInfoResponse> getSearchUserByKeyword(String keyword);
+
+	String findSaltById(String id);
 
 }

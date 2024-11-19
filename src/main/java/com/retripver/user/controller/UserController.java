@@ -3,6 +3,9 @@ package com.retripver.user.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,26 +32,61 @@ public class UserController {
 		this.fileManageService = fileManageService;
 	}
 	
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@CookieValue(value = "refresh_token", required = false) String refreshToken) {
+
+        String newAccessToken = userService.createAccessToken(refreshToken);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(
+                "Authorization",
+                "Bearer " + newAccessToken
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .headers(httpHeaders)
+                .build();
+    }
+	
 	// 로그인
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
-		System.out.println("!!!");
+	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
 		LoginResponse loginResponse = userService.login(loginRequest);
-		
-		session.setAttribute("loginUser", loginResponse);
-		
-		// 세션저장? 해시 저장? jwt저장?
-		
-		System.out.println(loginResponse.getId());
 
-		return ResponseEntity.ok().build();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(
+                "Authorization",
+                "Bearer " + loginResponse.getAccessToken()
+        );
+
+        ResponseCookie responseCookie = ResponseCookie
+                .from( // Cookie의 Key, Value 설정.
+                        "refresh_token", // Key
+                        loginResponse.getRefreshToken() // Value
+                )
+                .domain("localhost") // Cookie를 사용하는 도메인 (특정 도메인에만 적용하려면 사용. 그렇지 않은 경우 생략)
+                .path("/") // 해당 도메인의 경로 (쿠키 사용 범위)
+                .httpOnly(true) // HTTP 통신에서만 Cookie를 사용.
+                .secure(true) // Set-Cookie
+                .maxAge(loginResponse.getMaxAge().getTime() / 1000 / 1000) // RefreshToken과 동일한 시간.
+                .sameSite("Strict") // 동일한 사이트에서 사용, None: 동일한 사이트가 아니어도 됨.
+                .build();
+
+        // SET_COOKIE2를 사용하면 클라이언트의 쿠키가 변경되지 않음.
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .headers(httpHeaders)
+                .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
+                .body(loginResponse);
 	} 
 	
 	// 로그아웃
-	@GetMapping("/logout")
-	public ResponseEntity<?> logout(HttpSession session) {
-		session.invalidate();
-		
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(@RequestHeader(value = "Authorization", required = false) String authorization, @CookieValue(value = "refresh_token", required = false) String refreshToken) {
+		//TODO: 수정 필요
+		//userService.signOut(authorization, refreshToken);
+        
 		return ResponseEntity.ok().build();
 	}
 	
