@@ -16,10 +16,16 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 // primevue -  관련 설정
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
-import ConfirmationService from 'primevue/confirmationservice';
-import ToastService from 'primevue/toastservice';
-import 'primeicons/primeicons.css';
-import 'primeflex/primeflex.css'
+// import ConfirmationService from "primevue/confirmationservice";
+// import ToastService from "primevue/toastservice";
+import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
+
+// jQuery 추가
+import $ from "jquery";
+
+// jQuery 전역으로 등록
+window.$ = window.jQuery = $;
 
 library.add(fas, far, fab);
 
@@ -36,8 +42,8 @@ app.use(PrimeVue, {
     },
   },
 });
-app.use(ConfirmationService);
-app.use(ToastService);
+// app.use(ConfirmationService);
+// app.use(ToastService);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
 

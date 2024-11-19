@@ -1,10 +1,14 @@
 <script setup>
-import SelectedListItem from "@/components/plan/make/SelectedListItem.vue";
-import OptimizeDialog from "@/components/plan/make/OptimizeDialog.vue";
-
+import SelectedListItem from "@/components/plan/make/select/SelectedListItem.vue";
+import OptimizeDialog from "@/components/plan/make/select/OptimizeDialog.vue";
 import { Button, Dialog } from "primevue";
-
 import { ref } from "vue";
+
+defineProps({
+  selectList: {
+    type: Object,
+  },
+});
 
 const visible = ref(false);
 </script>
@@ -35,17 +39,12 @@ const visible = ref(false);
     </div>
 
     <div class="select-list">
-      <div class="selected-list-item">
-        <SelectedListItem />
-      </div>
-      <div class="selected-list-item">
-        <SelectedListItem />
-      </div>
-      <div class="selected-list-item">
-        <SelectedListItem />
-      </div>
-      <div class="selected-list-item">
-        <SelectedListItem />
+      <div
+        class="selected-list-item"
+        v-for="select in selectList"
+        :key="select.no"
+      >
+        <SelectedListItem :select="select" />
       </div>
     </div>
   </div>

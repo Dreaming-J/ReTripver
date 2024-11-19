@@ -1,20 +1,31 @@
 <script setup>
 import { ref } from "vue";
 
-import SelectedList from "@/components/plan/make/SelectedList.vue";
-import SearchList from "@/components/plan/make/SearchList.vue";
-import MapContent from "@/components/plan/make/MapContent.vue";
+import SelectedList from "@/components/plan/make/select/SelectedList.vue";
+import SearchList from "@/components/plan/make/search/SearchList.vue";
+import MapContent from "@/components/plan/make/map/MapContent.vue";
 
 import Button from "primevue/button";
 
 const isSearchVisible = ref(true);
+
+const selectList = ref([
+  { no: 3837, title: "경복궁", lat: 37.5788222356, lng: 126.9769930325 },
+  { no: 4486, title: "남산서울타워", lat: 37.5511089858, lng: 126.9878983791 },
+  {
+    no: 3931,
+    title: "창덕궁과 후원 [유네스코 세계유산]",
+    lat: 37.5809583673,
+    lng: 126.9919888278,
+  },
+]);
 </script>
 
 <template>
   <div class="container">
     <div class="seletced-list-container">
       <div class="seletced-list">
-        <SelectedList />
+        <SelectedList :select-list="selectList" />
       </div>
 
       <div :class="['search-list', { 'search-list-hide': !isSearchVisible }]">
@@ -36,7 +47,7 @@ const isSearchVisible = ref(true);
     </div>
 
     <div class="map-content">
-      <MapContent />
+      <MapContent :select-list="selectList" />
     </div>
   </div>
 </template>
@@ -44,12 +55,13 @@ const isSearchVisible = ref(true);
 <style scoped>
 .container {
   display: flex;
+  height: calc(100vh - 100px);
 }
 
 .seletced-list-container {
   display: flex;
   width: 500px;
-  height: 1200px;
+  height: 100%;
   position: relative;
 }
 
@@ -67,7 +79,9 @@ const isSearchVisible = ref(true);
   background-color: white;
   border: 1px solid lightgray;
   height: 100%;
-  left: 510px;
+  /* left: 510px;
+   */
+  left: 0px;
   position: absolute;
   transition: 0.4s;
 }
@@ -92,7 +106,8 @@ const isSearchVisible = ref(true);
 
 .map-content {
   width: 100%;
-  height: 1200px;
-  background-color: lightblue;
+  height: 100%;
+  padding: 1px; /* border 크기만큼 padding 추가 */
+  box-sizing: border-box; /* padding을 width/height에 포함 */
 }
 </style>
