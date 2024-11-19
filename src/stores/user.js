@@ -1,4 +1,5 @@
 import { ref } from "vue"
+import axios from "axios"
 import { useRouter } from "vue-router"
 import { defineStore } from "pinia"
 
@@ -11,7 +12,7 @@ export const useUserStore = defineStore("userStore", () => {
   const isLogin = ref(false)
   const isLoginError = ref(false)
   const userInfo = ref(null)
-  // const isValidToken = ref(false)
+  const isValidToken = ref(false)
 
   const userLogin = async (loginUser) => {
     await login(
@@ -24,22 +25,17 @@ export const useUserStore = defineStore("userStore", () => {
             id: data.id,
             profileImg: data.profileImg
           }
-
-          console.log(userInfo)
-          // let accessToken = data["access-token"]
-          // let refreshToken = data["refresh-token"]
           isLogin.value = true
           isLoginError.value = false
-          // isValidToken.value = true
-          // sessionStorage.setItem("accessToken", accessToken)
-          // sessionStorage.setItem("refreshToken", refreshToken)
+          isValidToken.value = true
+          axios.defaults.headers.common['Authorization'] = response.headers.authorization
         }
       },
       (error) => {
         console.log("로그인 실패!!!!")
         isLogin.value = false
         isLoginError.value = true
-        // isValidToken.value = false
+        isValidToken.value = false
         console.error(error)
       }
     )
@@ -49,7 +45,7 @@ export const useUserStore = defineStore("userStore", () => {
     isLogin,
     isLoginError,
     userInfo,
-    // isValidToken,
+    isValidToken,
     userLogin,
   }
 })
