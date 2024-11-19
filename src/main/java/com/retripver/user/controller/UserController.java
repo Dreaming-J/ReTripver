@@ -34,7 +34,7 @@ public class UserController {
 	
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(@CookieValue(value = "refresh_token", required = false) String refreshToken) {
-
+    	System.out.println("refresh");
         String newAccessToken = userService.createAccessToken(refreshToken);
 
         HttpHeaders httpHeaders = new HttpHeaders();

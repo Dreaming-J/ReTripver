@@ -21,6 +21,8 @@ public interface UserRepository {
 
 	void deleteExpiredTokens();
 
+	boolean getBlackListToken(String token);
+
 	LoginResponse login(LoginRequest loginRequest);
 
 	void signup(SignupRequest signupRequest) throws UserSQLException;

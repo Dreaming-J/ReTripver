@@ -38,7 +38,7 @@ public class PlanControllerTest {
 	static void setUp() {
 		LoginResponse loginResponse = new LoginResponse();
 		loginResponse.setId("test");
-		loginResponse.setProfeImg("/");
+		loginResponse.setProfileImg("/");
 		
 		session = new MockHttpSession();
 		session.setAttribute("loginUser", loginResponse);

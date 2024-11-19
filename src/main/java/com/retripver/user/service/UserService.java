@@ -21,6 +21,8 @@ public interface UserService {
 
 	String createAccessToken(String refreshToken) throws InvalidTokenException;
 
+	boolean isBlackListToken(String token);
+
 	LoginResponse login(LoginRequest loginRequest);
 
 	void signup(SignupRequest signupRequest);
