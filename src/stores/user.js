@@ -20,6 +20,12 @@ export const useUserStore = defineStore("userStore", () => {
         if (response.status === httpStatusCode.OK) {
           console.log("로그인 성공!!!!")
           let { data } = response
+          userInfo.value = {
+            id: data.id,
+            profileImg: data.profileImg
+          }
+
+          console.log(userInfo)
           // let accessToken = data["access-token"]
           // let refreshToken = data["refresh-token"]
           isLogin.value = true
