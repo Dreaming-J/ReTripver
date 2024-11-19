@@ -1,10 +1,11 @@
 <script setup>
 import ProfileBtnList from "@/components/common/header/userItems/ProfileBtnList.vue";
 import SignBtnList from "@/components/common/header/userItems/SignBtnList.vue";
-
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
 
-const isLogin = ref(false);
+const userStore = useUserStore();
+const isLogin = userStore.isLogin;
 </script>
 
 <template>
