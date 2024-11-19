@@ -84,7 +84,6 @@ const toggle = (event) => {
         ref="menu"
         id="overlay_menu"
         :model="items"
-        @item-click="onItemClick"
         :popup="true"
       />
     </div>

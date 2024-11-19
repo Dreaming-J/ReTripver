@@ -1,32 +1,32 @@
 <script setup>
-import { InputText, Button, Message } from "primevue"
-import { ref } from "vue"
-import { storeToRefs } from "pinia"
-import { useRouter } from "vue-router"
-import { useUserStore } from "@/stores/user"
+import { InputText, Button, Message } from "primevue";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
-const router = useRouter()
-const userStore = useUserStore()
-const { isLogin, isLoginError } = storeToRefs(userStore)
-const { userLogin } = userStore
+const router = useRouter();
+const userStore = useUserStore();
+const { isLogin, isLoginError } = storeToRefs(userStore);
+const { userLogin } = userStore;
 
 const loginForm = ref({
   id: "",
   password: "",
-})
+});
 
 const validMessage = ref("");
 
 const login = async () => {
-  await userLogin(loginForm.value)
-  console.log("isLogin: " + isLogin.value)
+  await userLogin(loginForm.value);
+  console.log("isLogin: " + isLogin.value);
   if (isLogin.value) {
-    router.replace("/")
+    router.replace("/");
   }
-}
+};
 
-const handleSubmit = async() => {
-  if(!loginForm.value.id) {
+const handleSubmit = async () => {
+  if (!loginForm.value.id) {
     validMessage.value = "아이디를 작성해주세요.";
     return;
   }
@@ -38,15 +38,12 @@ const handleSubmit = async() => {
 
   validMessage.value = "";
 
-  console.log("로그인 하러 감!");
-
-  await userLogin(loginForm.value)
-  console.log("isLogin: " + isLogin.value)
+  await userLogin(loginForm.value);
+  console.log("isLogin: " + isLogin.value);
   if (isLogin.value) {
-    router.replace("/")
+    router.replace("/");
   }
-}
-
+};
 </script>
 
 <template>
@@ -74,16 +71,13 @@ const handleSubmit = async() => {
 
       <div>
         <div class="message">
-          <Message
-            class="text-sm"
-            severity="error"
-            variant="simple"
-          >
+          <Message class="text-sm" severity="error" variant="simple">
             {{ validMessage }}
           </Message>
         </div>
         <div>
-          <Button type="submit" class="w-full" label="Login" severity="warn"  />  <!-- @click="login" -->
+          <Button type="submit" class="w-full" label="Login" severity="warn" />
+          <!-- @click="login" -->
         </div>
       </div>
 
