@@ -20,16 +20,11 @@ VALUES	(1,'브론즈','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/i
         (4,'플레티넘','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',300),
         (5,'다이아','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',400);
 INSERT INTO `users`
-VALUES	('admin','admin','관리자','admin@admin.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','사이트 관리자입니다.',999,NULL,NULL,'2024-11-01 05:13:20',5),
-		('champ1','champ1','신챔피언','champ1@champ.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','챔피언 유저입니다.',680,NULL,NULL,'2024-11-01 05:13:20',5),
-        ('guest1','guest1','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),
-        ('member1','member1','최회원','member1@member.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','활동적인 회원입니다.',320,NULL,NULL,'2024-11-01 05:13:20',4),
-        ('newbie1','newbie1','조신입','newbie1@newbie.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','새로 가입한 유저입니다.',20,NULL,NULL,'2024-11-01 05:13:20',1),
-        ('pro1','pro1','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),
-        ('test','test','김테스트','test@test.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','안녕하세요',55,'achievement_visit',1,'2024-11-01 05:13:20',1),
-        ('user','user','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,NULL,NULL,'2024-11-01 05:13:20',3),
-        ('user2','user2','김유저','user2@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',180,NULL,NULL,'2024-11-01 05:13:20',2),
-        ('vip1','vip1','황VIP','vip1@vip.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','VIP 유저입니다.',800,NULL,NULL,'2024-11-01 05:13:20',5);
+VALUES	('admin','74871D696745843B5119B3B72F115C44BA49068329E482F98C76D589615C32F1667ACFF996960DA433FD85B8BCA741C6B78F84A9D4E4E50404FFC82C37550DC0','67e07ac2430420e0ce57c136868c1626','관리자','admin@admin.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','사이트 관리자입니다.',999,NULL,NULL,'2024-11-01 05:13:20',5),
+		('guest1','DA63F86849923626240CA014974CC8EC4DAB2E10AAAF619ADEB99C19C31BFFF4568C440C7C299D49D8EACF6EDDB76551BF8AFDCBFF5663A44532414B2E83E250','67e07ac2430420e0ce57c136868c1626','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),
+        ('pro1','F77F231FECFC90464F2DF4421E76C5DB6CA92C114291C5C9D74D65D755F3F2AB2431687D8FC9DAD776B94DE20C89536BD7334AF0302B6AAFEF139D7FDC24D807','67e07ac2430420e0ce57c136868c1626','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),
+        ('user','5FAF24FFACD18F7B42D122B6C217E8A8FD86F0F2B9B8831DFCE67ECF848CD5F27445873237F38D24CD1DDB3B7E593F3D4CA39DE5A0627FD37423022EF7B69809','67e07ac2430420e0ce57c136868c1626','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,NULL,NULL,'2024-11-01 05:13:20',3),
+        ('test','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','test@test.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','안녕하세요',55,'achievement_visit',1,'2024-11-01 05:13:20',1);
 INSERT INTO `follow`
 VALUES	('test','guest1'),
 		('guest1','test'),

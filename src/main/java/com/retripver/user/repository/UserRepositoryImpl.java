@@ -22,6 +22,12 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+    @Transactional(rollbackFor = Exception.class)
+	public void deleteExpiredTokens() {
+		userMapper.deleteExpiredTokens();
+	}
+
+	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		return userMapper.selectByIdAndPassword(loginRequest);
 	}

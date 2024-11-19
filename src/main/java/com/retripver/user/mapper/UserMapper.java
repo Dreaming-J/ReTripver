@@ -9,11 +9,14 @@ import com.retripver.user.dto.*;
 
 @Mapper
 public interface UserMapper {
+	
+    @Delete("DELETE FROM token WHERE expired_at < NOW()")
+	void deleteExpiredTokens();
 
 	@Select("SELECT * FROM users WHERE id = #{id} AND password = #{password}")
 	LoginResponse selectByIdAndPassword(LoginRequest loginRequest);
 
-	@Insert("INSERT INTO users (id, password, name, email) VALUES (#{id}, #{password}, #{name}, #{email})")
+	@Insert("INSERT INTO users (id, password, salt, name, email) VALUES (#{id}, #{password}, #{salt}, #{name}, #{email})")
 	void insert(SignupRequest signupRequest) throws SQLException;
 	
 	@Select("SELECT count(*) FROM users WHERE id = #{id}")

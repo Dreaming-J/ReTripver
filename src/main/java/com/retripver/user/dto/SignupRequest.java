@@ -5,6 +5,7 @@ public class SignupRequest {
 	private String id;
 	private String password;
 	private String psswordCheck;
+	private String salt;
 	private String name;
 	private String email;
 	
@@ -25,6 +26,12 @@ public class SignupRequest {
 	}
 	public void setPsswordCheck(String psswordCheck) {
 		this.psswordCheck = psswordCheck;
+	}
+	public String getSalt() {
+		return salt;
+	}
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 	public String getName() {
 		return name;

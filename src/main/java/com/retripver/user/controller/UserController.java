@@ -32,7 +32,6 @@ public class UserController {
 	// 로그인
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpSession session) {
-		System.out.println("!!!");
 		LoginResponse loginResponse = userService.login(loginRequest);
 		
 		session.setAttribute("loginUser", loginResponse);

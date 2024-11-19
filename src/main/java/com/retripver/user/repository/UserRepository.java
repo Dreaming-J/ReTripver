@@ -19,6 +19,8 @@ import com.retripver.user.exception.UserSQLException;
 
 public interface UserRepository {
 
+	void deleteExpiredTokens();
+
 	LoginResponse login(LoginRequest loginRequest);
 
 	void signup(SignupRequest signupRequest) throws UserSQLException;

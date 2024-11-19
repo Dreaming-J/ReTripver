@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.retripver.global.util.HashUtil;
+import com.retripver.global.util.JWTUtil;
 import com.retripver.user.dto.*;
 import com.retripver.user.exception.*;
 import com.retripver.user.repository.UserRepository;
@@ -13,10 +15,14 @@ import com.retripver.user.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
+    private final HashUtil hashUtil;
+    private final JWTUtil jwtUtil;
 	
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository) {
+	public UserServiceImpl(UserRepository userRepository, HashUtil hashUtil, JWTUtil jwtUtil) {
 		this.userRepository = userRepository;
+		this.hashUtil = hashUtil;
+		this.jwtUtil = jwtUtil;
 	}
 
 	@Override
@@ -37,9 +43,13 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		if (isExistId(signupRequest.getId()) || isExistEmail(signupRequest.getEmail())) {
-
 			throw new DuplicateSignupException();
 		}
+		
+		String salt = hashUtil.generateSalt();
+		String hashedPassword = hashUtil.encrypt(signupRequest.getPassword(), salt);
+		signupRequest.setSalt(salt);
+		signupRequest.setPassword(hashedPassword);
 	
 		userRepository.signup(signupRequest);
 	}
