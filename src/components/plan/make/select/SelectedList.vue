@@ -3,14 +3,19 @@ import SelectedListItem from "@/components/plan/make/select/SelectedListItem.vue
 import OptimizeDialog from "@/components/plan/make/select/OptimizeDialog.vue";
 import { Button, Dialog } from "primevue";
 import { ref } from "vue";
+import { useMakePlansStore } from "@/stores/makePlans";
 
-defineProps({
-  selectList: {
-    type: Object,
-  },
-});
+const store = useMakePlansStore();
+
+const emit = defineEmits(["changeRouteType"]);
 
 const visible = ref(false);
+const routeType = ref(false); // true -> 자동차, false -> 도보
+
+const changeRouteTypeFunc = () => {
+  routeType.value = !routeType.value;
+  emit("changeRouteType", routeType.value);
+};
 </script>
 
 <template>
@@ -41,7 +46,7 @@ const visible = ref(false);
     <div class="select-list">
       <div
         class="selected-list-item"
-        v-for="select in selectList"
+        v-for="select in store.selectList"
         :key="select.no"
       >
         <SelectedListItem :select="select" />
@@ -50,7 +55,12 @@ const visible = ref(false);
   </div>
 
   <div class="select-btn">
-    <Button label="여행 만들기" severity="warn" variant="outlined" />
+    <div class="toggle-btn">
+      <Button label="선택" @click="changeRouteTypeFunc" />
+    </div>
+    <div>
+      <Button label="여행 만들기" severity="warn" variant="outlined" />
+    </div>
   </div>
 </template>
 
@@ -85,7 +95,8 @@ const visible = ref(false);
 
 .select-btn {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   padding: 15px;
 }
 </style>
