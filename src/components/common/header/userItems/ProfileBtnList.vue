@@ -1,14 +1,11 @@
 <script setup>
 import NoticeList from "@/components/common/header/userItems/NoticeList.vue";
-
-import ProfileImg from "@/assets/img/profile.jpg";
-
 import { Button, Drawer, Menu } from "primevue";
 
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/stores/user-store";
 
 const visibleNotice = ref(false);
 
