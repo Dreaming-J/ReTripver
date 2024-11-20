@@ -11,8 +11,8 @@ import { initTmap, addMarker, removeMarker } from "@/util/tmapLoader";
 const props = defineProps({
   selectList: {
     type: Object,
-  }
-})
+  },
+});
 
 // const selectList = ref([
 //   {no:1, lat:37.56520450, lng:126.98602028},
@@ -25,7 +25,7 @@ const markers = ref([]);
 onMounted(() => {
   map.value = initTmap();
 
-  if (props.selectList &&  props.selectList.length > 0) {
+  if (props.selectList && props.selectList.length > 0) {
     initializeMarkers(props.selectList);
   }
 });
@@ -46,7 +46,7 @@ const initializeMarkers = (locations) => {
   locations.forEach((location) => {
     const marker = addMarker(map.value, location.lat, location.lng);
     markers.value.push(marker);
-    
+
     // bounds 확장
     bounds.extend(new Tmapv3.LatLng(location.lat, location.lng));
   });
@@ -56,7 +56,7 @@ const initializeMarkers = (locations) => {
     top: 50,
     right: 50,
     bottom: 50,
-    left: 50
+    left: 50,
   };
 
   // bounds에 여백을 추가하고 지도 뷰 설정
@@ -76,7 +76,7 @@ watch(
   (newList) => {
     initializeMarkers(newList);
   },
-  {deep: true}
+  { deep: true }
 );
 </script>
 
