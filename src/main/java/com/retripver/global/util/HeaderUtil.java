@@ -21,7 +21,6 @@ public class HeaderUtil {
 
 	public static String getRefreshToken(HttpServletRequest httpServletRequest) {
 		Cookie[] cookieList = httpServletRequest.getCookies();
-		
 		if(cookieList == null) {
 			return null;
 		}

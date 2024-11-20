@@ -89,10 +89,13 @@ public class JWTUtil {
     public String createAccessToken(String userId) {
 
         Instant now = ZonedDateTime.now().toInstant(); // 토큰 생성 시간.
-        Instant validity = now.plus(Duration.ofMinutes(accessTokenValidityTime)); // 토큰 유효 시간
+//        Instant validity = now.plus(Duration.ofMinutes(accessTokenValidityTime)); // 토큰 유효 시간
+        Instant validity = now.plus(Duration.ofSeconds(3)); // 토큰 유효 시간
 
         maxAge = Date.from(validity);
 
+        System.out.println("Create Access Token until " + maxAge);
+        
         return Jwts.builder()
                 .subject(String.valueOf(userId)) // 토큰의 식별자
                 .issuedAt(Date.from(now)) // 토큰 발급 시간
@@ -108,6 +111,8 @@ public class JWTUtil {
         Instant validity = now.plus(Duration.ofHours(refreshTokenValidityTime)); // 토큰 유효 시간
 
         maxAge = Date.from(validity);
+
+        System.out.println("Create Refresh Token until " + maxAge);
 
         return Jwts.builder()
                 .subject(String.valueOf(userId)) // 토큰의 식별자
@@ -126,7 +131,8 @@ public class JWTUtil {
                     .parseSignedClaims(token);
 
         } catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException | ExpiredJwtException e) {
-            throw new InvalidTokenException();
+//            throw new InvalidTokenException();
+        	return false;
         }
 
         return true;
@@ -139,7 +145,6 @@ public class JWTUtil {
             actualToken = isRefreshToken ? token : resolveToken(token);
 
             return Jwts.parser()
-                    .clock(() -> Date.from(Instant.now()))
                     .verifyWith(publicKey)
                     .build()
                     .parseSignedClaims(actualToken)

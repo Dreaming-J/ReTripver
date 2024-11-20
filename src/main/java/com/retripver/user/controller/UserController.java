@@ -34,9 +34,8 @@ public class UserController {
 	
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(@CookieValue(value = "refresh_token", required = false) String refreshToken) {
-    	System.out.println("refresh");
         String newAccessToken = userService.createAccessToken(refreshToken);
-
+        
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(
                 "Authorization",
@@ -70,7 +69,7 @@ public class UserController {
                 .httpOnly(true) // HTTP 통신에서만 Cookie를 사용.
                 .secure(true) // Set-Cookie
                 .maxAge(loginResponse.getMaxAge().getTime() / 1000 / 1000) // RefreshToken과 동일한 시간.
-                .sameSite("Strict") // 동일한 사이트에서 사용, None: 동일한 사이트가 아니어도 됨.
+                .sameSite("None") // 동일한 사이트에서 사용, None: 동일한 사이트가 아니어도 됨.
                 .build();
 
         // SET_COOKIE2를 사용하면 클라이언트의 쿠키가 변경되지 않음.
