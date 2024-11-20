@@ -5,6 +5,7 @@ import { createPinia } from "pinia";
 
 import App from "./App.vue";
 import router from "./router";
+import { instance } from "@/api/axios"
 
 // fontawesome - 아이콘 관련 설정
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -31,6 +32,7 @@ library.add(fas, far, fab);
 
 const app = createApp(App);
 
+app.provide('axios', instance)
 app.use(createPinia());
 app.use(router);
 

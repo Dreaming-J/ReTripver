@@ -1,5 +1,13 @@
 <script setup>
 import Logo from "@/assets/img/logo.png";
+import { useUserStore } from "@/stores/user-store";
+
+const userStore = useUserStore()
+const { getRankList } = userStore
+
+const rankListEvent = async () => {
+  await getRankList(1);
+}
 </script>
 
 <template>
@@ -18,7 +26,7 @@ import Logo from "@/assets/img/logo.png";
           Attractions
         </RouterLink>
 
-        <RouterLink :to="{ name: 'user' }" class="nav-item"> Rank </RouterLink>
+        <RouterLink :to="{ name: 'user' }" class="nav-item" @click="rankListEvent"> Rank </RouterLink>
 
         <RouterLink :to="{ name: 'status' }" class="nav-item">
           My Status

@@ -3,11 +3,11 @@ import { InputText, Button, Message } from "primevue";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/stores/user-store";
 
 const router = useRouter();
 const userStore = useUserStore();
-const { isLogin, isLoginError } = storeToRefs(userStore);
+const { isLogin } = storeToRefs(userStore);
 const { userLogin } = userStore;
 
 const loginForm = ref({
@@ -16,14 +16,6 @@ const loginForm = ref({
 });
 
 const validMessage = ref("");
-
-const login = async () => {
-  await userLogin(loginForm.value);
-  console.log("isLogin: " + isLogin.value);
-  if (isLogin.value) {
-    router.replace("/");
-  }
-};
 
 const handleSubmit = async () => {
   if (!loginForm.value.id) {
@@ -77,7 +69,6 @@ const handleSubmit = async () => {
         </div>
         <div>
           <Button type="submit" class="w-full" label="Login" severity="warn" />
-          <!-- @click="login" -->
         </div>
       </div>
 
