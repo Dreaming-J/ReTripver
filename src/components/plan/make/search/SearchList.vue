@@ -1,11 +1,13 @@
 <script setup>
+import SearchForm from "@/components/plan/make/search/SearchForm.vue";
 import SearchListItem from "@/components/plan/make/search/SearchListItem.vue";
 </script>
 
 <template>
   <div>
-    <div>여행 검색하기</div>
-    <div>여행 검색 폼</div>
+    <div class="form-container">
+      <SearchForm />
+    </div>
     <div>
       <div>
         <SearchListItem />
@@ -20,4 +22,5 @@ import SearchListItem from "@/components/plan/make/search/SearchListItem.vue";
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
