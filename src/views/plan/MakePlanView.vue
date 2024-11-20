@@ -1,24 +1,18 @@
 <script setup>
-import { ref } from "vue";
-
 import SelectedList from "@/components/plan/make/select/SelectedList.vue";
 import SearchList from "@/components/plan/make/search/SearchList.vue";
 import MapContent from "@/components/plan/make/map/MapContent.vue";
 
 import Button from "primevue/button";
 
-const isSearchVisible = ref(true);
+import { ref } from "vue";
 
-const selectList = ref([
-  { no: 3837, title: "경복궁", lat: 37.5788222356, lng: 126.9769930325 },
-  { no: 4486, title: "남산서울타워", lat: 37.5511089858, lng: 126.9878983791 },
-  {
-    no: 3931,
-    title: "창덕궁과 후원 [유네스코 세계유산]",
-    lat: 37.5809583673,
-    lng: 126.9919888278,
-  },
-]);
+const isSearchVisible = ref(true);
+const routeType = ref(false);
+
+const changeRouteType = (changedRouteType) => {
+  routeType.value = changedRouteType;
+};
 </script>
 
 <template>
@@ -26,7 +20,7 @@ const selectList = ref([
     <div class="content-wrapper">
       <div class="seletced-list-container">
         <div class="seletced-list">
-          <SelectedList :select-list="selectList" />
+          <SelectedList @change-route-type="changeRouteType" />
         </div>
 
         <div :class="['search-list', { 'search-list-hide': !isSearchVisible }]">
@@ -48,7 +42,7 @@ const selectList = ref([
       </div>
 
       <div class="map-content">
-        <MapContent :select-list="selectList" />
+        <MapContent :route-type="routeType" />
       </div>
     </div>
   </div>
@@ -90,7 +84,7 @@ const selectList = ref([
   background-color: white;
   border: 1px solid lightgray;
   height: 100%;
-  left: 510px;
+  left: 0px;
   position: absolute;
   transition: 0.4s;
   z-index: 2;

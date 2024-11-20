@@ -1,23 +1,40 @@
 <template>
   <div id="map_wrap" class="map_wrap">
+    <h1>{{ routeType }}</h1>
+    <button @click="addP">추가</button>
+    <button @click="removeP(4486)">삭제</button>
     <div id="map_div"></div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { initTmap, addMarker, removeMarker } from "@/util/tmapLoader";
+import { useMakePlansStore } from "@/stores/makePlans";
+import {
+  initTmap,
+  addMarker,
+  removeMarker,
+  onSearchRoute,
+  clearRoute,
+} from "@/util/tmapLoader";
+
+const store = useMakePlansStore();
 
 const props = defineProps({
-  selectList: {
-    type: Object,
+  routeType: {
+    type: Boolean,
   },
 });
 
-// const selectList = ref([
-//   {no:1, lat:37.56520450, lng:126.98602028},
-//   {no:2, lat:37.56520450, lng:126.98702028},
-// ]);
+const addP = () => {
+  store.addItem();
+};
+
+const removeP = (no) => {
+  store.removeItem(no);
+
+  console.log(store.selectList);
+};
 
 const map = ref(null);
 const markers = ref([]);
@@ -25,12 +42,17 @@ const markers = ref([]);
 onMounted(() => {
   map.value = initTmap();
 
-  if (props.selectList && props.selectList.length > 0) {
-    initializeMarkers(props.selectList);
-  }
+  map.value.on("ConfigLoad", () => {
+    map.value.setMapType("NORMAL");
+
+    if (store.selectList && store.selectList.length > 0) {
+      initializeMarkers(store.selectList);
+
+      initializeRoute(store.selectList, props.routeType);
+    }
+  });
 });
 
-// 마커 초기화 함수
 const initializeMarkers = (locations) => {
   // 기존 마커 삭제
   clearAllMarkers();
@@ -71,12 +93,38 @@ const clearAllMarkers = () => {
   markers.value = [];
 };
 
+const initializeRoute = (locations) => {
+  clearRoute();
+
+  console.log("새로 그림!!");
+  for (let idx = 0; idx < locations.length - 1; idx++) {
+    const start = locations[idx];
+    const end = locations[idx + 1];
+
+    console.log("경로 그리기 시작!");
+    console.log(idx, start);
+    console.log(idx + 1, end);
+
+    onSearchRoute(map.value, start, end, props.routeType);
+  }
+};
+
 watch(
-  () => props.selectList,
+  () => store.selectList,
   (newList) => {
     initializeMarkers(newList);
+
+    initializeRoute(store.selectList, props.routeType);
   },
   { deep: true }
+);
+
+watch(
+  () => props.routeType,
+  (newType) => {
+    console.log(newType);
+    initializeRoute(store.selectList);
+  }
 );
 </script>
 
