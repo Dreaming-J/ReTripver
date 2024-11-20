@@ -1,5 +1,5 @@
 <script setup>
-import { InputText, Button, Message, InputOtp } from "primevue";
+import { InputText, Password, Button, Message, InputOtp } from "primevue";
 import { ref } from "vue";
 
 const signupForm = ref({
@@ -142,11 +142,12 @@ const handleSubmit = async () => {
         <div class="text-xs input-label">Password</div>
         <div>
           <div>
-            <InputText
+            <Password 
               class="w-full"
-              type="text"
               v-model="signupForm.password"
               @blur="passwordValidBlur"
+              :feedback="false"
+              toggleMask 
             />
           </div>
           <div class="text-valid">
@@ -166,11 +167,12 @@ const handleSubmit = async () => {
         <div class="text-xs input-label">Check Password</div>
         <div>
           <div>
-            <InputText
+            <Password
               class="w-full"
-              type="text"
               v-model="signupForm.passwordCheck"
               @blur="passwordCheckValidBlur"
+              :feedback="false"
+              toggleMask 
             />
           </div>
           <div class="text-valid">
@@ -304,6 +306,10 @@ const handleSubmit = async () => {
 
 .input-label {
   padding-bottom: 10px;
+}
+
+:deep(.p-password .p-inputtext) {
+  width: 100%;
 }
 
 .email-group {
