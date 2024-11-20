@@ -1,5 +1,5 @@
 <script setup>
-import { InputText, Button, Message } from "primevue";
+import { InputText, Button, Message, InputOtp } from "primevue";
 import { ref } from "vue";
 
 const signupForm = ref({
@@ -8,7 +8,14 @@ const signupForm = ref({
   passwordCheck: "",
   name: "",
   email: "",
+  emailVerify:""
 });
+
+const verifying = ref(false);
+
+const verifyEmail = () => {
+  verifying.value = true;
+}
 
 const idValidMessage = ref("");
 const validateId = (id) => {
@@ -220,9 +227,25 @@ const handleSubmit = async () => {
               label="인증"
               severity="warn"
               variant="outlined"
+              @click="verifyEmail"
             />
           </div>
         </div>
+
+        <div v-if="verifying" class="email-group input-code">
+          <div class="col-9 p-0 pr-1">
+            <InputOtp v-model="signupForm.emailVerify" :length="6" style="gap: 5" integerOnly />
+          </div>
+          <div class="col-3 p-0 pl-1">
+            <Button
+              class="w-full"
+              label="확인"
+              severity="warn"
+              variant="outlined"
+            />
+          </div>
+        </div>
+
         <div class="text-valid">
           <Message
             v-if="emailValidMessage !== ''"
@@ -286,6 +309,14 @@ const handleSubmit = async () => {
 .email-group {
   display: flex;
   width: 100%;
+}
+
+.input-code {
+  padding-top : 20px;
+}
+
+:deep(.p-inputotp) {
+  justify-content: center;
 }
 
 .btn-signup {

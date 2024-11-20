@@ -4,6 +4,8 @@ import { ref } from "vue";
 export const useMakePlansStore = defineStore("plans", () => {
   let courseOrder = 1;
 
+  const searchList = ref([])
+
   const selectList = ref([
     {
       no: 3837,
