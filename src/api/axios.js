@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { httpStatus } from '@/util/http-status.js'
+import router from '@/router'
 
 const { VITE_LOCAL_API_URL } = import.meta.env
 
@@ -45,12 +46,17 @@ instance.interceptors.response.use( (response) => {
                   const newAccessToken = response.headers.authorization
                   
                   if(newAccessToken) {
-                    console.log("새로운 Access Token 발급: " + newAccessToken)
+                    console.log("새로운 Access Token 발급 성공")
                     instance.defaults.headers.common['Authorization'] = newAccessToken
                     prevRequest.headers.authorization = newAccessToken
   
                     return instance(prevRequest)
                   }
+              })
+              .catch( (error) => {
+                console.log("Access Token 재발급 실패:", error)
+                alert("로그인이 필요합니다.")
+                router.push('/sign/login')
               })
               .finally( () => {
                 isTokenRefreshing = false
