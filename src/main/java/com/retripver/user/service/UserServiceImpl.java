@@ -34,6 +34,11 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
+	public boolean isBlackListToken(String token) {
+		return userRepository.getBlackListToken(token);
+	}
+
+	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		String salt = userRepository.findSaltById(loginRequest.getId());
 		

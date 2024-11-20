@@ -28,6 +28,11 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
+	public boolean getBlackListToken(String token) {
+		return userMapper.selectBlackListByToken(token);
+	}
+
+	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		return userMapper.selectByIdAndPassword(loginRequest);
 	}
@@ -221,5 +226,4 @@ public class UserRepositoryImpl implements UserRepository {
 	public String findSaltById(String id) {
 		return userMapper.selectSaltById(id);
 	}
-
 }

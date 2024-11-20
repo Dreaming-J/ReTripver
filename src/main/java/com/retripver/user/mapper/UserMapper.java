@@ -10,8 +10,11 @@ import com.retripver.user.dto.*;
 @Mapper
 public interface UserMapper {
 	
-    @Delete("DELETE FROM token WHERE expired_at < NOW()")
+    @Delete("DELETE FROM black_list WHERE expired_at < NOW()")
 	void deleteExpiredTokens();
+
+	@Select("SELECT COUNT(*) FROM black_list WHERE token=#{token}")
+	boolean selectBlackListByToken(String token);
 
 	@Select("SELECT * FROM users WHERE id = #{id} AND password = #{password}")
 	LoginResponse selectByIdAndPassword(LoginRequest loginRequest);
@@ -246,5 +249,4 @@ public interface UserMapper {
 			WHERE id = #{id}
 			""")
 	String selectSaltById(String id);
-
 }
