@@ -2,15 +2,15 @@
 import TMapComponont from "@/components/plan/make/map/TMapComponont.vue";
 
 defineProps({
-  selectList: {
-    type: Object,
+  routeType: {
+    type: Boolean,
   },
 });
 </script>
 
 <template>
   <div class="map">
-    <TMapComponont :select-list="selectList" />
+    <TMapComponont :route-type="routeType" />
   </div>
 </template>
 

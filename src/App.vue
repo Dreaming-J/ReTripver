@@ -2,10 +2,9 @@
 import Header from "@/components/common/header/Header.vue";
 import Footer from "@/components/common/Footer.vue";
 
-// import map from "@/components/plan/make/map/map.vue";
-
 import { useRoute } from "vue-router";
-import MapTmp from "@/components/plan/make/map/MapTmp.vue";
+
+import TestDrag from "./components/plan/make/select/TestDrag.vue";
 
 const route = useRoute();
 </script>
@@ -17,7 +16,8 @@ const route = useRoute();
     </header>
     <main>
       <RouterView />
-      <!-- <MapTmp /> -->
+
+      <!-- <TestDrag /> -->
     </main>
     <footer v-if="route.meta.layout !== 'empty'">
       <Footer />
