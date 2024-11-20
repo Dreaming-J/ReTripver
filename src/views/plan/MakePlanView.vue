@@ -84,7 +84,7 @@ const changeRouteType = (changedRouteType) => {
   background-color: white;
   border: 1px solid lightgray;
   height: 100%;
-  left: 0px;
+  left: 510px;
   position: absolute;
   transition: 0.4s;
   z-index: 2;

@@ -59,9 +59,17 @@ export const useMakePlansStore = defineStore("plans", () => {
     });
   };
 
+  const updateOrder = () => {
+    selectList.value = selectList.value.map((item, index) => ({
+      ...item,
+      courseOrder: index + 1, // 배열의 순서에 따라 courseOrder 재정렬
+    }));
+  };
+
   return {
     selectList,
     addItem,
     removeItem,
+    updateOrder,
   };
 });

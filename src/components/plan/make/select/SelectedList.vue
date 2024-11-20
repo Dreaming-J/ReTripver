@@ -4,13 +4,27 @@ import OptimizeDialog from "@/components/plan/make/select/OptimizeDialog.vue";
 import { Button, Dialog } from "primevue";
 import { ref } from "vue";
 import { useMakePlansStore } from "@/stores/makePlans";
-
-const store = useMakePlansStore();
+import { VueDraggableNext } from "vue-draggable-next";
 
 const emit = defineEmits(["changeRouteType"]);
 
 const visible = ref(false);
 const routeType = ref(false); // true -> 자동차, false -> 도보
+
+const store = useMakePlansStore();
+const log = (event) => {
+  if (event.moved) {
+    // moved 데이터를 활용하여 순서 업데이트
+    const { newIndex, oldIndex } = event.moved;
+    console.log(`Moved from ${oldIndex} to ${newIndex}`);
+
+    // courseOrder 재정렬
+    store.selectList = store.selectList.map((item, index) => ({
+      ...item,
+      courseOrder: index + 1,
+    }));
+  }
+};
 
 const changeRouteTypeFunc = () => {
   routeType.value = !routeType.value;
@@ -44,13 +58,37 @@ const changeRouteTypeFunc = () => {
     </div>
 
     <div class="select-list">
-      <div
+      <!-- <div
         class="selected-list-item"
         v-for="select in store.selectList"
         :key="select.no"
       >
         <SelectedListItem :select="select" />
-      </div>
+      </div> -->
+      <!-- <draggable
+        :list="store.selectList"
+        group="selectList"
+        @end="onDragEnd"
+        item-key="no"
+        :animation="200"
+        
+      >
+        <template #item="{ element }">
+          <div class="selected-list-item">
+            <SelectedListItem :select="element" />
+          </div>
+        </template>
+      </draggable> -->
+
+      <VueDraggableNext class="w-full" v-model="store.selectList" @change="log">
+        <div
+          class="selected-list-item"
+          v-for="select in store.selectList"
+          :key="select.no"
+        >
+          <SelectedListItem :select="select" />
+        </div>
+      </VueDraggableNext>
     </div>
   </div>
 

@@ -1,8 +1,8 @@
 <template>
   <div id="map_wrap" class="map_wrap">
-    <h1>{{ routeType }}</h1>
+    <!-- <h1>{{ routeType }}</h1>
     <button @click="addP">추가</button>
-    <button @click="removeP(4486)">삭제</button>
+    <button @click="removeP(4486)">삭제</button> -->
     <div id="map_div"></div>
   </div>
 </template>
