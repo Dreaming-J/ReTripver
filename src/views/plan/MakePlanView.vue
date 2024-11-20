@@ -23,31 +23,33 @@ const selectList = ref([
 
 <template>
   <div class="container">
-    <div class="seletced-list-container">
-      <div class="seletced-list">
-        <SelectedList :select-list="selectList" />
-      </div>
-
-      <div :class="['search-list', { 'search-list-hide': !isSearchVisible }]">
-        <div>
-          <SearchList />
+    <div class="content-wrapper">
+      <div class="seletced-list-container">
+        <div class="seletced-list">
+          <SelectedList :select-list="selectList" />
         </div>
 
-        <div class="btn-search-toggle">
-          <Button
-            class="btn-toggle"
-            :icon="
-              isSearchVisible ? 'pi pi-chevron-left' : 'pi pi-chevron-right'
-            "
-            severity="secondary"
-            @click="isSearchVisible = !isSearchVisible"
-          />
+        <div :class="['search-list', { 'search-list-hide': !isSearchVisible }]">
+          <div>
+            <SearchList />
+          </div>
+
+          <div class="btn-search-toggle">
+            <Button
+              class="btn-toggle"
+              :icon="
+                isSearchVisible ? 'pi pi-chevron-left' : 'pi pi-chevron-right'
+              "
+              severity="secondary"
+              @click="isSearchVisible = !isSearchVisible"
+            />
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="map-content">
-      <MapContent :select-list="selectList" />
+      <div class="map-content">
+        <MapContent :select-list="selectList" />
+      </div>
     </div>
   </div>
 </template>
@@ -56,6 +58,14 @@ const selectList = ref([
 .container {
   display: flex;
   height: calc(100vh - 100px);
+  width: 100%;
+}
+
+.content-wrapper {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
 }
 
 .seletced-list-container {
@@ -63,13 +73,14 @@ const selectList = ref([
   width: 500px;
   height: 100%;
   position: relative;
+  flex-shrink: 0;
 }
 
 .seletced-list {
   width: 500px;
   height: 100%;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   background-color: white;
 }
 
@@ -79,11 +90,10 @@ const selectList = ref([
   background-color: white;
   border: 1px solid lightgray;
   height: 100%;
-  /* left: 510px;
-   */
-  left: 0px;
+  left: 510px;
   position: absolute;
   transition: 0.4s;
+  z-index: 2;
 }
 
 .search-list-hide {
@@ -105,9 +115,11 @@ const selectList = ref([
 }
 
 .map-content {
-  width: 100%;
+  /* width: calc(100vw - 510px); */
+  flex: 1;
   height: 100%;
-  padding: 1px; /* border 크기만큼 padding 추가 */
-  box-sizing: border-box; /* padding을 width/height에 포함 */
+  position: relative;
+  z-index: 1;
+  min-width: 0;
 }
 </style>
