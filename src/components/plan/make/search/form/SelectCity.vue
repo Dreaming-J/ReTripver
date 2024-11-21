@@ -1,10 +1,17 @@
 <script setup>
 import SearchListItem from "@/components/plan/make/search/SearchListItem.vue";
 import Select from "primevue/select";
-
 import CascadeSelect from "primevue/cascadeselect";
 
+import { useAttractionStore } from "@/stores/attraction-store";
+import { storeToRefs } from "pinia";
 import { ref } from "vue";
+
+const attractionStore = useAttractionStore()
+const { sidoList } = storeToRefs(attractionStore)
+const { getSidoList } = attractionStore
+
+getSidoList();
 
 const selectCode = ref();
 const citys = ref([
@@ -55,17 +62,17 @@ const citys = ref([
   <div>
     <CascadeSelect
       v-model="selectCode"
-      :options="citys"
-      optionLabel="cname"
-      optionGroupLabel="name"
-      :optionGroupChildren="['states']"
+      :options="sidoList"
+      optionLabel="gugunName"
+      optionGroupLabel="sidoName"
+      :optionGroupChildren="['guguns']"
       class="w-full"
       placeholder="지역"
     >
       <template #option="slotProps">
         <div class="flex items-center">
-          <i v-if="slotProps.option.cname" class="pi pi-map-marker mr-2"></i>
-          <span>{{ slotProps.option.cname || slotProps.option.name }}</span>
+          <i v-if="slotProps.option.gugunName" class="pi pi-map-marker mr-2"></i>
+          <span>{{ slotProps.option.gugunName || slotProps.option.sidoName }}</span>
         </div>
       </template>
       <template #dropdownicon>
