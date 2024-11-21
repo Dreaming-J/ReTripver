@@ -141,4 +141,14 @@ watch(
   width: 80px;
   height: 40px;
 }
+
+/* 호버 효과 */
+.selected-list-item {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.selected-list-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
 </style>
