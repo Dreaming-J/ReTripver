@@ -1,4 +1,4 @@
-package com.retripver.plan.dto;
+package com.retripver.attraction.dto;
 
 public class AttractionResponse {
 	private int no;

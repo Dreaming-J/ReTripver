@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.FailAddPlanLikeException;
@@ -28,30 +28,6 @@ public class PlanServiceImpl implements PlanService {
 	@Autowired
 	public PlanServiceImpl(PlanRepository planRepository) {
 		this.planRepository = planRepository;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public AttractionResponse getAttraction(int attractionNo) {
-		AttractionResponse attractionResponse = planRepository.getAttraction(attractionNo);
-		
-		if (attractionResponse == null)
-			throw new NotFoundAttractionException();
-		
-		return attractionResponse;
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<AttractionResponse> getAttractions(int sidoCode, int page) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("sidoCode", sidoCode);
-		params.put("page", (page - 1) * PAGE_SIZE);
-		params.put("size", PAGE_SIZE);
-		
-		List<AttractionResponse> attractionList = planRepository.getAttractions(params);
-		
-		return attractionList;
 	}
 
 	@Override
