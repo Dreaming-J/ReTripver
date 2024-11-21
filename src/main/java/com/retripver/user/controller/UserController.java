@@ -7,10 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.retripver.auth.dto.LoginResponse;
+import com.retripver.global.util.JWTUtil;
 import com.retripver.user.dto.FollowRequest;
 import com.retripver.user.dto.StatusMapCountResponse;
 import com.retripver.user.dto.StatusUserInfoResponse;
@@ -18,24 +19,23 @@ import com.retripver.user.dto.UserAchievementResponse;
 import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.service.UserService;
 
-import jakarta.servlet.http.HttpSession;
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
 	
 	private final UserService userService;
+	private final JWTUtil jwtUtil;
 	
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, JWTUtil jwtUtil) {
 		this.userService = userService;
+		this.jwtUtil = jwtUtil;
 	}
 	
 	// 유저 팔로우/언팔로우
 	@PutMapping("/follow/{toId}")
-	public ResponseEntity<?> follow(@PathVariable String toId, HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		String fromId = loginUser.getId();
+	public ResponseEntity<?> follow(@PathVariable String toId, @RequestHeader(value = "Authorization") String authorization) {
+		String fromId = jwtUtil.extractUserId(authorization, false);
 		
 		boolean isFollow = userService.follow(new FollowRequest(fromId, toId));
 		
@@ -44,30 +44,30 @@ public class UserController {
 	
 	// 상태창 유저 정보
 	@GetMapping("/status/info")
-	public ResponseEntity<?> statusUser(HttpSession session) {
-//		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+	public ResponseEntity<?> statusUser(@RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 
-		StatusUserInfoResponse statusInfo = userService.statusUserInfo("test");
+		StatusUserInfoResponse statusInfo = userService.statusUserInfo(id);
 		
 		return ResponseEntity.ok(statusInfo);
 	}
 	
 	// 상태창 지도
 	@GetMapping("/status/map")
-	public ResponseEntity<?> statusMap(HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+	public ResponseEntity<?> statusMap(@RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount(loginUser.getId());
+		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount(id);
 		
 		return ResponseEntity.ok(statusMapCountList);
 	}
 	
 	// 업적 확인
 	@GetMapping("/achievement/list")
-	public ResponseEntity<?> achievement(HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
+	public ResponseEntity<?> achievement(@RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		UserAchievementResponse userAchievement = userService.getUserAchievement(loginUser.getId());
+		UserAchievementResponse userAchievement = userService.getUserAchievement(id);
 		
 		return ResponseEntity.ok(userAchievement);
 	}
