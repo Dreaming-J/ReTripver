@@ -3,9 +3,9 @@ package com.retripver.user.interceptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import com.retripver.user.dto.LoginResponse;
-import com.retripver.user.exception.UserErrorCode;
-import com.retripver.user.exception.UserErrorResponse;
+import com.retripver.auth.dto.LoginResponse;
+import com.retripver.auth.exception.AuthErrorCode;
+import com.retripver.auth.exception.AuthErrorResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
 
 		if (session == null || loginUser == null) {
-			UserErrorResponse userErrorResponse = UserErrorResponse.of(UserErrorCode.NOT_FOUND_USER);
+			AuthErrorResponse userErrorResponse = AuthErrorResponse.of(AuthErrorCode.NOT_FOUND_USER);
 			String bodyMessage = "{\"message\": \"" + userErrorResponse.getMessage() + "\"}";
 			
 			response.setStatus(userErrorResponse.getHttpStatus());

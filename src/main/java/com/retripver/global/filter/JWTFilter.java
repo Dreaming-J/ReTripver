@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.retripver.auth.service.AuthService;
 import com.retripver.global.exception.ErrorCode;
 import com.retripver.global.exception.ErrorResponse;
 import com.retripver.global.util.HeaderUtil;
 import com.retripver.global.util.JWTUtil;
-import com.retripver.user.service.UserService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,11 +22,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class JWTFilter extends OncePerRequestFilter {
 	
 	private final JWTUtil jwtUtil;
-	private final UserService userService;
+	private final AuthService authService;
 	
-	public JWTFilter(JWTUtil jwtUtil, UserService userService) {
+	public JWTFilter(JWTUtil jwtUtil, AuthService authService) {
 		this.jwtUtil = jwtUtil;
-		this.userService = userService;
+		this.authService = authService;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class JWTFilter extends OncePerRequestFilter {
 			if (refreshToken != null) {
 				
 				// 토큰이 비정상이거나, 비활성 토큰인 경우는 새로운 토큰을 발급해줄 수 없다.
-				if(!jwtUtil.validateToken(refreshToken) || userService.isBlackListToken(refreshToken)) {
+				if(!jwtUtil.validateToken(refreshToken) || authService.isBlackListToken(refreshToken)) {
 					System.out.println("Can't create new token");
 					httpServletResponse.setStatus(ErrorCode.REFRESH_TOKEN_EXPIRED.getHttpStatus());
 					httpServletResponse.setContentType("application/json;charset=UTF-8");
@@ -105,7 +105,7 @@ public class JWTFilter extends OncePerRequestFilter {
 			String accessToken = HeaderUtil.getAccessToken(httpServletRequest);
 			
 			// AccessToken이 없거나, 비정상 토큰이거나, 비활성 토큰인 경우 접근 불가 처리.
-			if(accessToken == null || !jwtUtil.validateToken(accessToken) || userService.isBlackListToken(accessToken)) {
+			if(accessToken == null || !jwtUtil.validateToken(accessToken) || authService.isBlackListToken(accessToken)) {
 				System.out.println("Invalidate Access Token");
 				httpServletResponse.setStatus(ErrorCode.REFRESH_TOKEN_EXPIRED.getHttpStatus());
 				httpServletResponse.setContentType("application/json;charset=UTF-8");

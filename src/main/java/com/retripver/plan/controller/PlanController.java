@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.retripver.auth.dto.LoginResponse;
 import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
-import com.retripver.user.dto.LoginResponse;
 
 import jakarta.servlet.http.HttpSession;
 

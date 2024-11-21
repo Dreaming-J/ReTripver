@@ -7,8 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.user.dto.*;
-import com.retripver.user.exception.*;
+import com.retripver.auth.exception.UserSQLException;
+import com.retripver.user.dto.FollowRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
+import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.UserAchievementResponse;
+import com.retripver.user.dto.UserAchievementTierResponse;
+import com.retripver.user.dto.UserAchievementVisitResponse;
+import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.mapper.UserMapper;
 
 @Repository
@@ -19,104 +25,6 @@ public class UserRepositoryImpl implements UserRepository {
 	@Autowired
 	public UserRepositoryImpl(UserMapper userMapper) {
 		this.userMapper = userMapper;
-	}
-
-	@Override
-    @Transactional(rollbackFor = Exception.class)
-	public void deleteExpiredTokens() {
-		userMapper.deleteExpiredTokens();
-	}
-
-	@Override
-	public boolean getBlackListToken(String token) {
-		return userMapper.selectBlackListByToken(token);
-	}
-
-	@Override
-	public LoginResponse login(LoginRequest loginRequest) {
-		return userMapper.selectByIdAndPassword(loginRequest);
-	}
-
-	@Override
-	public void signup(SignupRequest signupRequest) {
-		try {
-			userMapper.insert(signupRequest);
-		} catch (SQLException e) {
-			throw new UserSQLException();
-		}
-	}
-	
-	@Override
-	public boolean isExistId(String id) {
-		int isExisted = userMapper.selectCountById(id);
-		
-		if (isExisted == 0) return false;
-		return true;
-	}
-	
-	@Override
-	public boolean isExistEmail(String email) {
-		int isExisted = userMapper.selectCountByEmail(email);
-		
-		if (isExisted == 0) return false;
-		return true;
-	}
-
-	@Override
-	public void modifyProfile(UserProfileRequest userProfileRequest) {
-		try {
-			userMapper.updateProfile(userProfileRequest);
-		} catch (SQLException e) {
-			throw new UserSQLException();
-		}
-	}
-
-	@Override
-	public String searchId(UserSearchIdRequest userSearchIdRequest) {
-		return userMapper.selectByNameAndEmail(userSearchIdRequest);
-	}
-	
-	@Override
-	public boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest) {
-		String password = userMapper.selectByIdAndNameAndEmail(userSearchPwdRequest);
-		
-		if (password == null) {
-			return false;
-		}
-		
-		return true;
-	}
-
-	@Override
-	public void modify(UserModifyRequest userModifyRequest) {
-		try {
-			userMapper.update(userModifyRequest);
-		} catch (SQLException e) {
-			throw new UserSQLException();
-		}
-	}
-
-	@Override
-	public void modifyPassword(PwdModifyRequest pwdModifyRequset) {
-		try {
-			userMapper.updatePassword(pwdModifyRequset);
-		} catch (SQLException e) {
-			throw new UserSQLException();
-		}
-	}
-	
-	@Override
-	public String selectPasswordById(String id) {
-		return userMapper.selectPasswordById(id);
-	}
-
-	@Override
-	public void resign(String id) {
-		try {
-			userMapper.deleteUser(id);
-		} catch (SQLException e) {
-			throw new UserSQLException();
-		}
 	}
 
 	@Override
@@ -220,10 +128,5 @@ public class UserRepositoryImpl implements UserRepository {
 		if (achievementId == 0 || achievementTable == null) return null;
 		
 		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
-	}
-
-	@Override
-	public String findSaltById(String id) {
-		return userMapper.selectSaltById(id);
 	}
 }

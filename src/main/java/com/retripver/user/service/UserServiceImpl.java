@@ -5,136 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.retripver.global.exception.InvalidTokenException;
-import com.retripver.global.util.HashUtil;
-import com.retripver.global.util.JWTUtil;
-import com.retripver.user.dto.*;
-import com.retripver.user.exception.*;
+import com.retripver.user.dto.FollowRequest;
+import com.retripver.user.dto.StatusMapCountResponse;
+import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.UserAchievementResponse;
+import com.retripver.user.dto.UserInfoResponse;
 import com.retripver.user.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 	
 	private final UserRepository userRepository;
-    private final HashUtil hashUtil;
-    private final JWTUtil jwtUtil;
 	
 	@Autowired
-	public UserServiceImpl(UserRepository userRepository, HashUtil hashUtil, JWTUtil jwtUtil) {
+	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		this.hashUtil = hashUtil;
-		this.jwtUtil = jwtUtil;
-	}
-
-    @Override
-    public String createAccessToken(String refreshToken) throws InvalidTokenException {
-        String userId = jwtUtil.extractUserId(refreshToken, true);
-
-        return jwtUtil.createAccessToken(userId);
-    }
-
-	@Override
-	public boolean isBlackListToken(String token) {
-		return userRepository.getBlackListToken(token);
-	}
-
-	@Override
-	public LoginResponse login(LoginRequest loginRequest) {
-		String salt = userRepository.findSaltById(loginRequest.getId());
-		
-		if (salt == null) {
-			throw new NotFoundUserException();
-		}
-		
-		String hashedPassword = hashUtil.encrypt(loginRequest.getPassword(), salt);
-		loginRequest.setPassword(hashedPassword);
-		
-		LoginResponse loginResponse = userRepository.login(loginRequest);
-		
-		if (loginResponse == null) {
-			throw new NotFoundUserException();
-		}
-		
-        String accessToken = jwtUtil.createAccessToken(loginResponse.getId());
-        String refreshToken = jwtUtil.createRefreshToken(loginResponse.getId());
-        loginResponse.setAccessToken(accessToken);
-        
-        loginResponse.setRefreshToken(refreshToken);
-        loginResponse.setMaxAge(jwtUtil.getMaxAge());
-		
-		return loginResponse;
-	}
-
-	@Override
-	public void signup(SignupRequest signupRequest) {
-		if (!UserSignupValidator.isValid(signupRequest)) {
-			throw new InvalidSignupException();
-		}
-		
-		if (isExistId(signupRequest.getId()) || isExistEmail(signupRequest.getEmail())) {
-			throw new DuplicateSignupException();
-		}
-		
-		String salt = hashUtil.generateSalt();
-		String hashedPassword = hashUtil.encrypt(signupRequest.getPassword(), salt);
-		signupRequest.setSalt(salt);
-		signupRequest.setPassword(hashedPassword);
-	
-		userRepository.signup(signupRequest);
-	}
-	
-	@Override
-	public boolean isExistId(String id) {
-		return userRepository.isExistId(id);
-	}
-	
-	@Override
-	public boolean isExistEmail(String email) {
-		return userRepository.isExistEmail(email);
-	}
-
-	@Override
-	public void profileUpload(UserProfileRequest userProfileRequest) {
-		userRepository.modifyProfile(userProfileRequest);
-	}
-
-	@Override
-	public String searchId(UserSearchIdRequest userSearchIdRequest) {
-		return userRepository.searchId(userSearchIdRequest);
-	}
-	
-	@Override
-	public boolean searchPassword(UserSearchPwdRequest userSearchPwdRequest) {
-		return userRepository.searchPassword(userSearchPwdRequest);
-	}
-
-	@Override
-	public void modify(UserModifyRequest userModifyRequest) {
-		if(!UserSignupValidator.isValid(userModifyRequest)) {
-			throw new InvalidSignupException();
-		}
-		
-		userRepository.modify(userModifyRequest);
-	}
-
-	@Override
-	public void modifyPassword(PwdModifyRequest pwdModifyRequset) {
-		if (!UserSignupValidator.isValidPassword(pwdModifyRequset)) {
-			throw new InvalidSignupException();
-		}
-		
-		String curPassword = userRepository.selectPasswordById(pwdModifyRequset.getId());
-		
-		if (curPassword.equals(pwdModifyRequset.getNewPassword())) {
-			throw new DuplicatePasswordException();
-		}
-		
-		userRepository.modifyPassword(pwdModifyRequset);
-	}
-
-	@Override
-	public void resign(String id) {
-		userRepository.resign(id);
 	}
 
 	@Override

@@ -89,8 +89,7 @@ public class JWTUtil {
     public String createAccessToken(String userId) {
 
         Instant now = ZonedDateTime.now().toInstant(); // 토큰 생성 시간.
-//        Instant validity = now.plus(Duration.ofMinutes(accessTokenValidityTime)); // 토큰 유효 시간
-        Instant validity = now.plus(Duration.ofSeconds(3)); // 임시 토큰 유효 시간
+        Instant validity = now.plus(Duration.ofMinutes(accessTokenValidityTime)); // 토큰 유효 시간
 
         maxAge = Date.from(validity);
 
@@ -108,8 +107,7 @@ public class JWTUtil {
     public String createRefreshToken(String userId) {
 
         Instant now = ZonedDateTime.now().toInstant(); // 토큰 생성 시간.
-//        Instant validity = now.plus(Duration.ofHours(refreshTokenValidityTime)); // 토큰 유효 시간
-        Instant validity = now.plus(Duration.ofSeconds(5)); // 임시 토큰 유효 시간
+        Instant validity = now.plus(Duration.ofHours(refreshTokenValidityTime)); // 토큰 유효 시간
 
         maxAge = Date.from(validity);
 

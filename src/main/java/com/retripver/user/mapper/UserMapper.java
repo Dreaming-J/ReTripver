@@ -5,49 +5,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.*;
 
+import com.retripver.auth.dto.LoginRequest;
+import com.retripver.auth.dto.LoginResponse;
+import com.retripver.auth.dto.PwdModifyRequest;
+import com.retripver.auth.dto.SignupRequest;
+import com.retripver.auth.dto.UserModifyRequest;
+import com.retripver.auth.dto.UserProfileRequest;
+import com.retripver.auth.dto.UserSearchIdRequest;
+import com.retripver.auth.dto.UserSearchPwdRequest;
 import com.retripver.user.dto.*;
 
 @Mapper
 public interface UserMapper {
-	
-    @Delete("DELETE FROM black_list WHERE expired_at < NOW()")
-	void deleteExpiredTokens();
-
-	@Select("SELECT COUNT(*) FROM black_list WHERE token=#{token}")
-	boolean selectBlackListByToken(String token);
-
-	@Select("SELECT * FROM users WHERE id = #{id} AND password = #{password}")
-	LoginResponse selectByIdAndPassword(LoginRequest loginRequest);
-
-	@Insert("INSERT INTO users (id, password, salt, name, email) VALUES (#{id}, #{password}, #{salt}, #{name}, #{email})")
-	void insert(SignupRequest signupRequest) throws SQLException;
-	
-	@Select("SELECT count(*) FROM users WHERE id = #{id}")
-	int selectCountById(String id);
-	
-	@Select("SELECT count(*) FROM users WHERE email = #{email}")
-	int selectCountByEmail(String email);
-	
-	@Update("UPDATE users SET profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{id}")
-	void updateProfile(UserProfileRequest userProfileRequest) throws SQLException;
-
-	@Select("SELECT id FROM users WHERE name = #{name} AND email = #{email}")
-	String selectByNameAndEmail(UserSearchIdRequest userSearchIdRequest);
-	
-	@Select("SELECT password users WHERE id = #{id} AND name = #{name} AND email = #{email}")
-	String selectByIdAndNameAndEmail(UserSearchPwdRequest userSearchPwdRequest);
-
-	@Update("UPDATE users SET id = #{id}, name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{curId}")
-	void update(UserModifyRequest userModifyRequest) throws SQLException;
-
-	@Update("UPDATE users SET password = #{newPassword} WHERE id = #{id}")
-	void updatePassword(PwdModifyRequest pwdModifyRequset) throws SQLException;
-	
-	@Select("SELECT passowrd FROM users WHERE id = #{id}")
-	String selectPasswordById(String id);
-
-	@Delete("DELETE FROM users WHERE id = #{id}")
-	void deleteUser(String id) throws SQLException;
 
 	@Select("SELECT count(*) FROM follow WHERE from_id = #{fromId} AND to_id = #{toId}")
 	int selectCountByFromIdAndToId(FollowRequest followRequest);
@@ -112,8 +81,7 @@ public interface UserMapper {
 				SELECT p.user_id, count(*) success
 				FROM plans p
 				JOIN courses c ON p.id = c.plan_id
-				JOIN quests q ON c.id = q.id
-				WHERE q.isClear = 1
+				WHERE c.is_clear = 1
 				GROUP BY p.user_id ) s
 			ON t.user_id = s.user_id
 			WHERE t.user_id = #{id}
@@ -134,7 +102,13 @@ public interface UserMapper {
 	})
 	StatusUserInfoResponse selectUserInfoById(String id);
 
-	@SelectProvider(type = UserSqlProvider.class, method = "selectNameFromAchievementById")
+	@Select("""
+			<script>
+				SELECT name
+				FROM ${achievementTable}
+				WHERE id = #{achievementId}
+			</script>
+			""")
 	String selectNameFromAchievementById(int achievementId, String achievementTable);
 
 	@Select("""
@@ -242,11 +216,4 @@ public interface UserMapper {
 		@Result(property = "tierInfo", column="tier_no", one = @One(select = "selectTierById"))
 	})
 	List<UserInfoResponse> selectUserSearchByKeyword(String keyword);
-
-	@Select("""
-			SELECT salt
-			FROM users
-			WHERE id = #{id}
-			""")
-	String selectSaltById(String id);
 }
