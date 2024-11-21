@@ -1,8 +1,9 @@
 <script setup>
 import SelectedListItem from "@/components/plan/make/select/SelectedListItem.vue";
 import OptimizeDialog from "@/components/plan/make/select/OptimizeDialog.vue";
+import ToggleBtn from "./ToggleBtn.vue";
 import { Button, Dialog } from "primevue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useMakePlansStore } from "@/stores/makePlans";
 import { VueDraggableNext } from "vue-draggable-next";
 
@@ -12,7 +13,7 @@ const visible = ref(false);
 const routeType = ref(false); // true -> 자동차, false -> 도보
 
 const store = useMakePlansStore();
-const log = (event) => {
+const endDrag = (event) => {
   if (event.moved) {
     // moved 데이터를 활용하여 순서 업데이트
     const { newIndex, oldIndex } = event.moved;
@@ -26,10 +27,18 @@ const log = (event) => {
   }
 };
 
-const changeRouteTypeFunc = () => {
-  routeType.value = !routeType.value;
-  emit("changeRouteType", routeType.value);
+const changeRouteTypeFunc = (routeType) => {
+  emit("changeRouteType", routeType);
 };
+
+const deleteSearchItem = (no) => {
+  store.removeSeletedItem(no);
+};
+
+watch(
+  () => routeType.value,
+  (newType) => changeRouteTypeFunc(newType)
+);
 </script>
 
 <template>
@@ -58,35 +67,23 @@ const changeRouteTypeFunc = () => {
     </div>
 
     <div class="select-list">
-      <!-- <div
-        class="selected-list-item"
-        v-for="select in store.selectList"
-        :key="select.no"
+      <div v-if="store.selectList.length === 0" class="text-center m-6">
+        여행지를 추가해주세요.
+      </div>
+      <VueDraggableNext
+        class="w-full"
+        v-model="store.selectList"
+        @change="endDrag"
       >
-        <SelectedListItem :select="select" />
-      </div> -->
-      <!-- <draggable
-        :list="store.selectList"
-        group="selectList"
-        @end="onDragEnd"
-        item-key="no"
-        :animation="200"
-        
-      >
-        <template #item="{ element }">
-          <div class="selected-list-item">
-            <SelectedListItem :select="element" />
-          </div>
-        </template>
-      </draggable> -->
-
-      <VueDraggableNext class="w-full" v-model="store.selectList" @change="log">
         <div
           class="selected-list-item"
           v-for="select in store.selectList"
           :key="select.no"
         >
-          <SelectedListItem :select="select" />
+          <SelectedListItem
+            :select="select"
+            @delete-search-item="deleteSearchItem"
+          />
         </div>
       </VueDraggableNext>
     </div>
@@ -94,7 +91,8 @@ const changeRouteTypeFunc = () => {
 
   <div class="select-btn">
     <div class="toggle-btn">
-      <Button label="선택" @click="changeRouteTypeFunc" />
+      <!-- <Button label="선택" @click="changeRouteTypeFunc" /> -->
+      <ToggleBtn v-model="routeType" />
     </div>
     <div>
       <Button label="여행 만들기" severity="warn" variant="outlined" />
@@ -125,10 +123,11 @@ const changeRouteTypeFunc = () => {
 }
 
 .selected-list-item {
-  border: 1px solid lightgray;
-  margin: 10px;
-  height: 80px;
-  border-radius: 5px;
+  /* border: 1px solid lightgray; */
+  /* padding: 10px; */
+  margin-bottom: 10px;
+  height: 110px;
+  /* border-radius: 10px; */
 }
 
 .select-btn {
@@ -136,5 +135,10 @@ const changeRouteTypeFunc = () => {
   justify-content: space-between;
   align-items: center;
   padding: 15px;
+}
+
+.toggle-btn {
+  width: 80px;
+  height: 40px;
 }
 </style>

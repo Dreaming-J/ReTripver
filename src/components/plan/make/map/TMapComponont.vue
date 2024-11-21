@@ -40,17 +40,14 @@ const map = ref(null);
 const markers = ref([]);
 
 onMounted(() => {
-  map.value = initTmap();
-
-  map.value.on("ConfigLoad", () => {
-    map.value.setMapType("NORMAL");
-
-    if (store.selectList && store.selectList.length > 0) {
-      initializeMarkers(store.selectList);
-
-      initializeRoute(store.selectList, props.routeType);
-    }
-  });
+  // map.value = initTmap();
+  // map.value.on("ConfigLoad", () => {
+  //   map.value.setMapType("NORMAL");
+  //   if (store.selectList && store.selectList.length > 0) {
+  //     initializeMarkers(store.selectList);
+  //     initializeRoute(store.selectList, props.routeType);
+  //   }
+  // });
 });
 
 const initializeMarkers = (locations) => {
@@ -112,9 +109,8 @@ const initializeRoute = (locations) => {
 watch(
   () => store.selectList,
   (newList) => {
-    initializeMarkers(newList);
-
-    initializeRoute(store.selectList, props.routeType);
+    // initializeMarkers(newList);
+    // initializeRoute(store.selectList, props.routeType);
   },
   { deep: true }
 );
@@ -122,8 +118,7 @@ watch(
 watch(
   () => props.routeType,
   (newType) => {
-    console.log(newType);
-    initializeRoute(store.selectList);
+    // initializeRoute(store.selectList);
   }
 );
 </script>
