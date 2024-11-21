@@ -41,6 +41,7 @@ const selectSearchItem = (item) => {
   /* margin-bottom: 10px; */
   height: 110px;
   /* border-radius: 10px; */
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .selected-list-item:first-child {
