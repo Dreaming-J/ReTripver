@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.attraction.dto.GugunResponse;
 import com.retripver.attraction.dto.SidoResponse;
 
 @Mapper
@@ -39,11 +40,11 @@ public interface AttractionMapper {
 
     @Select("SELECT * FROM sidos")
 	@Results({
-	    @Result(property = "sido_code", column = "id"),
-	    @Result(property = "attractionNo", column = "attraction_no"),
-	    @Result(property = "attraction", column = "attraction_no", one = @One(select = "selectAttractionByAttractionNo"))
+		@Result(property = "sidoCode", column = "sido_code"),
+	    @Result(property = "guguns", column = "sido_code", many = @Many(select = "selectGugunsBySidoCode"))
 	    })
 	List<SidoResponse> selectSidos();
 
-
+    @Select("SELECT * FROM guguns WHERE sido_code = #{sidoCode}")
+    List<GugunResponse> selectGugunsBySidoCode(int sidoCode);
 }

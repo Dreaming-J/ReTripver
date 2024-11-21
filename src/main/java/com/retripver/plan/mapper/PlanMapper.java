@@ -24,7 +24,6 @@ public interface PlanMapper {
 	
 	final String ATTRACTION_MAPPER = "com.retripver.attraction.mapper.AttractionMapper.";
 
-	
     @Select("""
     		SELECT *
     		FROM courses
@@ -43,7 +42,6 @@ public interface PlanMapper {
 			AND is_public = true
 			""")
 	@Results({
-	    @Result(property = "id", column = "id"),
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
 	List<PlanResponse> selectPlansByUserId(String userId);

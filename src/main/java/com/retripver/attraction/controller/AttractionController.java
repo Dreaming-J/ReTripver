@@ -15,7 +15,7 @@ import com.retripver.attraction.dto.SidoResponse;
 import com.retripver.attraction.service.AttractionService;
 
 @RestController
-@RequestMapping("/attraciton")
+@RequestMapping("/attraction")
 public class AttractionController {
 
 	private final AttractionService attractionService;
