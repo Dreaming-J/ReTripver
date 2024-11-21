@@ -76,7 +76,7 @@ public class JWTFilter extends OncePerRequestFilter {
 		}
 		
 		// Refresh 요청이 발생한 경우.
-		if(httpServletRequest.getRequestURI().contains("/user/refresh")) {
+		if(httpServletRequest.getRequestURI().contains("/auth/refresh")) {
 			String refreshToken = HeaderUtil.getRefreshToken(httpServletRequest);
 			System.out.println("Refresh Request: " + refreshToken);
 			
