@@ -23,7 +23,12 @@ const changeRouteType = (changedRouteType) => {
           <SelectedList @change-route-type="changeRouteType" />
         </div>
 
-        <div :class="['search-list', { 'search-list-hide': !isSearchVisible }]">
+        <div
+          :class="[
+            'search-list shadow-2',
+            { 'search-list-hide': !isSearchVisible },
+          ]"
+        >
           <div>
             <SearchList />
           </div>
@@ -82,7 +87,7 @@ const changeRouteType = (changedRouteType) => {
   width: 500px;
   border-radius: 15px;
   background-color: white;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   height: 100%;
   left: 510px;
   position: absolute;
