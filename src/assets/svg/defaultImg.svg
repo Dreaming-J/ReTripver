@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <!-- 배경 -->
+  <rect width="400" height="300" fill="#f5f5f5"/>
+  
+  <!-- 카메라 아이콘 -->
+  <rect x="160" y="140" width="80" height="60" rx="5" fill="#d0d0d0"/>
+  <circle cx="200" cy="170" r="15" fill="#c0c0c0"/>
+  <rect x="220" y="150" width="15" height="8" fill="#c0c0c0"/>
+  
+  <!-- 텍스트 -->
+  <text x="200" y="240" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#888888">
+    이미지 준비중
+  </text>
+</svg>
