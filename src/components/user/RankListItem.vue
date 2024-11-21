@@ -12,7 +12,8 @@
 <template>
   <div>
     <br>
-    <p>{{ rank.userId }}의 {{ rank.title }}</p>
+    
+    <p>{{ rank.rank }}등. {{ rank.userId }}의 {{ rank.title }}</p>
     <br>
   </div>
 </template>
