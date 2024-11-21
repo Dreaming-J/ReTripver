@@ -10,7 +10,7 @@ export const useUserStore = defineStore("userStore", () => {
     profileImg:""
   })
   const userLogin = async (loginUser) => {
-    await axios.post('/user/login', loginUser, { withCredentials: true })
+    await axios.post('/auth/login', loginUser, { withCredentials: true })
     .then( (response) => {
         axios.defaults.headers.common['Authorization'] = response.headers.authorization
 

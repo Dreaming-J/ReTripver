@@ -41,7 +41,7 @@ instance.interceptors.response.use( (response) => {
         if(!isTokenRefreshing) {
             isTokenRefreshing = true
 
-            return await instance.post('/user/refresh')
+            return await instance.post('/auth/refresh')
               .then( (response) => {
                   const newAccessToken = response.headers.authorization
                   
