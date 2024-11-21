@@ -37,7 +37,7 @@ public class JWTFilter extends OncePerRequestFilter {
 		// 필터를 거치치 않을 URI 설정.
 		String[] excludeURIList = {
 				"swagger-ui", "favicon.ico",
-				"/user/login", "/user/signUp", "/user/logout"
+				"/auth/login", "/auth/signUp", "/auth/logout"
 		};
 		
 		// 필터를 거치치 않을 URI와 일치하는 경우 True(필터를 거치지 않음) / False(필터를 거침)
