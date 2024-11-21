@@ -4,19 +4,22 @@ import { defineStore } from "pinia"
 export const useUserStore = defineStore("userStore", () => {
   const axios = inject('axios')
 
+  function UserInfo(id='', profileImg='') {
+    this.id = id
+    this.profileImg = profileImg
+  }
+
+  const userInfo = ref(new UserInfo())
+
   const isLogin = ref(false)
-  const userInfo = ref({
-    id:"",
-    profileImg:""
-  })
   const userLogin = async (loginUser) => {
     await axios.post('/auth/login', loginUser, { withCredentials: true })
     .then( (response) => {
+        console.log("Success Login")
         axios.defaults.headers.common['Authorization'] = response.headers.authorization
 
         let { data } = response
-        userInfo.value.id = data.id
-        userInfo.value.profileImg = data.profileImg
+        userInfo.value = new UserInfo(data.id, data.profileImg)
         isLogin.value = true
     })
     .catch( (error) => {
@@ -24,34 +27,28 @@ export const useUserStore = defineStore("userStore", () => {
         isLogin.value = false
     })
   }
-
-  const myPage = async (myPage) => {
-    await axios.mypage(
-
-    )
-  }
-
-  const rankList = ref([])
-  const getRankList = async (page) => {
-    await axios.get('/plan/rank', {params: {page: page}})
+  const userLogout = async () => {
+    await axios.post('/auth/logout', { withCredentials: true })
     .then( (response) => {
-        let { data } = response
+        console.log("Success Logout")
 
-        rankList.value = data
+        axios.defaults.headers.common['Authorization'] = ''
+        document.cookie = 'refresh-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+
+        userInfo.value = new UserInfo()
+        isLogin.value = false
     })
     .catch( (error) => {
-      rankList.value = []
-      console.log(error)
+        console.log(error)
+        isLogin.value = false
     })
   }
 
   return {
-    isLogin,
     userInfo,
-    userLogin,
-    myPage,
 
-    rankList,
-    getRankList
+    isLogin,
+    userLogin,
+    userLogout
   }
 })

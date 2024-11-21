@@ -13,6 +13,7 @@ const router = useRouter();
 
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
+const { userLogout } = userStore;
 
 const menu = ref();
 const items = ref([
@@ -29,8 +30,9 @@ const items = ref([
       },
       {
         label: "Logout",
-        command: () => {
-          console.log("Logout");
+        command: async () => {
+          await userLogout();
+          router.push({ name: "main"});
         },
       },
     ],

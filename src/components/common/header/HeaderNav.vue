@@ -1,13 +1,13 @@
 <script setup>
-import Logo from "@/assets/img/logo.png";
-import { useUserStore } from "@/stores/user-store";
+  import Logo from "@/assets/img/logo.png";
+  import { usePlanStore } from "@/stores/plan-store";
 
-const userStore = useUserStore()
-const { getRankList } = userStore
+  const planStore = usePlanStore()
+  const { getRankList } = planStore
 
-const rankListEvent = async () => {
-  await getRankList(1);
-}
+  const rankListEvent = async () => {
+    await getRankList(1);
+  }
 </script>
 
 <template>

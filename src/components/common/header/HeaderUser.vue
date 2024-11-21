@@ -2,9 +2,10 @@
   import ProfileBtnList from "@/components/common/header/userItems/ProfileBtnList.vue";
   import SignBtnList from "@/components/common/header/userItems/SignBtnList.vue";
   import { useUserStore } from "@/stores/user-store";
+  import { storeToRefs } from "pinia";
 
   const userStore = useUserStore();
-  const isLogin = userStore.isLogin;
+  const { isLogin } = storeToRefs(userStore);
 </script>
 
 <template>

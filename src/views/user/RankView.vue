@@ -1,10 +1,10 @@
 <script setup>
   import RankListItem from '@/components/user/RankListItem.vue'
   import { storeToRefs } from "pinia"
-  import { useUserStore } from "@/stores/user-store"
+  import { usePlanStore } from "@/stores/plan-store"
 
-  const userStore = useUserStore()
-  const { rankList } = storeToRefs(userStore)
+  const planStore = usePlanStore()
+  const { rankList } = storeToRefs(planStore)
 </script>
 
 <template>
