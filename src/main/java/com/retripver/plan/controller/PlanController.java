@@ -9,27 +9,28 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.retripver.global.util.JWTUtil;
 import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
-import com.retripver.user.dto.LoginResponse;
-
-import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/plan")
 public class PlanController {
 
 	private final PlanService planService;
+	private final JWTUtil jwtUtil;
 	
 	@Autowired
-	public PlanController(PlanService planService) {
+	public PlanController(PlanService planService, JWTUtil jwtUtil) {
 		this.planService = planService;
+		this.jwtUtil = jwtUtil;
 	}
 	
 	@GetMapping("/attraction/info/{attractionNo}")
@@ -54,10 +55,10 @@ public class PlanController {
 	}
 	
 	@GetMapping("/mylist")
-	public ResponseEntity<?> myList(HttpSession httpSession) {
-		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+	public ResponseEntity<?> myList(@RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		List<PlanResponse> planList = planService.myPlanList(loginResponse.getId());
+		List<PlanResponse> planList = planService.myPlanList(id);
 		
 		return ResponseEntity.ok(planList);
 	}
@@ -70,19 +71,19 @@ public class PlanController {
 	}
 	
 	@GetMapping("/like")
-	public ResponseEntity<?> likeMyPlans(HttpSession httpSession) {
-		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+	public ResponseEntity<?> likeMyPlans(@RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		List<PlanResponse> likePlanList = planService.likePlanList(loginResponse.getId());
+		List<PlanResponse> likePlanList = planService.likePlanList(id);
 		
 		return ResponseEntity.ok(likePlanList);
 	}
 	
 	@GetMapping("/like/{planId}")
-	public ResponseEntity<?> likePlan(@PathVariable("planId") int planId, HttpSession httpSession) {
-		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+	public ResponseEntity<?> likePlan(@PathVariable("planId") int planId, @RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		boolean isLike = planService.likePlan(planId, loginResponse.getId());
+		boolean isLike = planService.likePlan(planId, id);
 		
 		return ResponseEntity.ok(isLike);
 	}
@@ -95,10 +96,10 @@ public class PlanController {
 	}
 	
 	@PostMapping("/make")
-	public ResponseEntity<?> makePlan(@RequestBody PlanRequest planRequest, HttpSession httpSession) {
-		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+	public ResponseEntity<?> makePlan(@RequestBody PlanRequest planRequest, @RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		planRequest.setUserId(loginResponse.getId());
+		planRequest.setUserId(id);
 		planService.makePlan(planRequest);
 		
 		return ResponseEntity.ok(null);
@@ -112,10 +113,10 @@ public class PlanController {
 	}
 	
 	@PatchMapping("/quest-clear")
-	public ResponseEntity<?> questClear(@RequestBody int planId, HttpSession httpSession) {
-		LoginResponse loginResponse = (LoginResponse) httpSession.getAttribute("loginUser");
+	public ResponseEntity<?> questClear(@RequestBody int planId, @RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
 		
-		planService.questClear(planId, loginResponse.getId());
+		planService.questClear(planId, id);
 		
 		return ResponseEntity.ok(null);
 	}

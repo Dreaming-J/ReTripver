@@ -9,6 +9,18 @@ public class HeaderUtil {
 	private static final String REFRESH_COOKIE = "refresh_token";
 	private static final String TOKEN_PREFIX = "Bearer ";
 
+	public static String getAuthorizationHeaderName() {
+		return AUTHORIZATION_HEADER;
+	}
+
+	public static String getTokenPrefix() {
+		return TOKEN_PREFIX;
+	}
+
+	public static String getRefreshCookieName() {
+		return REFRESH_COOKIE;
+	}
+
 	public static String getAccessToken(HttpServletRequest httpServletRequest) {
 		String authorization = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
 		

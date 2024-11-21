@@ -16,7 +16,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.user.dto.LoginResponse;
+import com.retripver.auth.dto.LoginResponse;
 
 @AutoConfigureMockMvc
 @SpringBootTest(

@@ -89,8 +89,7 @@ public class JWTUtil {
     public String createAccessToken(String userId) {
 
         Instant now = ZonedDateTime.now().toInstant(); // 토큰 생성 시간.
-//        Instant validity = now.plus(Duration.ofMinutes(accessTokenValidityTime)); // 토큰 유효 시간
-        Instant validity = now.plus(Duration.ofSeconds(3)); // 토큰 유효 시간
+        Instant validity = now.plus(Duration.ofMinutes(accessTokenValidityTime)); // 토큰 유효 시간
 
         maxAge = Date.from(validity);
 
@@ -99,7 +98,7 @@ public class JWTUtil {
         return Jwts.builder()
                 .subject(String.valueOf(userId)) // 토큰의 식별자
                 .issuedAt(Date.from(now)) // 토큰 발급 시간
-                .expiration(Date.from(validity)) // 토큰 만료 시간
+                .expiration(maxAge) // 토큰 만료 시간
                 .signWith(privateKey, Jwts.SIG.RS256) // 토큰 서명 (암호화) 및 방식, 비공개 키(개인키, private key)로 싸이닝.
                 .compact(); // 문자열 변환
     }
@@ -116,9 +115,9 @@ public class JWTUtil {
 
         return Jwts.builder()
                 .subject(String.valueOf(userId)) // 토큰의 식별자
-                .claim("Role", "") // 토큰에 포함될 정보
+//                .claim("Role", "") // 토큰에 포함될 정보
                 .issuedAt(Date.from(now)) // 토큰 발급 시간
-                .expiration(Date.from(validity)) // 토큰 만료 시간
+                .expiration(maxAge) // 토큰 만료 시간
                 .signWith(privateKey, Jwts.SIG.RS256) // 토큰 서명 (암호화) 및 방식, 비공개 키(개인키, private key)로 싸이닝.
                 .compact(); // 문자열 변환
     }
