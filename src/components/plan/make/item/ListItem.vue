@@ -37,6 +37,11 @@ const props = defineProps({
   align-items: center;
 }
 
+img {
+  object-fit: cover; /* 비율을 유지하며 컨테이너를 채움 (필요시 잘라냄) */
+  object-position: center;
+}
+
 .img-wrapper {
   flex-shrink: 0;
   width: 100px;

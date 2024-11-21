@@ -90,8 +90,8 @@ const changeRouteType = (changedRouteType) => {
   /* border: 1px solid lightgray; */
   height: 100%;
   left: 510px;
-  position: absolute;
-  transition: 0.4s;
+  position: absolute; 
+  transition: 0.3s ease;
   z-index: 2;
 }
 
