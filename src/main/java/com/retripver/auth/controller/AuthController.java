@@ -31,24 +31,27 @@ import com.retripver.auth.dto.UserSearchPwdRequest;
 import com.retripver.auth.service.AuthService;
 import com.retripver.auth.service.EmailService;
 import com.retripver.global.service.FileManageService;
-
-import jakarta.servlet.http.HttpSession;
+import com.retripver.global.util.HeaderUtil;
+import com.retripver.global.util.JWTUtil;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 	
 	private final AuthService authService;
+	private final JWTUtil jwtUtil;
 	private final EmailService emailService;
 	private final FileManageService fileManageService;
 	
 	@Autowired
-	public AuthController(AuthService authService, EmailService emailService, FileManageService fileManageService) {
+	public AuthController(AuthService authService, JWTUtil jwtUtil, EmailService emailService, FileManageService fileManageService) {
 		this.authService = authService;
+		this.jwtUtil = jwtUtil;
 		this.emailService = emailService;
 		this.fileManageService = fileManageService;
 	}
 	
+	// 엑세스 토큰 재발급
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(@CookieValue(value = "refresh_token", required = false) String refreshToken) {
         String newAccessToken = authService.createAccessToken(refreshToken);
@@ -72,15 +75,12 @@ public class AuthController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(
-                "Authorization",
-                "Bearer " + loginResponse.getAccessToken()
-        );
+                HeaderUtil.getAuthorizationHeaderName(),
+                HeaderUtil.getTokenPrefix() + loginResponse.getAccessToken()
+                );
 
         ResponseCookie responseCookie = ResponseCookie
-                .from( // Cookie의 Key, Value 설정.
-                        "refresh_token", // Key
-                        loginResponse.getRefreshToken() // Value
-                )
+                .from(HeaderUtil.getRefreshCookieName(), loginResponse.getRefreshToken()) // Cookie의 Key, Value 설정.
                 .domain("localhost") // Cookie를 사용하는 도메인 (특정 도메인에만 적용하려면 사용. 그렇지 않은 경우 생략)
                 .path("/") // 해당 도메인의 경로 (쿠키 사용 범위)
                 .httpOnly(true) // HTTP 통신에서만 Cookie를 사용.
@@ -90,8 +90,7 @@ public class AuthController {
                 .build();
 
         // SET_COOKIE2를 사용하면 클라이언트의 쿠키가 변경되지 않음.
-        return ResponseEntity
-                .status(HttpStatus.OK)
+        return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .header(HttpHeaders.SET_COOKIE, responseCookie.toString())
                 .body(loginResponse);
@@ -100,8 +99,7 @@ public class AuthController {
 	// 로그아웃
 	@PostMapping("/logout")
 	public ResponseEntity<?> logout(@RequestHeader(value = "Authorization", required = false) String authorization, @CookieValue(value = "refresh_token", required = false) String refreshToken) {
-		//TODO: 수정 필요
-		//authService.signOut(authorization, refreshToken);
+		authService.logout(authorization, refreshToken);
         
 		return ResponseEntity.ok().build();
 	}
@@ -116,10 +114,8 @@ public class AuthController {
 	
 	// 회원 탈퇴
 	@DeleteMapping
-	public ResponseEntity<?> resign(HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		
-		authService.resign(loginUser.getId());
+	public ResponseEntity<?> resign(@RequestHeader(value = "Authorization") String authorization) {
+		authService.resign(authorization);
 		
 		return ResponseEntity.ok("회원 탈퇴에 성공했습니다.");
 	}
@@ -158,9 +154,9 @@ public class AuthController {
 	
 	// 프로필 등록
 	@PutMapping("/profile")
-	public ResponseEntity<?> profileUpload(@RequestPart UserProfileRequest userProfileRequest, @RequestPart(value="profileImg", required=false) MultipartFile multipartFile, HttpSession session) {
-//		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-//		userProfileRequest.setId(loginUser.getId());
+	public ResponseEntity<?> profileUpload(@RequestPart UserProfileRequest userProfileRequest, @RequestPart(value="profileImg", required=false) MultipartFile multipartFile, @RequestHeader(value = "Authorization") String authorization) {
+		String userId = jwtUtil.extractUserId(authorization, false);
+		userProfileRequest.setId(userId);
 		
 		String profileImg = fileManageService.uploadFile(multipartFile);
 		userProfileRequest.setProfileImg(profileImg);
@@ -169,7 +165,7 @@ public class AuthController {
 		
 		// 프로필 등록 실패 에러
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(profileImg);
 	}
 	
 	// 아이디 찾기
@@ -205,37 +201,29 @@ public class AuthController {
 	
 	// 회원 정보 수정
 	@PutMapping
-	public ResponseEntity<?> modify(@RequestBody UserModifyRequest userModifyRequest, HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		userModifyRequest.setCurId(loginUser.getId());
+	public ResponseEntity<?> modify(
+			@RequestPart UserModifyRequest userModifyRequest,
+			@RequestPart(value="profileImg", required=false) MultipartFile multipartFile,
+			@RequestHeader(value = "Authorization") String authorization
+			) {
+		String userId = jwtUtil.extractUserId(authorization, false);
+		userModifyRequest.setCurId(userId);
 		
-		// 아이디를 수정하는 경우 이전의 아이디로 정보를 찾아야해서 cur과 new를 구분해야 한다!
-		
-		
-		// 추후 이미지 String을 image 파일로 변경하기!!!!
-		
+		String profileImg = fileManageService.uploadFile(multipartFile);
+		userModifyRequest.setProfileImg(profileImg);
 		
 		authService.modify(userModifyRequest);
 		
 		// 오류 추가!
 		
-		// 다시 세센에 바뀐 아이디 정보로 로그인하기?
-		
-		loginUser.setId(userModifyRequest.getNewId());
-		session.setAttribute("loginUser", loginUser);
-		
-		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(profileImg);
 	}
 	
 	// 비밀 번호 변경
 	@PutMapping("/user/password")
-	public ResponseEntity<?> modifyPassword(@RequestBody PwdModifyRequest pwdModifyRequset,HttpSession session) {
-		LoginResponse loginUser = (LoginResponse) session.getAttribute("loginUser");
-		pwdModifyRequset.setId(loginUser.getId());
-		
-		// 아이디가 기존의 비밀번호와 같은지 확인!
-		// 비밀번호와 비밀번호 체크가 같은지 확인!
+	public ResponseEntity<?> modifyPassword(@RequestBody PwdModifyRequest pwdModifyRequset, @RequestHeader(value = "Authorization") String authorization) {
+		String userId = jwtUtil.extractUserId(authorization, false);
+		pwdModifyRequset.setId(userId);
 		
 		authService.modifyPassword(pwdModifyRequset);
 		

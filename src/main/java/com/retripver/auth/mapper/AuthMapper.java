@@ -1,6 +1,7 @@
 package com.retripver.auth.mapper;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -32,6 +33,9 @@ public interface AuthMapper {
 	@Insert("INSERT INTO users (id, password, salt, name, email) VALUES (#{id}, #{password}, #{salt}, #{name}, #{email})")
 	void insert(SignupRequest signupRequest) throws SQLException;
 
+    @Insert("INSERT INTO black_list (id, token, expired_at) VALUES (#{userId}, #{token}, #{expiredAt})")
+	void insertBlackList(String userId, String token, Date expiredAt);
+
 	@Delete("DELETE FROM users WHERE id = #{id}")
 	void deleteUser(String id) throws SQLException;
 	
@@ -53,7 +57,7 @@ public interface AuthMapper {
 	@Select("SELECT password users WHERE id = #{id} AND name = #{name} AND email = #{email}")
 	String selectByIdAndNameAndEmail(UserSearchPwdRequest userSearchPwdRequest);
 
-	@Update("UPDATE users SET id = #{id}, name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{curId}")
+	@Update("UPDATE users SET id = #{newId}, name = #{name}, email = #{email}, profile_img = #{profileImg}, profile_desc = #{profileDesc} WHERE id = #{curId}")
 	void update(UserModifyRequest userModifyRequest) throws SQLException;
 
 	@Update("UPDATE users SET password = #{newPassword} WHERE id = #{id}")

@@ -18,8 +18,8 @@ public class ScheduleConfig {
         this.authRepository = authRepository;
     }
 
-    @Scheduled(cron = "0 * * * * *") // 1분 마다
-    //@Scheduled(cron = "0 0 4 * * *") // 매일 새벽 4시
+//    @Scheduled(cron = "0 * * * * *") // 1분 마다
+    @Scheduled(cron = "0 0 4 * * *") // 매일 새벽 4시
     public void deleteExpiredTokens() {
     	authRepository.deleteExpiredTokens();
     }

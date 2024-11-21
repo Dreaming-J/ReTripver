@@ -1,6 +1,7 @@
 package com.retripver.auth.repository;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,6 +42,11 @@ public class AuthRepositoryImpl implements AuthRepository {
 	@Override
 	public LoginResponse login(LoginRequest loginRequest) {
 		return authMapper.selectByIdAndPassword(loginRequest);
+	}
+
+	@Override
+	public void saveBlackList(String userId, String token, Date expiredAt) {
+        authMapper.insertBlackList(userId, token, expiredAt);		
 	}
 
 	@Override

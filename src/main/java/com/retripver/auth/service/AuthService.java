@@ -18,9 +18,11 @@ public interface AuthService {
 
 	LoginResponse login(LoginRequest loginRequest);
 
+	void logout(String authorization, String refreshToken);
+
 	void signup(SignupRequest signupRequest);
 
-	void resign(String id);
+	void resign(String authorization);
 	
 	boolean isExistId(String id);
 	

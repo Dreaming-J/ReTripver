@@ -1,5 +1,7 @@
 package com.retripver.auth.repository;
 
+import java.util.Date;
+
 import com.retripver.auth.dto.LoginRequest;
 import com.retripver.auth.dto.LoginResponse;
 import com.retripver.auth.dto.PwdModifyRequest;
@@ -17,6 +19,8 @@ public interface AuthRepository {
 	boolean getBlackListToken(String token);
 
 	LoginResponse login(LoginRequest loginRequest);
+	
+	void saveBlackList(String userId, String token, Date expiredAt);
 
 	void signup(SignupRequest signupRequest) throws UserSQLException;
 

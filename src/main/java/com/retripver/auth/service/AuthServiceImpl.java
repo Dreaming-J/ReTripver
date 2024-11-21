@@ -1,12 +1,10 @@
 package com.retripver.auth.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.retripver.auth.repository.AuthRepository;
-import com.retripver.global.exception.InvalidTokenException;
-import com.retripver.global.util.HashUtil;
-import com.retripver.global.util.JWTUtil;
 import com.retripver.auth.dto.LoginRequest;
 import com.retripver.auth.dto.LoginResponse;
 import com.retripver.auth.dto.PwdModifyRequest;
@@ -19,7 +17,10 @@ import com.retripver.auth.exception.DuplicatePasswordException;
 import com.retripver.auth.exception.DuplicateSignupException;
 import com.retripver.auth.exception.InvalidSignupException;
 import com.retripver.auth.exception.NotFoundUserException;
-import com.retripver.auth.service.AuthSignupValidator;
+import com.retripver.auth.repository.AuthRepository;
+import com.retripver.global.exception.InvalidTokenException;
+import com.retripver.global.util.HashUtil;
+import com.retripver.global.util.JWTUtil;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -38,13 +39,17 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public String createAccessToken(String refreshToken) throws InvalidTokenException {
         String userId = jwtUtil.extractUserId(refreshToken, true);
-
+        
         return jwtUtil.createAccessToken(userId);
     }
 
 	@Override
 	public boolean isBlackListToken(String token) {
-		return authRepository.getBlackListToken(token);
+//		return authRepository.getBlackListToken(token);
+		
+		boolean is = authRepository.getBlackListToken(token);
+		System.out.println(is);
+		return is;
 	}
 
 	@Override
@@ -75,6 +80,18 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
+	public void logout(String authorization, String refreshToken) {
+        String refreshTokenUserId = jwtUtil.extractUserId(refreshToken, true);
+        Date refreshTokenExpiredAt = jwtUtil.getExpirationTime(refreshToken, true);
+
+        String accessTokenUserId = jwtUtil.extractUserId(authorization, false);
+        Date accessTokenExpiredAt = jwtUtil.getExpirationTime(authorization, false);
+
+        authRepository.saveBlackList(refreshTokenUserId, refreshToken, refreshTokenExpiredAt);
+        authRepository.saveBlackList(accessTokenUserId, authorization, accessTokenExpiredAt);
+	}
+
+	@Override
 	public void signup(SignupRequest signupRequest) {
 		if (!AuthSignupValidator.isValid(signupRequest)) {
 			throw new InvalidSignupException();
@@ -93,7 +110,9 @@ public class AuthServiceImpl implements AuthService {
 	}
 
 	@Override
-	public void resign(String id) {
+	public void resign(String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
+		
 		authRepository.resign(id);
 	}
 	
