@@ -5,31 +5,36 @@ import StatusPlan from "@/components/user/status/StatusPlan.vue";
 
 import { ref } from "vue";
 
-const isPlansVisible = ref(true);
+const isPlansVisible = ref(false);
+const selectedSidoCode = ref(null);
 
-const selectSido = () => {
-  isPlansVisible.value = !isPlansVisible.value;
-}
+const selectSido = (sidoCode) => {
+  isPlansVisible.value = true;
+  selectedSidoCode.value = sidoCode;
+};
 
+const closePlansPanel = () => {
+  isPlansVisible.value = false;
+};
 </script>
 
 <template>
   <div class="status-container">
     <div class="info-container">
-      {{ isPlansVisible  }}
       <StatusInfo />
     </div>
-    <div class="map-container" >
-      <button @click="selectSido">클릭</button>
-      <StatusMap  />
+    <div class="map-container">
+      <StatusMap @select-sido-code="selectSido" />
     </div>
     <div class="plans-container">
       <div
-            class="plan-panel shadow-3"
-            :class="{'plan-panel-hide': !isPlansVisible}">
-        
-          <StatusPlan />
-        
+        class="plan-panel shadow-3"
+        :class="{ 'plan-panel-hide': !isPlansVisible }"
+      >
+        <StatusPlan
+          @close-plans-panel="closePlansPanel"
+          :sidoCode="selectedSidoCode"
+        />
       </div>
     </div>
   </div>
@@ -45,21 +50,24 @@ const selectSido = () => {
 }
 
 .info-container {
-  border: 1px solid pink;
   width: 400px;
   min-width: 400px;
+  /* border: 1px solid lightgray; */
+  /* border-right: 1px solid lightgray; */
+  /* border-radius: 10px; */
+  /* box-shadow: 4px 0 8px -4px rgba(0, 0, 0, 0.2); 오른쪽 선에만 그림자 */
 }
 
 .map-container {
-  border: 1px solid red;
   width: 100%;
 }
 
 .plans-container {
   position: relative;
-  width: 500px;
+  width: 600px;
   min-width: 400px;
   height: 100%;
+  overflow: hidden;
   /* border: 1px solid purple; */
 }
 
@@ -76,7 +84,7 @@ const selectSido = () => {
 
 .plan-panel-hide {
   transform: translate(400px, 0);
-  
-   /* background-color: pink; */
+
+  /* background-color: pink; */
 }
 </style>

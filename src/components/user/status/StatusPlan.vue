@@ -1,45 +1,45 @@
 <script setup>
-import PlanListItem from '@/components/plan/item/PlanListItem.vue';
+import PlanListItem from "@/components/plan/item/PlanListItem.vue";
 
-import {ScrollPanel, Button} from 'primevue';
+import { ScrollPanel, Button } from "primevue";
 
+const props = defineProps({
+  sidoCode: {
+    type: String,
+  },
+});
+
+const emit = defineEmits(["closePlansPanel"]);
+
+const closePanel = () => {
+  emit("closePlansPanel");
+};
 </script>
 
 <template>
   <div class="container p-1">
     <div class="btn-close">
-      <Button severity="secondary" variant="text" rounded aria-label="Cancel">
+      <Button
+        severity="secondary"
+        variant="text"
+        rounded
+        aria-label="Cancel"
+        @click="closePanel"
+      >
         <font-awesome-icon :icon="['fas', 'x']" />
       </Button>
     </div>
     <div class="title-container p-2 pt-0 text-lg flex justify-content-end">
-      여행 기록들
+      {{ sidoCode }}의 여행 기록들
     </div>
     <div class="travel-list">
-      <ScrollPanel class="scroll-panel p-2" style="width: 100%; height: 100%;">
-            <PlanListItem class="plan-list-item"/>
-            <PlanListItem />
-            <PlanListItem />
-            <PlanListItem />
-            <PlanListItem />
-            <PlanListItem />
-            <PlanListItem />
-
-            <PlanListItem />
-            <PlanListItem />
-            <PlanListItem />
-
-            <PlanListItem />
-        </ScrollPanel>
-
-
-
-      
-
+      <ScrollPanel class="scroll-panel p-2" style="width: 100%; height: 100%">
+        <PlanListItem class="plan-list-item" />
+        <PlanListItem class="plan-list-item" />
+        <PlanListItem class="plan-list-item" />
+        <PlanListItem class="plan-list-item" />
+      </ScrollPanel>
     </div>
-
-
-
   </div>
 </template>
 
@@ -57,7 +57,7 @@ import {ScrollPanel, Button} from 'primevue';
 }
 
 .travel-list {
- height: 100%;
+  height: 100%;
   position: relative;
 }
 
@@ -75,7 +75,7 @@ import {ScrollPanel, Button} from 'primevue';
 
 .plan-list-item:hover {
   transform: translateY(-2.5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* border: 1px solid #ddd; */
 }
 </style>

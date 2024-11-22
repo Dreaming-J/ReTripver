@@ -8,13 +8,15 @@ defineProps({
     type: Array,
     default: () => [
       "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
+      "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
+      "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
     ],
   },
 });
 </script>
 
 <template>
-  <div class="list-item">
+  <div class="list-item shadow-2">
     <div class="item-header">
       {{ title }}
     </div>
@@ -34,13 +36,13 @@ defineProps({
 .list-item {
   display: flex;
   flex-direction: column;
-  border: 1px solid #eee;
+  /* border: 1px solid #eee; */
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 16px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 200px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  height: 230px;
 }
 
 .item-header {

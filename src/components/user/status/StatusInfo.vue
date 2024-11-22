@@ -1,38 +1,79 @@
-<script setup></script>
+<script setup>
+import SidePanel from "@/components/user/status/SidePanel.vue";
+</script>
 
 <template>
   <div>
     <div class="profile-container">
       <div class="profile-header">
         <div class="profile-image">
-          <img src="@/assets/img/profile.jpg" alt="Diver profile image" />
+          <img src="@/assets/img/profile.jpg" />
         </div>
+
         <div class="profile-info">
-          <div class="profile-name">
+          <div class="ahievement-title">강원 수호자</div>
+          <div class="profile-id">
             Kim_JJong
-            <span class="edit-icon">✎</span>
-          </div>
-          <div class="stats">
-            <div class="stat-item">
-              <span class="stat-value">50</span>
-              <span>팔로워</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-value">50</span>
-              <span>팔로잉</span>
-            </div>
+            <span class="edit-icon">
+              <font-awesome-icon
+                :icon="['far', 'pen-to-square']"
+                class="text-xl"
+              />
+              <!-- <button class="text-xs">follow</button> -->
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="bio">
+      <div class="follow-info">
+        <div class="follow-num text-center col-6">
+          팔로워 <span class="pl-2">50</span>
+        </div>
+        <div class="follow-num text-center col-6">
+          팔로우 <span class="pl-2">50</span>
+        </div>
+      </div>
+
+      <div class="bio-container">
         드라이빙 중...<br />
         바다에서 쉬고 놀기는 사람...
       </div>
 
-      <button class="follow-button">+ 팔로우</button>
+      <!-- <div class="btn-container">
+        <button class="btn-follow">+ 팔로우</button>
+      </div> -->
 
-      <div class="progress-section">
+      <div class="exp-container">
+        <div class="tier-img">
+          <img src="@/assets/img/medal.png" />
+        </div>
+        <div class="exp-info">
+          <div class="exp-text text-sm">EXP</div>
+          <div class="exp-bar">
+            <div class="exp-background"></div>
+            <div class="exp-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="quest-container">
+        <div class="quest-text">Quest Succes</div>
+        <div class="quest-rate">
+          <SidePanel
+            :value="0.75"
+            :size="120"
+            :thickness="10"
+            :fill="{ gradient: ['#E0E0E0', '#355C7D', '#1F3649'] }"
+            line-cap="round"
+          >
+            <template #default="{ progress }">
+              {{ Math.round(progress * 100) }}%
+            </template>
+          </SidePanel>
+        </div>
+      </div>
+
+      <!-- <div class="progress-section">
         <div class="exp-label">
           <svg class="badge-icon" viewBox="0 0 24 24">
             <circle
@@ -51,120 +92,153 @@
 
         <div class="mission-label">Mission Success</div>
         <div class="mission-bar"></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <style scoped>
 .profile-container {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  max-width: 400px;
+  width: 100%;
   padding: 20px;
 }
 
 .profile-header {
+  height: 110px;
+  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
 }
 
 .profile-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: linear-gradient(45deg, #0066cc, #0099ff);
+  width: 110px;
+  height: 100%;
 }
 
 .profile-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  opacity: 0.7;
+  border-radius: 50%;
 }
 
 .profile-info {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
 }
 
-.profile-name {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 4px;
+.ahievement-title {
+  height: 40%;
   display: flex;
   align-items: center;
-  gap: 8px;
+}
+
+.profile-id {
+  height: 60%;
+  display: flex;
+  align-items: center;
 }
 
 .edit-icon {
-  color: #666;
-  font-size: 14px;
+  padding-left: 20px;
 }
 
-.stats {
+.follow-info {
+  height: 50px;
   display: flex;
-  gap: 16px;
-  color: #666;
-  font-size: 14px;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
-.stat-value {
-  font-weight: 600;
-  color: #000;
+.bio-container {
+  height: 120px;
+  padding-top: 10px;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
 }
 
-.bio {
-  color: #666;
-  font-size: 14px;
-  margin-bottom: 16px;
+.exp-container {
+  height: 75px;
+  width: 100%;
+  display: flex;
 }
 
-.follow-button {
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 20px;
-  padding: 8px 16px;
-  font-size: 14px;
-  cursor: pointer;
+.tier-img {
+  height: 100%;
+  width: 75px;
+  flex-shrink: 0;
 }
 
-.progress-section {
-  margin-top: 20px;
+.tier-img img {
+  height: 100%;
+  width: 100%;
+}
+
+.exp-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10px;
+}
+
+.exp-text {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
 }
 
 .exp-bar {
-  height: 8px;
-  background: #ffe4b5;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  height: 20%;
+  width: 100%;
+  position: relative;
 }
 
-.mission-bar {
-  height: 8px;
-  background: #ffb6c1;
-  border-radius: 4px;
+.exp-background {
+  background-color: lightgray;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
-.exp-label,
-.mission-label {
+.exp-fill {
+  background: linear-gradient(
+    90deg,
+    rgb(255, 239, 148) 0%,
+    rgb(255, 220, 100) 50%,
+    rgb(255, 200, 50) 100%
+  );
+  border-radius: 15px;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  animation: fill-animation 1.5s ease-out forwards; /* 애니메이션 설정 */
+}
+
+@keyframes fill-animation {
+  from {
+    width: 0%; /* 시작 너비 */
+  }
+  to {
+    width: 50%; /* 종료 너비 */
+  }
+}
+
+.quest-container {
+  padding-top: 10px;
+}
+
+.quest-text {
+  padding-bottom: 10px;
+}
+
+.quest-rate {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 4px;
-}
-
-.badge-icon {
-  width: 16px;
-  height: 16px;
+  justify-content: center;
 }
 </style>
