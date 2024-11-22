@@ -6,11 +6,8 @@ defineProps({
   },
   images: {
     type: Array,
-    default: () => ['https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image',
-                'https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image',
-                'https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image',
-                'https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image',
-                'https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image'
+    default: () => [
+      "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
     ],
   },
 });
