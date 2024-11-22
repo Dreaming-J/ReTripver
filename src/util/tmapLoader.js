@@ -1,5 +1,6 @@
 import { ref } from "vue";
 
+const { VITE_TMAP_SERVICE_KEY } = import.meta.env
 const { Tmapv3 } = window;
 
 // 상태 변수들을 ref로 정의
@@ -36,19 +37,21 @@ export const onSearchRoute = (map, start, end, routeType) => {
 
   const headers = {
     "Content-Type": "application/json",
-    appKey: "Nzgwwy1J3Zsqz0wG9woF7pL1T7Vqflc79F9psGGh",
+    appKey: VITE_TMAP_SERVICE_KEY,
   };
 
   const requestData = {
     startName: start.title,
-    startX: String(start.lng),
-    startY: String(start.lat),
+    startX: String(start.longitude),
+    startY: String(start.latitude),
     endName: end.title,
-    endX: String(end.lng),
-    endY: String(end.lat),
+    endX: String(end.longitude),
+    endY: String(end.latitude),
     reqCoordType: "WGS84GEO",
     resCoordType: "EPSG3857",
   };
+
+  console.log(requestData)
 
   console.log("경로 타입 ", routeType);
 

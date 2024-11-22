@@ -40,14 +40,14 @@ const map = ref(null);
 const markers = ref([]);
 
 onMounted(() => {
-  // map.value = initTmap();
-  // map.value.on("ConfigLoad", () => {
-  //   map.value.setMapType("NORMAL");
-  //   if (store.selectList && store.selectList.length > 0) {
-  //     initializeMarkers(store.selectList);
-  //     initializeRoute(store.selectList, props.routeType);
-  //   }
-  // });
+  map.value = initTmap();
+  map.value.on("ConfigLoad", () => {
+    map.value.setMapType("NORMAL");
+    if (store.selectList && store.selectList.length > 0) {
+      initializeMarkers(store.selectList);
+      initializeRoute(store.selectList, props.routeType);
+    }
+  });
 });
 
 const initializeMarkers = (locations) => {
@@ -58,16 +58,16 @@ const initializeMarkers = (locations) => {
 
   // LatLngBounds 객체 생성
   const bounds = new Tmapv3.LatLngBounds(
-    new Tmapv3.LatLng(locations[0].lat, locations[0].lng)
+    new Tmapv3.LatLng(locations[0].latitude, locations[0].longitude)
   );
 
   // 새 위치로 마커 추가 및 bounds 확장
   locations.forEach((location) => {
-    const marker = addMarker(map.value, location.lat, location.lng);
+    const marker = addMarker(map.value, location.latitude, location.longitude);
     markers.value.push(marker);
 
     // bounds 확장
-    bounds.extend(new Tmapv3.LatLng(location.lat, location.lng));
+    bounds.extend(new Tmapv3.LatLng(location.latitude, location.longitude));
   });
 
   // 여백 설정
@@ -109,8 +109,8 @@ const initializeRoute = (locations) => {
 watch(
   () => store.selectList,
   (newList) => {
-    // initializeMarkers(newList);
-    // initializeRoute(store.selectList, props.routeType);
+    initializeMarkers(newList);
+    initializeRoute(store.selectList, props.routeType);
   },
   { deep: true }
 );
@@ -118,7 +118,7 @@ watch(
 watch(
   () => props.routeType,
   (newType) => {
-    // initializeRoute(store.selectList);
+    initializeRoute(store.selectList);
   }
 );
 </script>
