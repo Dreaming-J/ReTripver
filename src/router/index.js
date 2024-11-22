@@ -36,7 +36,7 @@ const router = createRouter({
         {
           path: "list",
           name: "plan-list",
-          component: () => import("@/views/plan/PlanListView.vue"),
+          component: () => import("@/views/plan/PlanSelectSidoView.vue"),
         },
         {
           path: "make",

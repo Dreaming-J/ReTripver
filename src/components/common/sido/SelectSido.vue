@@ -26,7 +26,7 @@ const items = ref([
 
 <template>
   <div class="flex flex-wrap">
-    <div class="sido-item" v-for="item in items" :key="item.idx">
+    <div class="sido-item col-3 p-5" v-for="item in items" :key="item.idx">
       <SelectSidoItem />
     </div>
   </div>
@@ -34,6 +34,7 @@ const items = ref([
 
 <style scoped>
 .sido-item {
-  border: 1px solid peru;
+  /* border: 1px solid peru; */
+  height: 350px;
 }
 </style>
