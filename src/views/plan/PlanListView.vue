@@ -1,27 +1,30 @@
 <script setup>
-import PlanListItem from "@/components/plan/PlanListItem.vue";
+import SelectSido from "@/components/common/sido/SelectSido.vue";
 </script>
 
 <template>
-  <div>
-    <div>
-      <h1>다른 유저들이 올린 여행 계획들</h1>
-    </div>
-    <div>
-      <div>
-        <PlanListItem />
-      </div>
-      <div>
-        <PlanListItem />
-      </div>
-      <div>
-        <PlanListItem />
-      </div>
-      <div>
-        <PlanListItem />
-      </div>
+  <div class="view-container">
+    <div class="text-title text-lg">어떤 지역의 여행을 구경하시나요?</div>
+    <div class="select-sido-container">
+      <SelectSido />
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.view-container {
+  width: 1200px;
+  margin: 0 auto;
+  border: 1px solid black;
+}
+
+.text-title {
+  border: 1px solid red;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.select-sido-container {
+  border: 1px solid blue;
+}
+</style>
