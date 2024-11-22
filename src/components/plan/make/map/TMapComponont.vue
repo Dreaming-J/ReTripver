@@ -9,7 +9,7 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { useMakePlansStore } from "@/stores/makePlans";
+import { useMakePlanStore } from "@/stores/makePlan-store";
 import {
   initTmap,
   addMarker,
@@ -18,7 +18,7 @@ import {
   clearRoute,
 } from "@/util/tmapLoader";
 
-const store = useMakePlansStore();
+const store = useMakePlanStore();
 
 const props = defineProps({
   routeType: {

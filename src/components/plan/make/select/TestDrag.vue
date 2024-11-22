@@ -19,9 +19,9 @@
 <script setup>
 import { defineComponent } from "vue";
 import { VueDraggableNext } from "vue-draggable-next";
-import { useMakePlansStore } from "@/stores/makePlans";
+import { useMakePlanStore } from "@/stores/makePlan-store";
 
-const store = useMakePlansStore();
+const store = useMakePlanStore();
 const log = (event) => {
   if (event.moved) {
     // moved 데이터를 활용하여 순서 업데이트

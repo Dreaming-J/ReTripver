@@ -6,7 +6,7 @@ import SearchKeyword from "@/components/plan/make/search/form/SearchKeyword.vue"
 <template>
   <div class="w-full flex">
     <div class="col-4 p-3 pr-1">
-      <SelectCity />
+      <SelectCity/>
     </div>
     <div class="col-8 p-3 pl-1">
       <SearchKeyword />

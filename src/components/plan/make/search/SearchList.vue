@@ -1,9 +1,9 @@
 <script setup>
 import SearchForm from "@/components/plan/make/search/form/SearchForm.vue";
 import SearchListItem from "@/components/plan/make/search/SearchListItem.vue";
-import { useMakePlansStore } from "@/stores/makePlans";
+import { useMakePlanStore } from "@/stores/makePlan-store";
 
-const store = useMakePlansStore();
+const store = useMakePlanStore();
 
 const selectSearchItem = (item) => {
   store.addSelectItem(item);

@@ -4,7 +4,7 @@ import OptimizeDialog from "@/components/plan/make/select/OptimizeDialog.vue";
 import ToggleBtn from "./ToggleBtn.vue";
 import { Button, Dialog } from "primevue";
 import { ref, watch } from "vue";
-import { useMakePlansStore } from "@/stores/makePlans";
+import { useMakePlanStore } from "@/stores/makePlan-store";
 import { VueDraggableNext } from "vue-draggable-next";
 
 const emit = defineEmits(["changeRouteType"]);
@@ -12,7 +12,7 @@ const emit = defineEmits(["changeRouteType"]);
 const visible = ref(false);
 const routeType = ref(false); // true -> 자동차, false -> 도보
 
-const store = useMakePlansStore();
+const store = useMakePlanStore();
 const endDrag = (event) => {
   if (event.moved) {
     // moved 데이터를 활용하여 순서 업데이트
