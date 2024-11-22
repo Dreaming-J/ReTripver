@@ -3,59 +3,31 @@ import SearchListItem from "@/components/plan/make/search/SearchListItem.vue";
 import Select from "primevue/select";
 import CascadeSelect from "primevue/cascadeselect";
 
-import { useAttractionStore } from "@/stores/attraction-store";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { useAttractionStore } from "@/stores/attraction-store";
+import { useMakePlanStore } from "@/stores/makePlan-store";
+import { ref, onMounted, watch } from "vue";
 
 const attractionStore = useAttractionStore()
-const { sidoList } = storeToRefs(attractionStore)
 const { getSidoList } = attractionStore
 
-getSidoList();
+const makePlanStore = useMakePlanStore()
+const { searchOption } = storeToRefs(makePlanStore)
 
-const selectCode = ref();
-const citys = ref([
-  {
-    name: "경기",
-    states: [
-      {
-        cname: "경기",
-        sidoCode: 2,
-        gugunCode: 0,
-      },
-      {
-        cname: "양주시",
-        sidoCode: 2,
-        gugunCode: 0,
-      },
-      {
-        cname: "의정부시",
-        sidoCode: 2,
-        gugunCode: 0,
-      },
-    ],
+const selectCode = ref({})
+const sidoList = ref([])
+
+onMounted(async () => {
+  sidoList.value = await getSidoList()
+})
+
+watch(
+  selectCode, (newSelectCode) => {
+    searchOption.value.sidoCode = newSelectCode.sidoCode
+    searchOption.value.gugunCode = newSelectCode.gugunCode
   },
-  {
-    name: "강원",
-    states: [
-      {
-        cname: "강원",
-        sidoCode: 2,
-        gugunCode: 0,
-      },
-      {
-        cname: "강릉시",
-        sidoCode: 2,
-        gugunCode: 0,
-      },
-      {
-        cname: "동해시",
-        sidoCode: 2,
-        gugunCode: 0,
-      },
-    ],
-  },
-]);
+  {immediate: true}
+)
 </script>
 
 <template>

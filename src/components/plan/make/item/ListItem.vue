@@ -10,7 +10,7 @@ const props = defineProps({
   <div class="container">
     <div class="img-wrapper">
       <img
-        :src="info.img"
+        :src="info.firstImage1"
         @error="
           $event.target.src =
             'https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image'
@@ -23,7 +23,7 @@ const props = defineProps({
       </div>
       <div class="text-addr">
         <font-awesome-icon :icon="['fas', 'location-dot']" />
-        {{ info.addr }}
+        {{ info.addr1?.trim().split(/\s+/).filter(Boolean).slice(0, 2).join(" ") || "" }}
       </div>
     </div>
   </div>

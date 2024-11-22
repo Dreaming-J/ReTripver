@@ -1,8 +1,10 @@
 import { ref, inject } from "vue"
 import { defineStore } from "pinia"
+import { useRouter } from "vue-router";
 
 export const useUserStore = defineStore("userStore", () => {
   const axios = inject('axios')
+  const router = useRouter();
 
   function UserInfo(id='', profileImg='') {
     this.id = id
@@ -21,6 +23,8 @@ export const useUserStore = defineStore("userStore", () => {
         let { data } = response
         userInfo.value = new UserInfo(data.id, data.profileImg)
         isLogin.value = true
+        
+        router.replace("/")
     })
     .catch( (error) => {
         console.log(error)

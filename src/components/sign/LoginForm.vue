@@ -31,9 +31,10 @@ const handleSubmit = async () => {
   validMessage.value = "";
 
   await userLogin(loginForm.value);
-  console.log("isLogin: " + isLogin.value);
-  if (isLogin.value) {
-    router.replace("/");
+
+  if (!isLogin.value) {
+    loginForm.value.password = "";
+    alert('로그인에 실패했습니다.')
   }
 };
 </script>
