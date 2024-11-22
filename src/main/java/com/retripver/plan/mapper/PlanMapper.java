@@ -14,7 +14,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.CourseRequest;
 import com.retripver.plan.dto.CourseResponse;
 import com.retripver.plan.dto.PlanRequest;
@@ -23,6 +22,8 @@ import com.retripver.plan.dto.PlanResponse;
 @Mapper
 public interface PlanMapper {
 	
+	final String ATTRACTION_MAPPER = "com.retripver.attraction.mapper.AttractionMapper.";
+
     @Select("""
     		SELECT *
     		FROM courses
@@ -30,34 +31,10 @@ public interface PlanMapper {
             ORDER BY course_order
     		""")
 	@Results({
-	    @Result(property = "id", column = "id"),
-	    @Result(property = "attractionNo", column = "attraction_no"),
-	    @Result(property = "attraction", column = "attraction_no", one = @One(select = "selectAttractionByAttractionNo"))
+	    @Result(property = "attraction", column = "attraction_no", one = @One(select = ATTRACTION_MAPPER + "selectAttractionByAttractionNo"))
 	    })
 	List<CourseResponse> selectCoursesByPlanId(int planId);
     
-    @Select("""
-    		SELECT *
-    		FROM attractions a
-    		JOIN sidos s ON a.area_code = s.sido_code
-    		JOIN guguns g ON a.area_code = g.sido_code AND a.si_gun_gu_code = g.gugun_code
-    		JOIN contenttypes c ON a.content_type_id = c.content_type_id
-    		WHERE a.no = #{attractionNo}
-    		""")
-    AttractionResponse selectAttractionByAttractionNo(int attractionNo);
-
-    @Select("""
-    		SELECT *
-    		FROM attractions a
-    		JOIN sidos s ON a.area_code = s.sido_code
-    		JOIN guguns g ON a.area_code = g.sido_code AND a.si_gun_gu_code = g.gugun_code
-    		JOIN contenttypes c ON a.content_type_id = c.content_type_id
-    		WHERE a.area_code = #{sidoCode}
-    		AND a.first_image1 <> ''
-    		LIMIT #{page}, #{size}
-    		""")
-	List<AttractionResponse> selectAttractionsBySidoCode(Map<String, Object> params);
-
 	@Select("""
 			SELECT *
 			FROM plans
@@ -65,7 +42,6 @@ public interface PlanMapper {
 			AND is_public = true
 			""")
 	@Results({
-	    @Result(property = "id", column = "id"),
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
 	List<PlanResponse> selectPlansByUserId(String userId);
@@ -115,11 +91,14 @@ public interface PlanMapper {
 	int selectLikePlanByUserIdAndPlanId(Map<String, Object> params);
 
 	@Select("""
-			SELECT p.id, p.user_id, p.title, p.sido_code, IFNULL(pl.likeCount, 0) likeCount, ROW_NUMBER() OVER(ORDER BY likeCount DESC) `rank`
-			FROM plans p LEFT JOIN (SELECT plan_id, COUNT(plan_id) likeCount
-									FROM plan_like
-			                        GROUP BY plan_id) as pl
+			SELECT p.id, p.user_id, p.title, p.sido_code, s.sido_name, IFNULL(pl.likeCount, 0) likeCount, ROW_NUMBER() OVER(ORDER BY likeCount DESC) `rank`
+			FROM plans p
+			LEFT JOIN (SELECT plan_id, COUNT(plan_id) likeCount
+						FROM plan_like
+						GROUP BY plan_id) as pl
 			ON p.id = pl.plan_id
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
 			WHERE p.is_public = true
 			GROUP BY p.id
 			ORDER BY likeCount DESC

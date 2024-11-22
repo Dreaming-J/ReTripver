@@ -14,11 +14,11 @@ INSERT INTO `attractions` VALUES (3818,2733967,'가회동성당',12,1,23,'http:/
 -- -----------------------------------
 
 INSERT INTO `tier`(`id`, `name`, `img`, `base_exp`)
-VALUES	(1,'브론즈','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',0),
-		(2,'실버','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',100),
-        (3,'골드','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',200),
-        (4,'플레티넘','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',300),
-        (5,'다이아','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',400);
+VALUES	(1,'브론즈','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-bronze.png',0),
+		(2,'실버','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-silver.png',100),
+        (3,'골드','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-gold.png',200),
+        (4,'플레티넘','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-platinum.png',300),
+        (5,'다이아','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-diamond.png',400);
 INSERT INTO `users`
 VALUES	('admin','74871D696745843B5119B3B72F115C44BA49068329E482F98C76D589615C32F1667ACFF996960DA433FD85B8BCA741C6B78F84A9D4E4E50404FFC82C37550DC0','67e07ac2430420e0ce57c136868c1626','관리자','admin@admin.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','사이트 관리자입니다.',999,NULL,NULL,'2024-11-01 05:13:20',5),
 		('guest1','DA63F86849923626240CA014974CC8EC4DAB2E10AAAF619ADEB99C19C31BFFF4568C440C7C299D49D8EACF6EDDB76551BF8AFDCBFF5663A44532414B2E83E250','67e07ac2430420e0ce57c136868c1626','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),

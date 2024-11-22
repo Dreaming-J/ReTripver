@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.global.util.JWTUtil;
-import com.retripver.plan.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
@@ -31,20 +31,6 @@ public class PlanController {
 	public PlanController(PlanService planService, JWTUtil jwtUtil) {
 		this.planService = planService;
 		this.jwtUtil = jwtUtil;
-	}
-	
-	@GetMapping("/attraction/info/{attractionNo}")
-	public ResponseEntity<?> attractionInfo(@PathVariable("attractionNo") int attractionNo) {
-		AttractionResponse attractionResponse = planService.getAttraction(attractionNo);
-		
-		return ResponseEntity.ok(attractionResponse);
-	}
-	
-	@GetMapping("/attraction/search/{sidoCode}")
-	public ResponseEntity<?> attractionList(@PathVariable("sidoCode") int sidoCode, @RequestParam int page) {
-		List<AttractionResponse> attractionList = planService.getAttractions(sidoCode, page);
-		
-		return ResponseEntity.ok(attractionList);
 	}
 	
 	@GetMapping("/list/{userId}")

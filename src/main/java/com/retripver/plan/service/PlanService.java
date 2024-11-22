@@ -2,15 +2,11 @@ package com.retripver.plan.service;
 
 import java.util.List;
 
-import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanService {
-
-	AttractionResponse getAttraction(int attractionNo);
-
-	List<AttractionResponse> getAttractions(int sidoCode, int page);
 
 	List<PlanResponse> planList(String userId);
 

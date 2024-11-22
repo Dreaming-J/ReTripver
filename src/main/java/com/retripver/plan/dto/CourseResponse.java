@@ -1,5 +1,7 @@
 package com.retripver.plan.dto;
 
+import com.retripver.attraction.dto.AttractionResponse;
+
 public class CourseResponse {
 	private int id;
 	private int planId;

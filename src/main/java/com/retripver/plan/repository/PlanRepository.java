@@ -3,15 +3,11 @@ package com.retripver.plan.repository;
 import java.util.List;
 import java.util.Map;
 
-import com.retripver.plan.dto.AttractionResponse;
+import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
 public interface PlanRepository {
-
-	AttractionResponse getAttraction(int attractionNo);
-
-	List<AttractionResponse> getAttractions(Map<String, Object> params);
 
 	List<PlanResponse> planList(String userId);
 

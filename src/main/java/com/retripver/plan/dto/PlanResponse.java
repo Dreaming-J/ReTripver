@@ -7,6 +7,7 @@ public class PlanResponse {
 	private String userId;
 	private String title;
 	private int sidoCode;
+	private String sidoName;
 	private boolean isClear;
 	private boolean isPublic;
 	private List<CourseResponse> courses;
@@ -36,6 +37,12 @@ public class PlanResponse {
 	}
 	public void setSidoCode(int sidoCode) {
 		this.sidoCode = sidoCode;
+	}
+	public String getSidoName() {
+		return sidoName;
+	}
+	public void setSidoName(String sidoName) {
+		this.sidoName = sidoName;
 	}
 	public boolean isClear() {
 		return isClear;

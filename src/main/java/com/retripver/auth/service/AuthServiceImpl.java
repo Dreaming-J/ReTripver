@@ -45,11 +45,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public boolean isBlackListToken(String token) {
-//		return authRepository.getBlackListToken(token);
-		
-		boolean is = authRepository.getBlackListToken(token);
-		System.out.println(is);
-		return is;
+		return authRepository.getBlackListToken(token);
 	}
 
 	@Override

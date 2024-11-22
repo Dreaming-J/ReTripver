@@ -3,17 +3,23 @@ package com.retripver.user.mapper;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
 
-import com.retripver.auth.dto.LoginRequest;
-import com.retripver.auth.dto.LoginResponse;
-import com.retripver.auth.dto.PwdModifyRequest;
-import com.retripver.auth.dto.SignupRequest;
-import com.retripver.auth.dto.UserModifyRequest;
-import com.retripver.auth.dto.UserProfileRequest;
-import com.retripver.auth.dto.UserSearchIdRequest;
-import com.retripver.auth.dto.UserSearchPwdRequest;
-import com.retripver.user.dto.*;
+import com.retripver.user.dto.FollowCountResponse;
+import com.retripver.user.dto.FollowRequest;
+import com.retripver.user.dto.QuestRateResponse;
+import com.retripver.user.dto.StatusMapCountResponse;
+import com.retripver.user.dto.StatusUserInfoResponse;
+import com.retripver.user.dto.TierInfoResponse;
+import com.retripver.user.dto.UserAchievementTierResponse;
+import com.retripver.user.dto.UserAchievementVisitResponse;
+import com.retripver.user.dto.UserInfoResponse;
 
 @Mapper
 public interface UserMapper {
