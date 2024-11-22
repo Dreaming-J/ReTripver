@@ -69,14 +69,14 @@ const changeRouteType = (changedRouteType) => {
 
 .seletced-list-container {
   display: flex;
-  width: 500px;
+  width: 400px;
   height: 100%;
   position: relative;
   flex-shrink: 0;
 }
 
 .seletced-list {
-  width: 500px;
+  width: 400px;
   height: 100%;
   position: relative;
   z-index: 3;
@@ -84,19 +84,19 @@ const changeRouteType = (changedRouteType) => {
 }
 
 .search-list {
-  width: 500px;
+  width: 400px;
   border-radius: 15px;
   background-color: white;
   /* border: 1px solid lightgray; */
   height: 100%;
-  left: 510px;
+  left: 410px;
   position: absolute;
-  transition: 0.4s;
+  transition: 0.3s ease;
   z-index: 2;
 }
 
 .search-list-hide {
-  transform: translate(-510px, 0);
+  transform: translate(-410px, 0);
 }
 
 .btn-search-toggle {

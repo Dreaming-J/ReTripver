@@ -48,9 +48,9 @@ const selectSearchItem = (item) => {
   border-top: 1px solid (236, 236, 236);
 }
 
-.selected-list-item:hover {
+/* .selected-list-item:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
   transform: scale(1.01);
-}
+} */
 </style>
