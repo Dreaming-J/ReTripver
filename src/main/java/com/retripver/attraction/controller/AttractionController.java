@@ -5,12 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.attraction.dto.SearchOption;
 import com.retripver.attraction.dto.SidoResponse;
 import com.retripver.attraction.service.AttractionService;
 
@@ -32,9 +33,9 @@ public class AttractionController {
 		return ResponseEntity.ok(attractionResponse);
 	}
 	
-	@GetMapping("/search/{sidoCode}")
-	public ResponseEntity<?> attractionList(@PathVariable("sidoCode") int sidoCode, @RequestParam int page) {
-		List<AttractionResponse> attractionList = attractionService.getAttractions(sidoCode, page);
+	@GetMapping("/search")
+	public ResponseEntity<?> attractionList(@ModelAttribute SearchOption searchOption) {
+		List<AttractionResponse> attractionList = attractionService.getAttractions(searchOption);
 		
 		return ResponseEntity.ok(attractionList);
 	}

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.attraction.dto.SearchOption;
 import com.retripver.attraction.dto.SidoResponse;
 import com.retripver.attraction.mapper.AttractionMapper;
 
@@ -26,8 +27,8 @@ public class AttractionRepositoryImpl implements AttractionRepository {
 	}
 
 	@Override
-	public List<AttractionResponse> getAttractions(Map<String, Object> params) {
-		return attractionMapper.selectAttractionsBySidoCode(params);
+	public List<AttractionResponse> getAttractions(SearchOption searchOption) {
+		return attractionMapper.selectAttractionsBySidoCode(searchOption);
 	}
 
 	@Override

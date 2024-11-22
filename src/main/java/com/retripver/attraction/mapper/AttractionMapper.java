@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.attraction.dto.GugunResponse;
+import com.retripver.attraction.dto.SearchOption;
 import com.retripver.attraction.dto.SidoResponse;
 
 @Mapper
@@ -27,16 +28,28 @@ public interface AttractionMapper {
     AttractionResponse selectAttractionByAttractionNo(int attractionNo);
 
     @Select("""
-    		SELECT *
-    		FROM attractions a
-    		JOIN sidos s ON a.area_code = s.sido_code
-    		JOIN guguns g ON a.area_code = g.sido_code AND a.si_gun_gu_code = g.gugun_code
-    		JOIN contenttypes c ON a.content_type_id = c.content_type_id
-    		WHERE a.area_code = #{sidoCode}
-    		AND a.first_image1 <> ''
-    		LIMIT #{page}, #{size}
+    		<script>
+	    		SELECT *
+	    		FROM attractions a
+	    		JOIN sidos s ON a.area_code = s.sido_code
+	    		JOIN guguns g ON a.area_code = g.sido_code AND a.si_gun_gu_code = g.gugun_code
+	    		JOIN contenttypes c ON a.content_type_id = c.content_type_id
+	    		<where>
+	    			<if test='sidoCode != null and sidoCode != 0'>
+	    				AND a.area_code = #{sidoCode}
+	    			</if>
+	    			<if test='gugunCode != null and gugunCode != 0'>
+	    				AND g.gugun_code = #{gugunCode}
+	    			</if>
+	    			<if test="keyword != null and keyword != ''">
+	    				AND a.title LIKE CONCAT('%', #{keyword}, '%')
+	    			</if>
+	    			AND a.first_image1 != ''
+	    		</where>
+	    		LIMIT #{page}, #{size}
+    		</script>
     		""")
-	List<AttractionResponse> selectAttractionsBySidoCode(Map<String, Object> params);
+	List<AttractionResponse> selectAttractionsBySidoCode(SearchOption searchOption);
 
     @Select("SELECT * FROM sidos")
 	@Results({

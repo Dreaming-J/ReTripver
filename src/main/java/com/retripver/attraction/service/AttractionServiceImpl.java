@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.attraction.dto.SearchOption;
 import com.retripver.attraction.dto.SidoResponse;
 import com.retripver.attraction.repository.AttractionRepository;
 import com.retripver.plan.exception.NotFoundAttractionException;
@@ -38,13 +39,12 @@ public class AttractionServiceImpl implements AttractionService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AttractionResponse> getAttractions(int sidoCode, int page) {
-		Map<String, Object> params = new HashMap<>();
-		params.put("sidoCode", sidoCode);
-		params.put("page", (page - 1) * PAGE_SIZE);
-		params.put("size", PAGE_SIZE);
+	public List<AttractionResponse> getAttractions(SearchOption searchOption) {
+		int page = (searchOption.getPage() - 1) * PAGE_SIZE;
+		searchOption.setPage(page);
+		searchOption.setSize(PAGE_SIZE);
 		
-		List<AttractionResponse> attractionList = attractionRepository.getAttractions(params);
+		List<AttractionResponse> attractionList = attractionRepository.getAttractions(searchOption);
 		
 		return attractionList;
 	}
