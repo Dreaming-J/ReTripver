@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.global.util.JWTUtil;
+import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.service.PlanService;
@@ -103,6 +103,13 @@ public class PlanController {
 		String id = jwtUtil.extractUserId(authorization, false);
 		
 		planService.questClear(planId, id);
+		
+		return ResponseEntity.ok(null);
+	}
+	
+	@PostMapping("/optimizeCourses")
+	public ResponseEntity<?> omptimize(@RequestBody OptimizeCoursesRequest OptimizeCoursesRequest) {
+		planService.optimizeCourses(OptimizeCoursesRequest);
 		
 		return ResponseEntity.ok(null);
 	}

@@ -10,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.FailAddPlanLikeException;
 import com.retripver.plan.exception.FailDeletePlanLikeException;
 import com.retripver.plan.exception.NoCarryOutCourseInPlanException;
-import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
 
@@ -129,5 +128,19 @@ public class PlanServiceImpl implements PlanService {
 //			throw new FailQuestClearException();
 		
 		//업적, 방문 횟수, 티어 상승 처리
+	}
+
+	@Override
+	public void optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest) {
+		int[] newOrder;
+		
+		if (optimizeCoursesRequest.isFixFirst() && optimizeCoursesRequest.isFixLast())
+			System.out.println("1. 시작, 끝 고정 -> 완전 탐색(백트래킹)");
+		else if (optimizeCoursesRequest.isFixFirst())
+			System.out.println("2. 시작 고정 -> 다익스트라");
+		else if (optimizeCoursesRequest.isFixLast())
+			System.out.println("3. 끝 고정 -> 뒤집은 다익스트라");
+		else
+			System.out.println("4. 고정 X -> 플로이드 워셜 후, 최단 경로");
 	}
 }
