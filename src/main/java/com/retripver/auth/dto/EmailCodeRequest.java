@@ -34,4 +34,8 @@ public class EmailCodeRequest {
 		this.completeTime = completeTime;
 	}
 	
+	@Override
+	public String toString() {
+		return "EmailCodeRequest [email=" + email + ", code=" + code + ", completeTime=" + completeTime + "]";
+	}
 }

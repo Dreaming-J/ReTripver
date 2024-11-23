@@ -4,9 +4,11 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.retripver.auth.dto.EmailAuthResponse;
@@ -41,9 +43,8 @@ public class EmailServiceImpl implements EmailService {
 		try {
 			String code = generateAuthCode();
 			Timestamp completeTime = getAuthCompleteTime();
-			
 			emailRepository.sendEmailAuth(new EmailCodeRequest(email, code, completeTime));
-			
+
 			sendEmail(email, EMAIL_AUTH_SUBJECT, EMAIL_AUTH_PASSWORD + code);
 			
 			return "이메일로 인증 코드를 전송했습니다.";
@@ -55,14 +56,14 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public EmailAuthVerifyResponse verifyEmailAuth(EmailAuthVerifyRequest emailAuthVerifyRequest) {
 		EmailAuthResponse emailAuthResponse = emailRepository.verifyEmailAuth(emailAuthVerifyRequest.getEmail());
-		
-		if (isCompleteAuthTime(emailAuthResponse.getSendTime())) {// 시간이 만료되었다면
+
+		if (isCompleteAuthTime(emailAuthResponse.getCompleteTime())) {// 시간이 만료되었다면
 			return new EmailAuthVerifyResponse(false, "인증 시간이 지났습니다. 이메일 인증을 다시 시도해주세요.");
 		}
-		
+
 		String generatedCode = emailAuthResponse.getCode();
 		String requestCode = emailAuthVerifyRequest.getCode();
-		
+
 		if (!generatedCode.equals(requestCode)) {
 			return new EmailAuthVerifyResponse(false, "인증 코드가 다릅니다. 다시 입력해주세요.");
 		}
@@ -70,15 +71,22 @@ public class EmailServiceImpl implements EmailService {
 		return new EmailAuthVerifyResponse(true, "인증이 확인되었습니다.");
 	}
 	
-	private void sendEmail(String to, String subject, String text) throws MessagingException {
-		MimeMessage message = mailSender.createMimeMessage();
+	@Async
+	private CompletableFuture<Void> sendEmail(String to, String subject, String text) throws MessagingException {
+		return CompletableFuture.runAsync(() -> {
+			try {
+				MimeMessage message = mailSender.createMimeMessage();
 
-		message.setFrom("ReTripver@gmail.com"); // 인증 메일을 보낼 사용자 메일 주소
-		message.setRecipients(MimeMessage.RecipientType.TO, to);
-		message.setSubject(subject); // 이메일 제목
-		message.setText(text, "UTF-8", "html"); // 이메일 내용
-		
-		mailSender.send(message);
+				message.setFrom("ReTripver@gmail.com"); // 인증 메일을 보낼 사용자 메일 주소
+				message.setRecipients(MimeMessage.RecipientType.TO, to);
+				message.setSubject(subject); // 이메일 제목
+				message.setText(text, "UTF-8", "html"); // 이메일 내용
+
+				mailSender.send(message);
+			} catch (MessagingException e) {
+				e.getStackTrace();
+			}
+		});
 	}
 	
 	private String generateAuthCode() {

@@ -89,13 +89,16 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public void signup(SignupRequest signupRequest) {
+		System.out.println("1");
 		if (!AuthSignupValidator.isValid(signupRequest)) {
 			throw new InvalidSignupException();
 		}
+		System.out.println("2");
 		
 		if (isExistId(signupRequest.getId()) || isExistEmail(signupRequest.getEmail())) {
 			throw new DuplicateSignupException();
 		}
+		System.out.println("3");
 		
 		String salt = hashUtil.generateSalt();
 		String hashedPassword = hashUtil.encrypt(signupRequest.getPassword(), salt);

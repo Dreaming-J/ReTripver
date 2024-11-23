@@ -4,7 +4,7 @@ public class SignupRequest {
 
 	private String id;
 	private String password;
-	private String psswordCheck;
+	private String passwordCheck;
 	private String salt;
 	private String name;
 	private String email;
@@ -21,11 +21,11 @@ public class SignupRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getPsswordCheck() {
-		return psswordCheck;
+	public String getPasswordCheck() {
+		return passwordCheck;
 	}
-	public void setPsswordCheck(String psswordCheck) {
-		this.psswordCheck = psswordCheck;
+	public void setPasswordCheck(String passwordCheck) {
+		this.passwordCheck = passwordCheck;
 	}
 	public String getSalt() {
 		return salt;
@@ -44,6 +44,11 @@ public class SignupRequest {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	@Override
+	public String toString() {
+		return "SignupRequest [id=" + id + ", password=" + password + ", passwordCheck=" + passwordCheck + ", salt="
+				+ salt + ", name=" + name + ", email=" + email + "]";
 	}
 	
 }

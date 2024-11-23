@@ -24,4 +24,8 @@ public class EmailAuthVerifyResponse {
 		this.resultText = resultText;
 	}
 	
+	@Override
+	public String toString() {
+		return "EmailAuthVerifyResponse [verified=" + verified + ", resultText=" + resultText + "]";
+	}
 }

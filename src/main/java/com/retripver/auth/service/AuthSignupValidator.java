@@ -8,7 +8,7 @@ public class AuthSignupValidator {
 
 	public static boolean isValid(SignupRequest signupReqeust) {
 		return isValidId(signupReqeust.getId()) &&
-			   isValidPassword(signupReqeust.getPassword(), signupReqeust.getPsswordCheck()) &&
+			   isValidPassword(signupReqeust.getPassword(), signupReqeust.getPasswordCheck()) &&
 			   isValidName(signupReqeust.getName()) &&
 			   isValidEmail(signupReqeust.getEmail());
 	}
@@ -79,8 +79,8 @@ public class AuthSignupValidator {
 			return false;
 		}
 		
-		// @포함
-		if (!email.contains("@")) {
+		// 이메일 정규표현식
+		if (!email.matches("^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")) {
 			return false;
 		}
 		

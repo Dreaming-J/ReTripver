@@ -20,11 +20,10 @@ public class EmailRepositoryImpl implements EmailRepository {
 	@Override
 	public void sendEmailAuth(EmailCodeRequest emailCodeRequest) {
 		int isExistEmail = emailMapper.selectCountByEmail(emailCodeRequest.getEmail());
-		
 		if (isExistEmail != 0) {
 			emailMapper.deleteByEmail(emailCodeRequest.getEmail());
 		}
-		
+
 		emailMapper.insert(emailCodeRequest);
 	}
 
