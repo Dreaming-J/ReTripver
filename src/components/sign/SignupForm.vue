@@ -1,6 +1,10 @@
 <script setup>
 import { InputText, Password, Button, Message, InputOtp } from "primevue";
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user-store";
+
+const userStore = useUserStore()
+const {existId, existEmail, authEmail, authVerify, userSignup} = userStore
 
 const signupForm = ref({
   id: "",
@@ -11,18 +15,53 @@ const signupForm = ref({
   emailVerify:""
 });
 
-const verifying = ref(false);
+const idDuplicateCheck = ref(false)
+const duplicateId = async () => {
+  idDuplicateCheck.value = await existId(signupForm.value.id)
 
-const verifyEmail = () => {
-  verifying.value = true;
+  idValidMessage.value = idDuplicateCheck.value ? "" : "아이디 중복입니다."
+}
+
+const emailDuplicateCheck = ref(false)
+const verifying = ref(false);
+const verifyEmail = async() => {
+  if (!/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(signupForm.value.email)) {
+    emailValidMessage.value = "올바른 이메일을 작성해주세요."
+    return
+  }
+  
+  emailDuplicateCheck.value = await existEmail(signupForm.value.email)
+
+  if (emailDuplicateCheck.value) {
+    emailValidMessage.value = await authEmail(signupForm.value.email)
+
+    if (emailValidMessage.value !== "이메일 전송에 실패했습니다. 다시 시도해주세요.")
+      verifying.value = true
+  }
+  else {
+    verifying.value = false
+    emailValidMessage.value = "이메일 중복입니다."
+  }
+}
+
+const verifyCodeCheck = ref(false)
+const verifyCode = async() => {
+  let { verified, resultText } = await authVerify(signupForm.value.email, signupForm.value.emailVerify)
+
+  verifyCodeCheck.value = verified
+  emailValidMessage.value = resultText
 }
 
 const idValidMessage = ref("");
 const validateId = (id) => {
-  if (!id) return "아이디를 작성해주세요.";
-  if (id.length < 4 || id.length > 20) return "4~20자 사이여야 합니다.";
+  if (!id)
+    return "아이디를 작성해주세요.";
+  if (id.length < 4 || id.length > 20)
+    return "4~20자 사이여야 합니다.";
   if (!/^[a-zA-Z0-9_.-]+$/.test(id))
     return "영문, 숫자, 특수문자(_.-)만 사용 가능합니다.";
+  if (!idDuplicateCheck.value)
+    return "아이디 확인이 필요합니다."
 
   return "";
 };
@@ -77,8 +116,12 @@ const nameValidBlur = () => {
 
 const emailValidMessage = ref("");
 const validateEmail = (email) => {
-  if (!email) return "이메일을 작성해주세요.";
-  if (!email.includes("@")) return "올바른 이메일 형식이 아닙니다.";
+  if (!email)
+    return "이메일을 작성해주세요.";
+  if (!/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email))
+    return "올바른 이메일 형식이 아닙니다.";
+  if (!emailDuplicateCheck.value)
+    return "이메일 인증이 필요합니다."
 
   return "";
 };
@@ -99,7 +142,11 @@ const handleSubmit = async () => {
   if (nameValidMessage.value !== "") return;
   if (emailValidMessage.value !== "") return;
 
-  console.log("회원가입 하러 감!!");
+  if (!idDuplicateCheck.value) return
+  if (!emailDuplicateCheck.value) return
+  if (!verifyCodeCheck.value) return
+
+  await userSignup(signupForm.value)
 };
 </script>
 
@@ -123,6 +170,7 @@ const handleSubmit = async () => {
               label="확인"
               severity="warn"
               variant="outlined"
+              @click="duplicateId"
             />
           </div>
         </div>
@@ -244,6 +292,7 @@ const handleSubmit = async () => {
               label="확인"
               severity="warn"
               variant="outlined"
+              @click="verifyCode"
             />
           </div>
         </div>

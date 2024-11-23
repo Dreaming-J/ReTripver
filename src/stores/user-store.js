@@ -24,7 +24,7 @@ export const useUserStore = defineStore("userStore", () => {
         userInfo.value = new UserInfo(data.id, data.profileImg)
         isLogin.value = true
         
-        router.replace("/")
+        router.replace({name: 'main'})
     })
     .catch( (error) => {
         console.log(error)
@@ -48,11 +48,60 @@ export const useUserStore = defineStore("userStore", () => {
     })
   }
 
+  const userSignup = async (signupForm) => {
+    try {
+      await axios.post(`/auth/signup`, signupForm)
+      
+      router.replace({name : 'login'})
+    } catch (error) {
+      console.log(error)
+      alert(error)
+    }
+  }
+  const existId = async (id) => {
+    try {
+      const response = await axios.get(`/auth/exist/id/${id}`)
+      return !response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const existEmail = async (email) => {
+    try {
+      const response = await axios.get(`/auth/exist/email/${email}`)
+      return !response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const authEmail = async (email) => {
+    try {
+      const response = await axios.get(`/auth/email/${email}`)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const authVerify = async (email, code) => {
+    try {
+      const response = await axios.post(`/auth/email/verify`, {email: email, code: code})
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     userInfo,
 
     isLogin,
     userLogin,
-    userLogout
+    userLogout,
+
+    userSignup,
+    existId,
+    existEmail,
+    authEmail,
+    authVerify
   }
 })
