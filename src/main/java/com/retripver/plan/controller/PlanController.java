@@ -109,8 +109,8 @@ public class PlanController {
 	
 	@PostMapping("/optimizeCourses")
 	public ResponseEntity<?> omptimize(@RequestBody OptimizeCoursesRequest OptimizeCoursesRequest) {
-		planService.optimizeCourses(OptimizeCoursesRequest);
+		int[] newOrder = planService.optimizeCourses(OptimizeCoursesRequest);
 		
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(newOrder);
 	}
 }

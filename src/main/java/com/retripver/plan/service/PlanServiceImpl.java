@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.retripver.global.util.OptimizeUtil;
 import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
@@ -23,10 +24,12 @@ import com.retripver.plan.repository.PlanRepository;
 public class PlanServiceImpl implements PlanService {
 
 	private final PlanRepository planRepository;
+	private final OptimizeUtil optimizeUtil;
 	
 	@Autowired
-	public PlanServiceImpl(PlanRepository planRepository) {
+	public PlanServiceImpl(PlanRepository planRepository, OptimizeUtil optimizeUtil) {
 		this.planRepository = planRepository;
+		this.optimizeUtil = optimizeUtil;
 	}
 
 	@Override
@@ -131,16 +134,7 @@ public class PlanServiceImpl implements PlanService {
 	}
 
 	@Override
-	public void optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest) {
-		int[] newOrder;
-		
-		if (optimizeCoursesRequest.isFixFirst() && optimizeCoursesRequest.isFixLast())
-			System.out.println("1. 시작, 끝 고정 -> 완전 탐색(백트래킹)");
-		else if (optimizeCoursesRequest.isFixFirst())
-			System.out.println("2. 시작 고정 -> 다익스트라");
-		else if (optimizeCoursesRequest.isFixLast())
-			System.out.println("3. 끝 고정 -> 뒤집은 다익스트라");
-		else
-			System.out.println("4. 고정 X -> 플로이드 워셜 후, 최단 경로");
+	public int[] optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest) {
+		return optimizeUtil.optimeRoute(optimizeCoursesRequest);
 	}
 }
