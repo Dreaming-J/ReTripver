@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import com.retripver.auth.dto.EmailAuthResponse;
-import com.retripver.auth.dto.EmailAuthVerifyResponse;
 import com.retripver.auth.dto.EmailCodeRequest;
 
 @Mapper

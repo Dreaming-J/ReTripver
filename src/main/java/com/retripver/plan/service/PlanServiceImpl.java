@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.global.util.OptimizeUtil;
+import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.exception.FailAddPlanLikeException;
 import com.retripver.plan.exception.FailDeletePlanLikeException;
 import com.retripver.plan.exception.NoCarryOutCourseInPlanException;
-import com.retripver.plan.exception.NotFoundAttractionException;
 import com.retripver.plan.exception.NotFoundPlanException;
 import com.retripver.plan.repository.PlanRepository;
 
@@ -24,10 +24,12 @@ import com.retripver.plan.repository.PlanRepository;
 public class PlanServiceImpl implements PlanService {
 
 	private final PlanRepository planRepository;
+	private final OptimizeUtil optimizeUtil;
 	
 	@Autowired
-	public PlanServiceImpl(PlanRepository planRepository) {
+	public PlanServiceImpl(PlanRepository planRepository, OptimizeUtil optimizeUtil) {
 		this.planRepository = planRepository;
+		this.optimizeUtil = optimizeUtil;
 	}
 
 	@Override
@@ -129,5 +131,10 @@ public class PlanServiceImpl implements PlanService {
 //			throw new FailQuestClearException();
 		
 		//업적, 방문 횟수, 티어 상승 처리
+	}
+
+	@Override
+	public int[] optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest) {
+		return optimizeUtil.optimeRoute(optimizeCoursesRequest);
 	}
 }

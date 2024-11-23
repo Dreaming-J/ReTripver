@@ -137,8 +137,8 @@ public class AuthController {
 	}
 	
 	// 이메일 인증 전송
-	@PostMapping("/email")
-	public ResponseEntity<?> emailAuth(String email) {
+	@GetMapping("/email/{email}")
+	public ResponseEntity<?> emailAuth(@PathVariable String email) {
 		String result = emailService.sendEmailAuth(email);
 		
 		return ResponseEntity.ok(result);
@@ -146,7 +146,7 @@ public class AuthController {
 	
 	// 이메일 인증 확인 
 	@PostMapping("/email/verify")
-	public ResponseEntity<?> emailAuthVerify(EmailAuthVerifyRequest emailAuthVerifyReqeust) {
+	public ResponseEntity<?> emailAuthVerify(@RequestBody EmailAuthVerifyRequest emailAuthVerifyReqeust) {
 		EmailAuthVerifyResponse result = emailService.verifyEmailAuth(emailAuthVerifyReqeust);
 		
 		return ResponseEntity.ok(result);

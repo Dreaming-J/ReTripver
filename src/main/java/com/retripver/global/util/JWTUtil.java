@@ -18,7 +18,6 @@ import java.time.*;
 import java.util.Base64;
 import java.util.Date;
 
-
 @Component
 public class JWTUtil {
 

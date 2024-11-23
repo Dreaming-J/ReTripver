@@ -3,7 +3,6 @@ package com.retripver.plan.repository;
 import java.util.List;
 import java.util.Map;
 
-import com.retripver.attraction.dto.AttractionResponse;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 

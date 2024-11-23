@@ -1,10 +1,9 @@
 package com.retripver.attraction.mapper;
 
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;

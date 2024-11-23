@@ -2,7 +2,7 @@ package com.retripver.plan.service;
 
 import java.util.List;
 
-import com.retripver.attraction.dto.AttractionResponse;
+import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
@@ -25,5 +25,7 @@ public interface PlanService {
 	List<PlanResponse> sidoPlanList(int sidoCode);
 
 	void questClear(int planId, String userId);
+
+	int[] optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest);
 
 }

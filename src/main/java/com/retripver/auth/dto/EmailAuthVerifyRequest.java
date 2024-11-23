@@ -18,4 +18,8 @@ public class EmailAuthVerifyRequest {
 		this.code = code;
 	}
 	
+	@Override
+	public String toString() {
+		return "EmailAuthVerifyRequest [email=" + email + ", code=" + code + "]";
+	}
 }

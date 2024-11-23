@@ -1,7 +1,5 @@
 package com.retripver.auth.dto;
 
-import java.sql.Timestamp;
-
 public class EmailAuthVerifyResponse {
 
 	private boolean verified;
@@ -26,4 +24,8 @@ public class EmailAuthVerifyResponse {
 		this.resultText = resultText;
 	}
 	
+	@Override
+	public String toString() {
+		return "EmailAuthVerifyResponse [verified=" + verified + ", resultText=" + resultText + "]";
+	}
 }

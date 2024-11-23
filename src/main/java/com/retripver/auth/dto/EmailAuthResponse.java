@@ -20,11 +20,15 @@ public class EmailAuthResponse {
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public Timestamp getSendTime() {
+	public Timestamp getCompleteTime() {
 		return completeTime;
 	}
-	public void setSendTime(Timestamp sendTime) {
-		this.completeTime = sendTime;
+	public void setCompleteTime(Timestamp completeTime) {
+		this.completeTime = completeTime;
 	}
 	
+	@Override
+	public String toString() {
+		return "EmailAuthResponse [email=" + email + ", code=" + code + ", completeTime=" + completeTime + "]";
+	}
 }
