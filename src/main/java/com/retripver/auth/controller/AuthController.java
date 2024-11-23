@@ -107,7 +107,6 @@ public class AuthController {
 	// 회원가입
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody SignupRequest signupRequest) {
-		System.out.println(signupRequest);
 		authService.signup(signupRequest);
 
 		return ResponseEntity.ok().build();
