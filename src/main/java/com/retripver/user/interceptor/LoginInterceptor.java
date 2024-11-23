@@ -1,6 +1,5 @@
 package com.retripver.user.interceptor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.retripver.auth.dto.LoginResponse;

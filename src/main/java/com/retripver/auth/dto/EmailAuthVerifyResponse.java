@@ -1,7 +1,5 @@
 package com.retripver.auth.dto;
 
-import java.sql.Timestamp;
-
 public class EmailAuthVerifyResponse {
 
 	private boolean verified;

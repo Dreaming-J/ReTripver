@@ -2,9 +2,7 @@ package com.retripver.attraction.service;
 
 import static com.retripver.global.constant.Constant.PAGE_SIZE;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

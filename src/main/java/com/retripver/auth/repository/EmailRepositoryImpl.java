@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.retripver.auth.dto.EmailAuthResponse;
-import com.retripver.auth.dto.EmailAuthVerifyRequest;
-import com.retripver.auth.dto.EmailAuthVerifyResponse;
 import com.retripver.auth.dto.EmailCodeRequest;
 import com.retripver.auth.mapper.EmailMapper;
 
