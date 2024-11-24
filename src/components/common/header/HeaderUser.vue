@@ -3,9 +3,15 @@
   import SignBtnList from "@/components/common/header/userItems/SignBtnList.vue";
   import { useUserStore } from "@/stores/user-store";
   import { storeToRefs } from "pinia";
+  import { onMounted } from 'vue'
 
   const userStore = useUserStore();
   const { isLogin } = storeToRefs(userStore);
+  const { getUserInfo } = userStore
+
+  onMounted(async () => {
+    await getUserInfo()
+  })
 </script>
 
 <template>
