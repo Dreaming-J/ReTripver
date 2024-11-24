@@ -1,13 +1,11 @@
 <script setup>
-import PlanListItem from "@/components/plan/item/PlanListItem.vue";
-
 import { ScrollPanel, Button } from "primevue";
+import PlanListItem from "@/components/plan/item/PlanListItem.vue";
+import { storeToRefs } from "pinia"
+import { useAttractionStore } from "@/stores/attraction-store";
 
-const props = defineProps({
-  sidoCode: {
-    type: String,
-  },
-});
+const attractiontore = useAttractionStore()
+const { selectMyPlans } = storeToRefs(attractiontore)
 
 const emit = defineEmits(["closePlansPanel"]);
 
@@ -17,7 +15,7 @@ const closePanel = () => {
 </script>
 
 <template>
-  <div class="container p-1">
+  <div class="container p-1" v-if="selectMyPlans">
     <div class="btn-close">
       <Button
         severity="secondary"
@@ -30,14 +28,16 @@ const closePanel = () => {
       </Button>
     </div>
     <div class="title-container p-2 pt-0 text-lg flex justify-content-end">
-      {{ sidoCode }} 여행 기록들
+      {{ selectMyPlans.sidoName }} 여행 기록들 - {{ selectMyPlans.plans.length }}번
     </div>
     <div class="travel-list">
       <ScrollPanel class="scroll-panel p-2" style="width: 100%; height: 100%">
-        <PlanListItem class="plan-list-item" />
-        <PlanListItem class="plan-list-item" />
-        <PlanListItem class="plan-list-item" />
-        <PlanListItem class="plan-list-item" />
+        <PlanListItem
+          class="plan-list-item"
+          v-for="plan in selectMyPlans.plans"
+          :key="plan.id"
+          :plan="plan"
+        />
       </ScrollPanel>
     </div>
   </div>

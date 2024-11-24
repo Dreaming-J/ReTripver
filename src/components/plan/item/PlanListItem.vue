@@ -1,30 +1,25 @@
 <script setup>
 import {Button} from 'primevue';
 defineProps({
-  title: {
-    type: String,
-    default: "서울 여행",
-  },
-  images: {
-    type: Array,
-    default: () => [
-      "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
-      "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
-      "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
-    ],
-  },
+  plan: {
+    type: Object,
+    required: true
+  }
 });
 </script>
 
 <template>
   <div class="list-item shadow-2">
-    <div class="item-images" :class="`images-count-${images.length}`">
+    <div class="item-header">
+      {{ plan.title }}
+    </div>
+    <div class="item-images" :class="`images-count-${plan.courses.length}`">
       <div
-        v-for="(image, index) in images"
+        v-for="(course, index) in plan.courses"
         :key="index"
         class="image-wrapper"
         :class="`image-${index + 1}`"
-        :style="{ backgroundImage: `url(${image})` }"
+        :style="{ backgroundImage: `url(${course.userImg})` }"
       ></div>
     </div>
     <div class="item-header mt-3">
