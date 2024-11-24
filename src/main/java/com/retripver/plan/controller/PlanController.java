@@ -42,9 +42,18 @@ public class PlanController {
 	
 	@GetMapping("/mylist")
 	public ResponseEntity<?> myList(@RequestHeader(value = "Authorization") String authorization) {
-		String id = jwtUtil.extractUserId(authorization, false);
+		String userId = jwtUtil.extractUserId(authorization, false);
 		
-		List<PlanResponse> planList = planService.myPlanList(id);
+		List<PlanResponse> planList = planService.myPlanList(userId);
+		
+		return ResponseEntity.ok(planList);
+	}
+	
+	@GetMapping("/mylist/{sidoCode}")
+	public ResponseEntity<?> myListInSido(@PathVariable int sidoCode, @RequestHeader(value = "Authorization") String authorization) {
+		String userId = jwtUtil.extractUserId(authorization, false);
+		
+		List<PlanResponse> planList = planService.myPlanListInSido(userId, sidoCode);
 		
 		return ResponseEntity.ok(planList);
 	}
@@ -58,18 +67,18 @@ public class PlanController {
 	
 	@GetMapping("/like")
 	public ResponseEntity<?> likeMyPlans(@RequestHeader(value = "Authorization") String authorization) {
-		String id = jwtUtil.extractUserId(authorization, false);
+		String userId = jwtUtil.extractUserId(authorization, false);
 		
-		List<PlanResponse> likePlanList = planService.likePlanList(id);
+		List<PlanResponse> likePlanList = planService.likePlanList(userId);
 		
 		return ResponseEntity.ok(likePlanList);
 	}
 	
 	@GetMapping("/like/{planId}")
 	public ResponseEntity<?> likePlan(@PathVariable("planId") int planId, @RequestHeader(value = "Authorization") String authorization) {
-		String id = jwtUtil.extractUserId(authorization, false);
+		String userId = jwtUtil.extractUserId(authorization, false);
 		
-		boolean isLike = planService.likePlan(planId, id);
+		boolean isLike = planService.likePlan(planId, userId);
 		
 		return ResponseEntity.ok(isLike);
 	}
@@ -83,9 +92,9 @@ public class PlanController {
 	
 	@PostMapping("/make")
 	public ResponseEntity<?> makePlan(@RequestBody PlanRequest planRequest, @RequestHeader(value = "Authorization") String authorization) {
-		String id = jwtUtil.extractUserId(authorization, false);
+		String userId = jwtUtil.extractUserId(authorization, false);
 		
-		planRequest.setUserId(id);
+		planRequest.setUserId(userId);
 		planService.makePlan(planRequest);
 		
 		return ResponseEntity.ok(null);
@@ -100,9 +109,9 @@ public class PlanController {
 	
 	@PatchMapping("/quest-clear")
 	public ResponseEntity<?> questClear(@RequestBody int planId, @RequestHeader(value = "Authorization") String authorization) {
-		String id = jwtUtil.extractUserId(authorization, false);
+		String userId = jwtUtil.extractUserId(authorization, false);
 		
-		planService.questClear(planId, id);
+		planService.questClear(planId, userId);
 		
 		return ResponseEntity.ok(null);
 	}

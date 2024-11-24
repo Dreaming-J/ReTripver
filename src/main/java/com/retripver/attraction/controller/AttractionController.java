@@ -46,4 +46,11 @@ public class AttractionController {
 		
 		return ResponseEntity.ok(sidoList);
 	}
+	
+	@GetMapping("/sido/{sidoCode}")
+	public ResponseEntity<?> sidoName(@PathVariable int sidoCode) {
+		String sidoName = attractionService.getSidoName(sidoCode);
+		
+		return ResponseEntity.ok(sidoName);
+	}
 }

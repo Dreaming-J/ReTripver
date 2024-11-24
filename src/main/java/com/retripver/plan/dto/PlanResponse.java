@@ -74,4 +74,11 @@ public class PlanResponse {
 	public void setRank(int rank) {
 		this.rank = rank;
 	}
+	
+	@Override
+	public String toString() {
+		return "PlanResponse [id=" + id + ", userId=" + userId + ", title=" + title + ", sidoCode=" + sidoCode
+				+ ", sidoName=" + sidoName + ", isClear=" + isClear + ", isPublic=" + isPublic + ", courses=" + courses
+				+ ", likeCount=" + likeCount + ", rank=" + rank + "]";
+	}
 }

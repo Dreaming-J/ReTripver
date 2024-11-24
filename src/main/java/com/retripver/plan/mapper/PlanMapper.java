@@ -37,7 +37,9 @@ public interface PlanMapper {
     
 	@Select("""
 			SELECT *
-			FROM plans
+			FROM plans p
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
 			WHERE user_id = #{userId}
 			AND is_public = true
 			""")
@@ -48,19 +50,36 @@ public interface PlanMapper {
 
 	@Select("""
 			SELECT *
-			FROM plans
+			FROM plans p
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
 			WHERE user_id = #{userId}
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
 	    })
-
 	List<PlanResponse> selectMyPlansByUserId(String userId);
+
+	@Select("""
+			SELECT *
+			FROM plans p
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
+			WHERE user_id = #{userId}
+			AND p.sido_code = #{sidoCode}
+			""")
+	@Results({
+	    @Result(property = "id", column = "id"),
+	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
+	    })
+	List<PlanResponse> selectMyPlansByUserIdAndSidoCode(String userId, int sidoCode);
 
     @Select("""
     		SELECT *
-    		FROM plans
+    		FROM plans p
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
     		WHERE id = #{planId}
     		""")
 	@Results({
@@ -73,6 +92,8 @@ public interface PlanMapper {
 			SELECT *
 			FROM plan_like pl JOIN plans p
 			ON pl.plan_id = p.id
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
 			WHERE pl.user_id = #{userId}
 			AND p.is_public = true
 			""")
@@ -143,8 +164,10 @@ public interface PlanMapper {
 
 	@Select("""
 			SELECT *
-			FROM plans
-			WHERE sido_code = #{sidoCode}
+			FROM plans p
+			JOIN sidos s
+			ON p.sido_code = s.sido_code
+			WHERE p.sido_code = #{sidoCode}
 			AND is_public = true
 			""")
 	@Results({

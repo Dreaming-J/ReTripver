@@ -59,4 +59,7 @@ public interface AttractionMapper {
 
     @Select("SELECT * FROM guguns WHERE sido_code = #{sidoCode}")
     List<GugunResponse> selectGugunsBySidoCode(int sidoCode);
+
+    @Select("SELECT sido_name FROM sidos WHERE sido_code = #{sidoCode}")
+	String selectSidoNameBySidoCode(int sidoCode);
 }

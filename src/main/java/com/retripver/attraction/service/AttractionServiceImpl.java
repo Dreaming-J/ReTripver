@@ -53,4 +53,9 @@ public class AttractionServiceImpl implements AttractionService {
 		return attractionRepository.getSidos();
 	}
 
+	@Override
+	public String getSidoName(int sidoCode) {
+		return attractionRepository.getSidoName(sidoCode);
+	}
+
 }

@@ -14,4 +14,6 @@ public interface AttractionService {
 
 	List<SidoResponse> getSidos();
 
+	String getSidoName(int sidoCode);
+
 }

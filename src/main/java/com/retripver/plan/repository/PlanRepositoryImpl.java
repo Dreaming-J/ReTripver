@@ -31,6 +31,11 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
+	public List<PlanResponse> myPlanListInSido(String userId, int sidoCode) {
+		return planMapper.selectMyPlansByUserIdAndSidoCode(userId, sidoCode);
+	}
+
+	@Override
 	public PlanResponse getPlan(int planId) {
 		return planMapper.selectPlanByPlanId(planId);
 	}
