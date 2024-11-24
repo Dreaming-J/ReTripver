@@ -2,32 +2,92 @@
 import SelectSidoItem from "@/components/common/sido/SelectSidoItem.vue";
 import { ref } from "vue";
 
-const items = ref([
+const sidos = ref([
   {
-    idx: 1,
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
   },
   {
-    idx: 2,
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
   },
   {
-    idx: 3,
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
   },
   {
-    idx: 4,
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
   },
   {
-    idx: 5,
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
   },
   {
-    idx: 6,
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
+  },
+  {
+    sidoCode:1,
+    name: "서울",
+    img :new URL('@/assets/img/sido/1.jpg', import.meta.url).href,
+    desc :"서울 설명"
   },
 ]);
 </script>
 
 <template>
   <div class="flex flex-wrap">
-    <div class="sido-item col-3 p-5" v-for="item in items" :key="item.idx">
-      <SelectSidoItem />
+    <div class="sido-item col-3 p-5" v-for="sido in sidos" :key="sido.sidoCode">
+      <SelectSidoItem :sido="sido"/>
     </div>
   </div>
 </template>
@@ -35,6 +95,6 @@ const items = ref([
 <style scoped>
 .sido-item {
   /* border: 1px solid peru; */
-  height: 350px;
+  height: 380px;
 }
 </style>

@@ -43,6 +43,11 @@ const router = createRouter({
           name: "make-plan",
           component: () => import("@/views/plan/MakePlanView.vue"),
         },
+        {
+          path: "mission",
+          name: "mission-upload",
+          component: () => import("@/views/plan/MissionUploadView.vue"),
+        },
       ],
     },
     {

@@ -4,7 +4,7 @@ import SelectSido from "@/components/common/sido/SelectSido.vue";
 
 <template>
   <div class="view-container">
-    <div class="text-title text-xl">어떤 지역의 여행을 구경하시나요?</div>
+    <div class="text-title text-2xl">어떤 계획을 보고 싶나요?</div>
     <div class="select-sido-container">
       <SelectSido />
     </div>
@@ -13,7 +13,7 @@ import SelectSido from "@/components/common/sido/SelectSido.vue";
 
 <style scoped>
 .view-container {
-  width: 1200px;
+  width: 1300px;
   margin: 0 auto;
   /* border: 1px solid black; */
 }
@@ -21,8 +21,8 @@ import SelectSido from "@/components/common/sido/SelectSido.vue";
 .text-title {
   /* border: 1px solid red; */
   text-align: center;
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .select-sido-container {
