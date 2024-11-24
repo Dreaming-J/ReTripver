@@ -1,4 +1,5 @@
 <script setup>
+import {Button} from 'primevue';
 defineProps({
   plan: {
     type: Object,
@@ -21,6 +22,21 @@ defineProps({
         :style="{ backgroundImage: `url(${course.userImg})` }"
       ></div>
     </div>
+    <div class="item-header mt-3">
+      {{ title }}
+    </div>
+    <div class="item-desc text-sm">
+      설명설명 리뷰리뷰 ai 리뷰?
+      설명설명 리뷰리뷰 ai 리뷰?
+      설명설명 리뷰리뷰 ai 리뷰?
+      설명설명 리뷰리뷰 ai 리뷰?
+      설명설명 리뷰리뷰 ai 리뷰?
+    </div>
+    <div class="item-footer flex justify-content-end">
+      <Button severity="danger" variant="text" rounded aria-label="Cancel">
+        <font-awesome-icon :icon="['far', 'heart']" />
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -28,17 +44,17 @@ defineProps({
 .list-item {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid #eee; */
+  /* border: 1px solid red; */
   border-radius: 10px;
   padding: 16px;
   margin-bottom: 16px;
   background-color: #fff;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  height: 230px;
+  height: 270px;
 }
 
 .item-header {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .item-header h3 {
@@ -64,6 +80,15 @@ defineProps({
   background-position: center;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.item-desc  {
+  color: gray;
+  /* border: 1px solid red; */
+  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 넘치는 부분에 "..." 추가 */
 }
 
 /* Single image */
