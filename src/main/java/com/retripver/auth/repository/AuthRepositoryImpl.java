@@ -11,6 +11,7 @@ import com.retripver.auth.dto.LoginRequest;
 import com.retripver.auth.dto.LoginResponse;
 import com.retripver.auth.dto.PwdModifyRequest;
 import com.retripver.auth.dto.SignupRequest;
+import com.retripver.auth.dto.UserInfoResponse;
 import com.retripver.auth.dto.UserModifyRequest;
 import com.retripver.auth.dto.UserProfileRequest;
 import com.retripver.auth.dto.UserSearchIdRequest;
@@ -134,6 +135,11 @@ public class AuthRepositoryImpl implements AuthRepository {
 	@Override
 	public String selectPasswordById(String id) {
 		return authMapper.selectPasswordById(id);
+	}
+
+	@Override
+	public UserInfoResponse getUserInfo(String userId) {
+		return authMapper.selectIdAndProfileImageById(userId);
 	}
 
 }

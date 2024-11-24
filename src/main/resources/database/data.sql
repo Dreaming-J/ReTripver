@@ -15,7 +15,7 @@ VALUES	('admin','74871D696745843B5119B3B72F115C44BA49068329E482F98C76D589615C32F
 		('guest1','DA63F86849923626240CA014974CC8EC4DAB2E10AAAF619ADEB99C19C31BFFF4568C440C7C299D49D8EACF6EDDB76551BF8AFDCBFF5663A44532414B2E83E250','67e07ac2430420e0ce57c136868c1626','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),
         ('pro1','F77F231FECFC90464F2DF4421E76C5DB6CA92C114291C5C9D74D65D755F3F2AB2431687D8FC9DAD776B94DE20C89536BD7334AF0302B6AAFEF139D7FDC24D807','67e07ac2430420e0ce57c136868c1626','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),
         ('user','5FAF24FFACD18F7B42D122B6C217E8A8FD86F0F2B9B8831DFCE67ECF848CD5F27445873237F38D24CD1DDB3B7E593F3D4CA39DE5A0627FD37423022EF7B69809','67e07ac2430420e0ce57c136868c1626','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,NULL,NULL,'2024-11-01 05:13:20',3),
-        ('test','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','test@test.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/8d259f70bce34ad7b05bcadf686b183a.webp','안녕하세요',55,'achievement_visit',1,'2024-11-01 05:13:20',1);
+        ('test','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','test@test.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/8d259f70bce34ad7b05bcadf686b183a.webp','안녕하세요',53,'achievement_visit',1,'2024-11-01 05:13:20',2);
 INSERT INTO `follow`
 VALUES	('test','guest1'),
 		('guest1','test'),
@@ -45,7 +45,7 @@ VALUES	(1,'test','신나는 부산 여행!',6,0,1),
 		(10,'test','고요한 남해의 섬마을 여행',36,0,1),
 		(11,'test','울산 태화강과 대왕암 공원 산책',7,0,1);
 INSERT INTO `courses`
-VALUES	(1,6,3837,0,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
+VALUES	(1,6,3837,0,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,1),
 		(2,6,4486,1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0),
 		(3,6,3931,2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png',NULL,10,0);
 INSERT INTO `plan_like`
