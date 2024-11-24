@@ -1,6 +1,6 @@
 import { ref } from "vue";
 
-const { VITE_TMAP_SERVICE_KEY } = import.meta.env
+const { VITE_TMAP_SERVICE_KEY } = import.meta.env;
 const { Tmapv3 } = window;
 
 // 상태 변수들을 ref로 정의
@@ -32,6 +32,66 @@ export const removeMarker = (marker) => {
   marker.setMap(null);
 };
 
+export const onSearchOnlyTime = (start, end, routeType) => {
+  console.log("시간 가져오기", start.title, "->", end.title);
+
+  const headers = {
+    "Content-Type": "application/json",
+    appKey: VITE_TMAP_SERVICE_KEY,
+  };
+
+  const requestData = {
+    startName: start.title,
+    startX: String(start.longitude),
+    startY: String(start.latitude),
+    endName: end.title,
+    endX: String(end.longitude),
+    endY: String(end.latitude),
+    reqCoordType: "WGS84GEO",
+    resCoordType: "EPSG3857",
+  };
+
+  const url = ref("");
+  if (routeType) {
+    url.value = "https://apis.openapi.sk.com/tmap/routes?version=1&format=json"; // 자동차
+  } else {
+    url.value =
+      "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json"; // 도보
+  }
+
+  fetch(url.value, {
+    method: "POST",
+    headers: headers,
+    body: JSON.stringify(requestData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (!data || !data.features) {
+        throw new Error("Invalid response data");
+      }
+
+      const resultData = data.features;
+
+      const tDistance = null;
+      const tTime = null;
+
+      // 경로 정보 저장
+      if (resultData[0] && resultData[0].properties) {
+        tDistance = resultData[0].properties.totalDistance / 1000;
+        tTime = resultData[0].properties.totalTime / 60;
+
+        console.log(
+          `[경로 정보] ${start.title} -> ${end.title} : ${tDistance}km, ${tTime}분`
+        );
+      }
+    })
+    .catch((error) => {
+      console.error("경로 검색 중 오류 발생:", error);
+    });
+
+  return tTime;
+};
+
 export const onSearchRoute = (map, start, end, routeType) => {
   console.log("경로 그리기:", start.title, "->", end.title);
 
@@ -50,10 +110,6 @@ export const onSearchRoute = (map, start, end, routeType) => {
     reqCoordType: "WGS84GEO",
     resCoordType: "EPSG3857",
   };
-
-  console.log(requestData)
-
-  console.log("경로 타입 ", routeType);
 
   const url = ref("");
   if (routeType) {
