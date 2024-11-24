@@ -25,7 +25,4 @@ import SelectSido from "@/components/common/sido/SelectSido.vue";
   padding-bottom: 60px;
 }
 
-.select-sido-container {
-  /* border: 1px solid blue; */
-}
 </style>

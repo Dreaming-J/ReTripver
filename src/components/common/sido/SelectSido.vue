@@ -115,7 +115,7 @@ const sidos = ref([
       <RouterLink :to="{name:'plan-list-sido', params: { sidoCode: sido.sidoCode }}">
        <SelectSidoItem :sido="sido"/>
       </RouterLink>
-    </div>
+    </div> 
   </div>
 </template>
 
