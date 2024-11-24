@@ -5,9 +5,13 @@ import StatusPlan from "@/components/user/status/StatusPlan.vue";
 
 import { ref, onMounted } from 'vue'
 import { useUserStore } from "@/stores/user-store"
+import { useAttractionStore } from "@/stores/attraction-store";
 
 const userStore = useUserStore()
 const { getUserStatus } = userStore
+
+const attractiontore = useAttractionStore()
+const { getMyPlanList, setMyPlan, unSetMyPlan } = attractiontore
 
 const userStatus = ref({
   userInfo: {
@@ -34,18 +38,18 @@ const userStatus = ref({
 })
 onMounted(async () => {
   userStatus.value = await getUserStatus()
+  await getMyPlanList()
 })
 
 const isPlansVisible = ref(false);
-const selectedSidoCode = ref(null);
-
 const selectSido = (sidoCode) => {
   isPlansVisible.value = true;
-  selectedSidoCode.value = sidoCode;
+  setMyPlan(sidoCode)
 };
 
 const closePlansPanel = () => {
   isPlansVisible.value = false;
+  unSetMyPlan()
 };
 </script>
 
@@ -64,7 +68,6 @@ const closePlansPanel = () => {
       >
         <StatusPlan
           @close-plans-panel="closePlansPanel"
-          :sidoCode="selectedSidoCode"
         />
       </div>
     </div>

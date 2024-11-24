@@ -49,7 +49,7 @@ const expPercantage = computed(() => {
         </div>
       </div>
 
-      <div class="bio-container">
+      <div class="bio-container" style="white-space: pre-line">
         {{ userStatus.userInfo.profileDesc }}
       </div>
 
