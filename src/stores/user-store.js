@@ -47,6 +47,19 @@ export const useUserStore = defineStore("userStore", () => {
         isLogin.value = false
     })
   }
+  const getUserInfo = async() => {
+    if (isLogin.value)
+      return
+
+    try {
+      const response = await axios.get('/auth/info', { withCredentials: true})
+      userInfo.value = response.data
+      isLogin.value = true
+    } catch (error) {
+      userInfo.value = new UserInfo()
+      isLogin.value = false
+    }
+  }
 
   const userSignup = async (signupForm) => {
     try {
@@ -91,17 +104,29 @@ export const useUserStore = defineStore("userStore", () => {
     }
   }
 
+  const getUserStatus = async () => {
+    try {
+      const response = await axios.get('/user/status/info', { withCredentials: true })
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     userInfo,
 
     isLogin,
     userLogin,
     userLogout,
+    getUserInfo,
 
     userSignup,
     existId,
     existEmail,
     authEmail,
-    authVerify
+    authVerify,
+
+    getUserStatus
   }
 })

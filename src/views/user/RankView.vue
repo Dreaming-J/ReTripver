@@ -1,10 +1,15 @@
 <script setup>
   import RankListItem from '@/components/user/RankListItem.vue'
-  import { storeToRefs } from "pinia"
+  import { ref, onMounted } from 'vue'
   import { usePlanStore } from "@/stores/plan-store"
 
   const planStore = usePlanStore()
-  const { rankList } = storeToRefs(planStore)
+  const { getRankList } = planStore
+  
+  const rankList = ref([])
+  onMounted(async () => {
+    rankList.value = await getRankList(1);
+  })
 </script>
 
 <template>

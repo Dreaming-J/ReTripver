@@ -30,7 +30,7 @@ const closePanel = () => {
       </Button>
     </div>
     <div class="title-container p-2 pt-0 text-lg flex justify-content-end">
-      {{ sidoCode }}의 여행 기록들
+      {{ sidoCode }} 여행 기록들
     </div>
     <div class="travel-list">
       <ScrollPanel class="scroll-panel p-2" style="width: 100%; height: 100%">

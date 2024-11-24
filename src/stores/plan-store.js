@@ -4,22 +4,16 @@ import { defineStore } from "pinia"
 export const usePlanStore = defineStore("planStore", () => {
   const axios = inject('axios')
 
-  const rankList = ref([])
   const getRankList = async (page) => {
-    await axios.get('/plan/rank', {params: {page: page}})
-    .then( (response) => {
-        let { data } = response
-
-        rankList.value = data
-    })
-    .catch( (error) => {
-      rankList.value = []
+    try {
+      const response = await axios.get('/plan/rank', {params: {page: page}})
+      return response.data
+    } catch (error) {
       console.log(error)
-    })
+    }
   }
 
   return {
-    rankList,
     getRankList,
   }
 })

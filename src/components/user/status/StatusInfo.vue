@@ -1,5 +1,20 @@
 <script setup>
 import SidePanel from "@/components/user/status/SidePanel.vue";
+import {computed} from 'vue'
+
+const props = defineProps({
+  userStatus: {
+    type: Object,
+    required: true
+  }
+})
+
+const expPercantage = computed(() => {
+  const percentage = (props.userStatus.userInfo.exp / props.userStatus.userInfo.tierInfo.nextTierExp * 100).toFixed(1)
+  return {
+    '--target-width': `${percentage}%`
+  }
+})
 </script>
 
 <template>
@@ -7,13 +22,13 @@ import SidePanel from "@/components/user/status/SidePanel.vue";
     <div class="profile-container">
       <div class="profile-header">
         <div class="profile-image">
-          <img src="@/assets/img/profile.jpg" />
+          <img :src="userStatus.userInfo.profileImg" />
         </div>
 
         <div class="profile-info">
-          <div class="ahievement-title">강원 수호자</div>
+          <div class="ahievement-title">{{ userStatus.userInfo.achievementTitle }}</div>
           <div class="profile-id">
-            Kim_JJong
+            {{ userStatus.userInfo.id }}
             <span class="edit-icon">
               <font-awesome-icon
                 :icon="['far', 'pen-to-square']"
@@ -27,16 +42,15 @@ import SidePanel from "@/components/user/status/SidePanel.vue";
 
       <div class="follow-info">
         <div class="follow-num text-center col-6">
-          팔로워 <span class="pl-2">50</span>
+          팔로워 <span class="pl-2">{{ userStatus.follow.followerCount }}</span>
         </div>
         <div class="follow-num text-center col-6">
-          팔로우 <span class="pl-2">50</span>
+          팔로우 <span class="pl-2">{{ userStatus.follow.followingCount }}</span>
         </div>
       </div>
 
       <div class="bio-container">
-        드라이빙 중...<br />
-        바다에서 쉬고 놀기는 사람...
+        {{ userStatus.userInfo.profileDesc }}
       </div>
 
       <!-- <div class="btn-container">
@@ -48,10 +62,14 @@ import SidePanel from "@/components/user/status/SidePanel.vue";
           <img src="@/assets/img/medal.png" />
         </div>
         <div class="exp-info">
-          <div class="exp-text text-sm">EXP</div>
+          <div
+            class="exp-text text-sm"
+          >
+            EXP. {{userStatus.userInfo.exp}}/{{userStatus.userInfo.tierInfo.nextTierExp}}[{{ (userStatus.userInfo.exp / userStatus.userInfo.tierInfo.nextTierExp * 100).toFixed(1) }}%]
+          </div>
           <div class="exp-bar">
             <div class="exp-background"></div>
-            <div class="exp-fill"></div>
+            <div class="exp-fill":style="expPercantage"></div>
           </div>
         </div>
       </div>
@@ -60,7 +78,7 @@ import SidePanel from "@/components/user/status/SidePanel.vue";
         <div class="quest-text">Quest Succes</div>
         <div class="quest-rate">
           <SidePanel
-            :value="0.75"
+            :value="userStatus.questRate.successQuestRate"
             :size="120"
             :thickness="10"
             :fill="{ gradient: ['#E0E0E0', '#355C7D', '#1F3649'] }"
@@ -225,7 +243,7 @@ import SidePanel from "@/components/user/status/SidePanel.vue";
     width: 0%; /* 시작 너비 */
   }
   to {
-    width: 50%; /* 종료 너비 */
+    width: var(--target-width); /* 종료 너비 */
   }
 }
 
