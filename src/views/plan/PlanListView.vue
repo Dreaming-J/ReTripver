@@ -1,6 +1,6 @@
 <script setup>
 import PlanList from "@/components/plan/list/PlanList.vue";
-import PlanSearchForm from "@/components/common/search/PlanSearchForm.vue";
+import PlanSearchForm from "@/components/plan/list/PlanSearchForm.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -34,6 +34,7 @@ const searchKeyword = (selectedCity, keyword) => {
   height: 100px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .list-container {

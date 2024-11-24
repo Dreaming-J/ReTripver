@@ -29,7 +29,6 @@ console.log(props.sidoCode);
         <PlanListItem class="plan-item" />
       </div>
     </div>
-    
   </div>
 </template>
 
