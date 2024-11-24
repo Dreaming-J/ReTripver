@@ -20,13 +20,6 @@ defineProps({
         </template>
         <template #title><p class="text-lg">{{ attraction.title }}</p></template>
         <template #subtitle><p class="text-base">{{ attraction.addr1?.trim().split(/\s+/).filter(Boolean).slice(0, 2).join(" ") || "" }}</p></template>
-        <template #footer>
-            <div class="flex justify-content-end">
-                <Button label="Save" class="col-2" text size="small">
-                  <font-awesome-icon class="btn-like" :icon="['far', 'heart']" />
-                </Button>
-            </div>
-        </template>
     </Card>
   </div>
 </template>
