@@ -38,6 +38,6 @@ const searchKeyword = (selectedCity, keyword) => {
 }
 
 .list-container {
-  width: 100%;
+  width: 100%; 
 }
 </style>
