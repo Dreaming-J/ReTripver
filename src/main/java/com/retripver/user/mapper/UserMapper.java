@@ -81,13 +81,11 @@ public interface UserMapper {
 			FROM (
 				SELECT p.user_id, count(*) total
 				FROM plans p
-				JOIN courses c ON p.id = c.plan_id
 				GROUP BY p.user_id) t
-			LEFT JOIN (
+			JOIN (
 				SELECT p.user_id, count(*) success
 				FROM plans p
-				JOIN courses c ON p.id = c.plan_id
-				WHERE c.is_clear = 1
+				WHERE p.is_clear = 1
 				GROUP BY p.user_id ) s
 			ON t.user_id = s.user_id
 			WHERE t.user_id = #{id}
