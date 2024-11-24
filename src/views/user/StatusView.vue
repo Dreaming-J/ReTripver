@@ -3,7 +3,38 @@ import StatusInfo from "@/components/user/status/StatusInfo.vue";
 import StatusMap from "@/components/user/status/StatusMap.vue";
 import StatusPlan from "@/components/user/status/StatusPlan.vue";
 
-import { ref } from "vue";
+import { ref, onMounted } from 'vue'
+import { useUserStore } from "@/stores/user-store"
+
+const userStore = useUserStore()
+const { getUserStatus } = userStore
+
+const userStatus = ref({
+  userInfo: {
+     id: '',
+     profileImg: '',
+     profileDesc: '',
+     exp: 0,
+     achievementTitle: '',
+     tierInfo: {
+      tierName: '',
+      tierImg: '',
+      nextTierExp: 0,
+     }
+  },
+  follow: {
+    followerCount: 0,
+    followingCount: 0,
+  },
+  questRate: {
+	  successQuestRate: 0,
+	  successQuestCount: 0,
+	  totalQuestCount: 0,
+  }
+})
+onMounted(async () => {
+  userStatus.value = await getUserStatus()
+})
 
 const isPlansVisible = ref(false);
 const selectedSidoCode = ref(null);
@@ -21,7 +52,7 @@ const closePlansPanel = () => {
 <template>
   <div class="status-container">
     <div class="info-container">
-      <StatusInfo />
+      <StatusInfo :user-status="userStatus" />
     </div>
     <div class="map-container">
       <StatusMap @select-sido-code="selectSido" />
