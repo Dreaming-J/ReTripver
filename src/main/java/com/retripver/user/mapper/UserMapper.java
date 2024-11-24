@@ -77,13 +77,13 @@ public interface UserMapper {
 	FollowCountResponse selectFollowCountById(String id);
 	
 	@Select("""
-			SELECT t.user_id, success, total, success / total * 100 rate
+			SELECT t.user_id, IFNULL(success, 0) success, total, IFNULL(success, 0) / total rate
 			FROM (
 				SELECT p.user_id, count(*) total
 				FROM plans p
 				JOIN courses c ON p.id = c.plan_id
 				GROUP BY p.user_id) t
-			JOIN (
+			LEFT JOIN (
 				SELECT p.user_id, count(*) success
 				FROM plans p
 				JOIN courses c ON p.id = c.plan_id
@@ -91,7 +91,6 @@ public interface UserMapper {
 				GROUP BY p.user_id ) s
 			ON t.user_id = s.user_id
 			WHERE t.user_id = #{id}
-			
 			""")
 	@Results({
 		@Result(property = "successQuestRate", column = "rate"),

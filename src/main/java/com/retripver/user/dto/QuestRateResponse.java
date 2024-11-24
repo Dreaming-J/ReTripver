@@ -2,14 +2,14 @@ package com.retripver.user.dto;
 
 public class QuestRateResponse {
 
-	private int successQuestRate;
+	private double successQuestRate;
 	private int successQuestCount;
 	private int totalQuestCount;
 	
-	public int getSuccessQuestRate() {
+	public double getSuccessQuestRate() {
 		return successQuestRate;
 	}
-	public void setSuccessQuestRate(int successQuestRate) {
+	public void setSuccessQuestRate(double successQuestRate) {
 		this.successQuestRate = successQuestRate;
 	}
 	public int getSuccessQuestCount() {
@@ -23,6 +23,11 @@ public class QuestRateResponse {
 	}
 	public void setTotalQuestCount(int totalQuestCount) {
 		this.totalQuestCount = totalQuestCount;
+	}
+	@Override
+	public String toString() {
+		return "QuestRateResponse [successQuestRate=" + successQuestRate + ", successQuestCount=" + successQuestCount
+				+ ", totalQuestCount=" + totalQuestCount + "]";
 	}
 
 }

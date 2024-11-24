@@ -24,6 +24,7 @@ import com.retripver.auth.dto.LoginRequest;
 import com.retripver.auth.dto.LoginResponse;
 import com.retripver.auth.dto.PwdModifyRequest;
 import com.retripver.auth.dto.SignupRequest;
+import com.retripver.auth.dto.UserInfoResponse;
 import com.retripver.auth.dto.UserModifyRequest;
 import com.retripver.auth.dto.UserProfileRequest;
 import com.retripver.auth.dto.UserSearchIdRequest;
@@ -230,5 +231,15 @@ public class AuthController {
 		// 오류 추가!
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	// 유저 정보 불러오기
+	@GetMapping("/info")
+	public ResponseEntity<?> refreshUserInfo(@RequestHeader(value = "Authorization", required = false) String authorization) {
+		String userId = jwtUtil.extractUserId(authorization, false);
+		
+		UserInfoResponse userInfoResponse = authService.getUserInfo(userId);
+		
+		return ResponseEntity.ok(userInfoResponse);
 	}
 }
