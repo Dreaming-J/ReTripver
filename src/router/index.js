@@ -39,6 +39,12 @@ const router = createRouter({
           component: () => import("@/views/plan/PlanSelectSidoView.vue"),
         },
         {
+          path:"list/:sidoCode",
+          name:"plan-list-sido",
+          component: ()=>import("@/views/plan/PlanListView.vue"),
+          props: true,
+        },
+        {
           path: "make",
           name: "make-plan",
           component: () => import("@/views/plan/MakePlanView.vue"),
