@@ -12,6 +12,8 @@ public interface PlanService {
 
 	List<PlanResponse> myPlanList(String userId);
 
+	List<PlanResponse> myPlanListInSido(String userId, int sidoCode);
+
 	PlanResponse getPlan(int planId);
 
 	List<PlanResponse> likePlanList(String userId);

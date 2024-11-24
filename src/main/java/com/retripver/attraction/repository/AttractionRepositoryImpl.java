@@ -34,5 +34,10 @@ public class AttractionRepositoryImpl implements AttractionRepository {
 	public List<SidoResponse> getSidos() {
 		return attractionMapper.selectSidos();
 	}
+
+	@Override
+	public String getSidoName(int sidoCode) {
+		return attractionMapper.selectSidoNameBySidoCode(sidoCode);
+	}
 	
 }
