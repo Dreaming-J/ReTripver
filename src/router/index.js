@@ -89,6 +89,23 @@ const router = createRouter({
           path: "myPage",
           name: "myPage",
           component: () => import("@/views/user/MyPageView.vue"),
+          children: [
+            {
+              path: "profile",
+              name: "myPage-profile",
+              component: () => import("@/views/user/myPage/EditProfile.vue"),
+            },
+            {
+              path: "email",
+              name: "myPage-email",
+              component: () => import("@/views/user/myPage/EditEmail.vue"),
+            },
+            {
+              path: "password",
+              name: "myPage-password",
+              component: () => import("@/views/user/myPage/EditPassword.vue"),
+            }
+          ]
         },
       ],
     },

@@ -90,6 +90,10 @@ defineProps({
   font-size: 0.95rem;
   line-height: 1.5;
   font-weight: 300;
+
+  white-space: normal; /* 기본 줄바꿈 설정 */
+  word-break: keep-all; /* 단어 단위로 끊어지지 않도록 설정 */
+  line-height: 1.3; /* 줄 간격 조절 */
 }
 
 .container:hover .description {

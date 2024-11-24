@@ -13,6 +13,7 @@ defineProps({
       "https://via.placeholder.com/85x85/f5f5f5/999999?text=No+Image",
     ],
   },
+  
 });
 </script>
 
