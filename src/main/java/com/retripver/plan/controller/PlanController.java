@@ -115,9 +115,9 @@ public class PlanController {
 		String userId = jwtUtil.extractUserId(authorization, false);
 		
 		planRequest.setUserId(userId);
-		planService.makePlan(planRequest);
+		int planId = planService.makePlan(planRequest);
 		
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(planId);
 	}
 	
 	@GetMapping("/search/{sidoCode}")
