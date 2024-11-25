@@ -1,13 +1,17 @@
 <script setup>
 import PlanList from "@/components/plan/list/PlanList.vue";
 import PlanSearchForm from "@/components/plan/list/PlanSearchForm.vue";
+import { ref } from 'vue'
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 const sidoCode = route.params.sidoCode;
+const gugun = ref({})
+const keyword = ref("")
 
-const searchKeyword = (selectedCity, keyword) => {
-  console.log(selectedCity, keyword )
+const searchKeyword = (selectedCity, searchKeyword) => {
+  gugun.value = selectedCity
+  keyword.value = searchKeyword
 }
 </script>
 
@@ -17,7 +21,7 @@ const searchKeyword = (selectedCity, keyword) => {
       <PlanSearchForm @searchKeyword="searchKeyword"/>
     </div>
     <div class="list-container"> 
-      <PlanList :sidoCode="sidoCode"/>
+      <PlanList :sidoCode="sidoCode" :gugun="gugun" :keyword="keyword"/>
     </div>
   </div>
 </template>

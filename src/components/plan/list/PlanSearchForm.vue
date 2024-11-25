@@ -4,39 +4,46 @@ import IconField from "primevue/iconfield";
 import InputIcon from "primevue/inputicon";
 import Select from 'primevue/select';
 
-import { ref } from "vue";
+import { useRoute } from 'vue-router'
+import { ref, onMounted } from "vue";
+import { useAttractionStore } from "@/stores/attraction-store";
 
-const selectedCity = ref();
-const keyword = ref();
-const cities = ref([
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' }
-]);
+const route = useRoute()
+const attractionStore = useAttractionStore()
+const { getSidoList } = attractionStore
+
+const sidoCode = route.params.sidoCode;
+
+const selectedCity = ref({});
+const keyword = ref("");
+const guguns = ref([]);
+
+onMounted(async () => {
+  const response = await getSidoList()
+  guguns.value = response.find(sido => sido.sidoCode == sidoCode).guguns
+})
 
 const emit = defineEmits(["searchKeyword"]);
 
-const sumbitEvent = () => {
+const submitEvent = () => {
   emit("searchKeyword", selectedCity.value, keyword.value);
 }
 
 </script>
 
 <template>
-  <form @submit.prevent="sumbitEvent" class="flex">
-  <div class="container">
-      <div class="select-city col-4 p-3 pr-1">
-          <Select v-model="selectedCity" :options="cities" optionLabel="name" placeholder="지역" class="w-full md:w-56" />
-      </div>
-      <div class="card flex col-8 p-3 pl-1">
-        <IconField class="w-full">
-          <InputText class="w-full" v-model="keyword" variant="filled" />
-          <InputIcon class="pi pi-search"/>
-        </IconField>
-      </div>
-   </div>
+  <form class="flex">
+    <div class="container">
+        <div class="select-city col-4 p-3 pr-1">
+            <Select v-model="selectedCity" :options="guguns" optionLabel="gugunName" placeholder="지역" class="w-full md:w-56" />
+        </div>
+        <div class="card flex col-8 p-3 pl-1">
+          <IconField class="w-full">
+            <InputText class="w-full" v-model="keyword" variant="filled" />
+            <InputIcon class="pi pi-search" @click="submitEvent"/>
+          </IconField>
+        </div>
+    </div>
   </form>
 </template>
 
