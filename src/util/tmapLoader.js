@@ -32,8 +32,8 @@ export const removeMarker = (marker) => {
   marker.setMap(null);
 };
 
-export const onSearchOnlyTime = (start, end, routeType) => {
-  console.log("시간 가져오기", start.title, "->", end.title);
+export const onSearchOnlyTime = async (start, end, routeType) => {
+  // console.log("시간 가져오기", start.title, "->", end.title);
 
   const headers = {
     "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export const onSearchOnlyTime = (start, end, routeType) => {
       "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json"; // 도보
   }
 
-  fetch(url.value, {
+  return await fetch(url.value, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(requestData),
@@ -72,28 +72,26 @@ export const onSearchOnlyTime = (start, end, routeType) => {
 
       const resultData = data.features;
 
-      const tDistance = null;
-      const tTime = null;
+      let tTime = 0;
 
       // 경로 정보 저장
       if (resultData[0] && resultData[0].properties) {
-        tDistance = resultData[0].properties.totalDistance / 1000;
         tTime = resultData[0].properties.totalTime / 60;
 
-        console.log(
-          `[경로 정보] ${start.title} -> ${end.title} : ${tDistance}km, ${tTime}분`
-        );
+        // console.log(
+        //   `[시간 정보] ${start.title} -> ${end.title} : ${tTime}분`
+        // );
       }
+
+      return tTime
     })
     .catch((error) => {
-      console.error("경로 검색 중 오류 발생:", error);
+      console.error("시간 계산 중 오류 발생:", error);
     });
-
-  return tTime;
 };
 
 export const onSearchRoute = (map, start, end, routeType) => {
-  console.log("경로 그리기:", start.title, "->", end.title);
+  // console.log("경로 그리기:", start.title, "->", end.title);
 
   const headers = {
     "Content-Type": "application/json",
@@ -137,9 +135,9 @@ export const onSearchRoute = (map, start, end, routeType) => {
         const tDistance = resultData[0].properties.totalDistance / 1000;
         const tTime = resultData[0].properties.totalTime / 60;
 
-        console.log(
-          `[경로 정보] ${start.title} -> ${end.title} : ${tDistance}km, ${tTime}분`
-        );
+        // console.log(
+        //   `[경로 정보] ${start.title} -> ${end.title} : ${tDistance}km, ${tTime}분`
+        // );
       }
 
       // 이 경로의 모든 좌표를 저장할 배열

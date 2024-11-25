@@ -1,10 +1,25 @@
 <script setup>
 import { ref } from "vue";
+import { useMakePlanStore } from "@/stores/makePlan-store";
 
 import Checkbox from "primevue/checkbox";
 import Button from "primevue/button";
 
-const optimizeOptions = ref();
+const makePlanStore = useMakePlanStore()
+const { optimizeList } = makePlanStore
+
+const optimizeOptions = ref([]);
+
+const emit = defineEmits(["closeOptimizeDialog"])
+
+const cancleEvent = () => {
+  emit("closeOptimizeDialog")
+}
+
+const okEvent = async () => {
+  await optimizeList(optimizeOptions.value)
+  emit("closeOptimizeDialog")
+}
 </script>
 
 <template>
@@ -12,31 +27,21 @@ const optimizeOptions = ref();
     <div class="checkbox-item">
       <Checkbox
         v-model="optimizeOptions"
-        inputId="optimizeCourse"
+        inputId="fixFirst"
         name="optimizeOptions"
-        value="optimizeCourse"
+        value="fixFirst"
       />
-      <label for="optimizeCourse"> 코스 최적화 </label>
+      <label for="fixFirst"> 출발지 고정 </label>
     </div>
 
     <div class="checkbox-item">
       <Checkbox
         v-model="optimizeOptions"
-        inputId="startFix"
+        inputId="fixLast"
         name="optimizeOptions"
-        value="startFix"
+        value="fixLast"
       />
-      <label for="startFix"> 출발지 고정 </label>
-    </div>
-
-    <div class="checkbox-item">
-      <Checkbox
-        v-model="optimizeOptions"
-        inputId="endFix"
-        name="optimizeOptions"
-        value="endFix"
-      />
-      <label for="endFix"> 도착지 고정 </label>
+      <label for="fixLast"> 도착지 고정 </label>
     </div>
 
     <div class="btn-items">
@@ -45,8 +50,14 @@ const optimizeOptions = ref();
         label="취소"
         severity="secondary"
         variant="outlined"
+        @click="cancleEvent"
       />
-      <Button class="btn-item" label="확인" severity="warn" />
+      <Button
+        class="btn-item" 
+        label="확인"
+        severity="warn"
+        @click="okEvent"
+      />
     </div>
   </div>
 </template>

@@ -48,7 +48,7 @@ watch(
         <font-awesome-icon :icon="['fas', 'location-dot']" />
       </div>
 
-      <div class="header-item fa-lg">여행 장소 선택</div>
+      <div class="header-item fa-base">여행 장소 선택</div>
 
       <div class="header-item">
         <Button
@@ -60,7 +60,7 @@ watch(
 
         <div class="card flex justify-center">
           <Dialog v-model:visible="visible" modal header=" ">
-            <OptimizeDialog />
+            <OptimizeDialog @close-optimize-dialog="visible = false" />
           </Dialog>
         </div>
       </div>

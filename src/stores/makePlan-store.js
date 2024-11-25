@@ -78,6 +78,38 @@ export const useMakePlanStore = defineStore("plans", () => {
     }));
   };
 
+  const optimizeCourses = ref({
+    size: 0,
+    optimizeCourses: [],
+    fixFirst: false,
+    fixLast: false
+  })
+  const optimizeList = async (optimizeOptions) => {
+    optimizeCourses.value.size = selectList.value.length
+
+    if (optimizeOptions.includes("fixFirst"))
+      optimizeCourses.value.fixFirst = true
+    else
+    optimizeCourses.value.fixFirst = false
+
+    if (optimizeOptions.includes("fixLast"))
+      optimizeCourses.value.fixLast = true
+    else
+      optimizeCourses.value.fixLast = false
+
+    try {
+      const response = await axios.post('plan/optimizeCourses', optimizeCourses.value)
+      const newOrder = response.data
+
+      const tempList = JSON.parse(JSON.stringify(selectList.value))
+      for (let idx = 0; idx < selectList.value.length; idx++) {
+        selectList.value[idx] = tempList[newOrder[idx]]
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     searchOption,
     searchList,
@@ -87,5 +119,8 @@ export const useMakePlanStore = defineStore("plans", () => {
     addSelectItem,
     removeSeletedItem,
     updateOrder,
+
+    optimizeCourses,
+    optimizeList
   };
 });
