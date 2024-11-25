@@ -9,7 +9,6 @@ public class PlanRequest {
 	private int sidoCode;
 	private boolean isPublic;
 	private List<CourseRequest> courses;
-
 	
 	public int getId() {
 		return id;
@@ -47,4 +46,10 @@ public class PlanRequest {
 	public void setCourses(List<CourseRequest> courses) {
 		this.courses = courses;
 	}
+	@Override
+	public String toString() {
+		return "PlanRequest [id=" + id + ", userId=" + userId + ", title=" + title + ", sidoCode=" + sidoCode
+				+ ", isPublic=" + isPublic + ", courses=" + courses + "]";
+	}
+	
 }
