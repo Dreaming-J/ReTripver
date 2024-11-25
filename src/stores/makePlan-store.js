@@ -2,27 +2,28 @@ import { defineStore } from "pinia";
 import { ref, inject } from "vue";
 
 export const useMakePlanStore = defineStore("plans", () => {
-  const axios = inject('axios')
-  
-  const searchOption = ref({
-    sidoCode: '',
-    gugunCode: '',
-    keyword: '',
-    page: 1
-  })
+  const axios = inject("axios");
 
-  const searchList = ref([])
+  const searchOption = ref({
+    sidoCode: "",
+    gugunCode: "",
+    keyword: "",
+    page: 1,
+  });
+
+  const searchList = ref([]);
 
   const searchAttractions = async () => {
-    await axios.get('/attraction/search', {params: searchOption.value})
-      .then( (response) => {
-        console.log("Success Load Attractions")
-        searchList.value = response.data
+    await axios
+      .get("/attraction/search", { params: searchOption.value })
+      .then((response) => {
+        console.log("Success Load Attractions");
+        searchList.value = response.data;
       })
-      .catch( (error) => {
-        console.log(error)
-      })
-  }
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const selectList = ref([]);
 
@@ -82,33 +83,34 @@ export const useMakePlanStore = defineStore("plans", () => {
     size: 0,
     optimizeCourses: [],
     fixFirst: false,
-    fixLast: false
-  })
+    fixLast: false,
+  });
   const optimizeList = async (optimizeOptions) => {
-    optimizeCourses.value.size = selectList.value.length
+    optimizeCourses.value.size = selectList.value.length;
 
     if (optimizeOptions.includes("fixFirst"))
-      optimizeCourses.value.fixFirst = true
-    else
-    optimizeCourses.value.fixFirst = false
+      optimizeCourses.value.fixFirst = true;
+    else optimizeCourses.value.fixFirst = false;
 
     if (optimizeOptions.includes("fixLast"))
-      optimizeCourses.value.fixLast = true
-    else
-      optimizeCourses.value.fixLast = false
+      optimizeCourses.value.fixLast = true;
+    else optimizeCourses.value.fixLast = false;
 
     try {
-      const response = await axios.post('plan/optimizeCourses', optimizeCourses.value)
-      const newOrder = response.data
+      const response = await axios.post(
+        "plan/optimizeCourses",
+        optimizeCourses.value
+      );
+      const newOrder = response.data;
 
-      const tempList = JSON.parse(JSON.stringify(selectList.value))
+      const tempList = JSON.parse(JSON.stringify(selectList.value));
       for (let idx = 0; idx < selectList.value.length; idx++) {
-        selectList.value[idx] = tempList[newOrder[idx]]
+        selectList.value[idx] = tempList[newOrder[idx]];
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return {
     searchOption,
@@ -121,6 +123,6 @@ export const useMakePlanStore = defineStore("plans", () => {
     updateOrder,
 
     optimizeCourses,
-    optimizeList
+    optimizeList,
   };
 });
