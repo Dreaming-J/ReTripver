@@ -3,15 +3,33 @@ import SelectedList from "@/components/plan/make/select/SelectedList.vue";
 import SearchList from "@/components/plan/make/search/SearchList.vue";
 import MapContent from "@/components/plan/make/map/MapContent.vue";
 
-import Button from "primevue/button";
+import { Button, Dialog } from "primevue";
 
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const isSearchVisible = ref(true);
 const routeType = ref(false);
 
+const isNotSelected = ref(false);
+const isMakePlanvVisible = ref(false);
+
 const changeRouteType = (changedRouteType) => {
   routeType.value = changedRouteType;
+};
+
+const makePlan = (selectList) => {
+  if (selectList.length <= 0) {
+    isNotSelected.value = true;
+  } else {
+    isMakePlanvVisible.value = true;
+  }
+};
+
+const goQuestPage = () => {
+  router.push({ name: "make-mission" });
 };
 </script>
 
@@ -20,7 +38,10 @@ const changeRouteType = (changedRouteType) => {
     <div class="content-wrapper">
       <div class="seletced-list-container">
         <div class="seletced-list">
-          <SelectedList @change-route-type="changeRouteType" />
+          <SelectedList
+            @change-route-type="changeRouteType"
+            @make-plan="makePlan"
+          />
         </div>
 
         <div
@@ -50,6 +71,54 @@ const changeRouteType = (changedRouteType) => {
         <MapContent :route-type="routeType" />
       </div>
     </div>
+
+    <Dialog
+      v-model:visible="isNotSelected"
+      modal
+      header=" "
+      :style="{ width: '25rem' }"
+    >
+      <span class="text-lg dark:text-surface-400 block mb-6 text-center"
+        >여행지를 추가해주세요.</span
+      >
+      <div class="flex justify-end gap-2">
+        <Button
+          class="w-full"
+          type="button"
+          label="확인"
+          @click="isNotSelected = false"
+        ></Button>
+      </div>
+    </Dialog>
+
+    <Dialog
+      v-model:visible="isMakePlanvVisible"
+      modal
+      header="여행을 만들겠습니까?"
+      :style="{ width: '25rem' }"
+    >
+      <span class="text-lg dark:text-surface-400 block mt-6 mb-6"
+        >확인 후, 미션 사진이 생성됩니다!</span
+      >
+      <div class="flex items-center text-sm mb-5">
+        * 만드신 여행 계획은 수정이 불가능합니다.
+      </div>
+      <div class="flex justify-end gap-2">
+        <Button
+          class="col-6"
+          type="button"
+          label="취소"
+          severity="secondary"
+          @click="isMakePlanvVisible = false"
+        ></Button>
+        <Button
+          class="col-6"
+          type="button"
+          label="확인"
+          @click="goQuestPage"
+        ></Button>
+      </div>
+    </Dialog>
   </div>
 </template>
 

@@ -23,7 +23,14 @@ const props = defineProps({
       </div>
       <div class="text-addr">
         <font-awesome-icon :icon="['fas', 'location-dot']" />
-        {{ info.addr1?.trim().split(/\s+/).filter(Boolean).slice(0, 2).join(" ") || "" }}
+        {{
+          info.addr1
+            ?.trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .slice(0, 2)
+            .join(" ") || ""
+        }}
       </div>
     </div>
   </div>
@@ -66,7 +73,6 @@ img {
 }
 
 .text-title {
-  font-family: GmarketSansMedium;
   font-size: 1.125rem; /* 기본 크기 */
   line-height: 1.3;
   overflow: hidden;
