@@ -112,6 +112,7 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	@Transactional
 	public void makePlan(PlanRequest planRequest) {
+		planRequest.setSidoCode(1);
 		planRepository.makePlan(planRequest);
 	}
 

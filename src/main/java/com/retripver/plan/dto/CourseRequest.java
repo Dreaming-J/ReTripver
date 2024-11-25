@@ -37,4 +37,10 @@ public class CourseRequest {
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
+	@Override
+	public String toString() {
+		return "CourseRequest [planId=" + planId + ", attractionNo=" + attractionNo + ", courseOrder=" + courseOrder
+				+ ", missionImg=" + missionImg + ", exp=" + exp + "]";
+	}
+	
 }
