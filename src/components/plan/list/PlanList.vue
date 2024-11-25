@@ -1,32 +1,31 @@
 <script setup>
-import PlanListItem from '@/components/plan/item/PlanListItem.vue';
+  import PlanListItem from '@/components/plan/item/PlanListItem.vue';
+  import { ref, onMounted } from 'vue'
+  import { storeToRefs } from "pinia";
+  import { usePlanStore } from "@/stores/plan-store";
 
-const props = defineProps({
-    sidoCode : {
-        type:String
-    }
-})
+  const planStore = usePlanStore();
+  const { planListInSido } = storeToRefs(planStore)
+  const { getPlanListInSido } = planStore
 
-console.log(props.sidoCode);
+  const props = defineProps({
+      sidoCode : {
+          type:String
+      }
+  })
+
+  const planList = ref([])
+  onMounted(async () => {
+    await getPlanListInSido(props.sidoCode)
+    planList.value = planListInSido.value
+  })
 </script>
 
 <template>
   <div>
     <div class="flex flex-wrap">
-      <div class="col-4 p-3">
-        <PlanListItem class="plan-item"/>
-      </div>
-      <div class="col-4 p-3">
-        <PlanListItem class="plan-item"/>
-      </div>
-      <div class="col-4 p-3">
-        <PlanListItem class="plan-item" />
-      </div>
-      <div class="col-4 p-3">
-        <PlanListItem class="plan-item" />
-      </div>
-      <div class="col-4 p-3">
-        <PlanListItem class="plan-item" />
+      <div class="col-4 p-3" v-for="plan in planList" :key="plan.id">
+        <PlanListItem class="plan-item" :plan="plan"/>
       </div>
     </div>
   </div>

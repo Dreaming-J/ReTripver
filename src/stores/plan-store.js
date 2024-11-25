@@ -13,7 +13,20 @@ export const usePlanStore = defineStore("planStore", () => {
     }
   }
 
+  const planListInSido = ref([])
+  const getPlanListInSido = async (sidoCode) => {
+    try {
+      const response = await axios.get(`/plan/search/${sidoCode}`)
+      planListInSido.value = response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     getRankList,
+
+    planListInSido,
+    getPlanListInSido
   }
 })
