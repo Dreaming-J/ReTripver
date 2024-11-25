@@ -53,6 +53,17 @@ public class UserController {
 		return ResponseEntity.ok(statusInfo);
 	}
 	
+	// 유저 아이디로 정보 가져오기
+	@GetMapping("/status/info/{userId}")
+	public ResponseEntity<?> statusUserByUserId(@PathVariable String userId) {
+		StatusUserInfoResponse statusInfo = userService.statusUserInfo(userId);
+		System.out.println(statusInfo.getQuestRate());
+		
+		System.out.println("호출!!@!!!" + userId);
+		
+		return ResponseEntity.ok(statusInfo);
+	}
+	
 	// 상태창 지도
 	@GetMapping("/status/map")
 	public ResponseEntity<?> statusMap(@RequestHeader(value = "Authorization") String authorization) {
