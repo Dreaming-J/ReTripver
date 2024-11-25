@@ -1,24 +1,32 @@
 <script setup>
-import { ref } from 'vue'
-import { storeToRefs } from "pinia"
+import { onMounted, ref } from "vue";
+import { storeToRefs } from "pinia";
 import { useAttractionStore } from "@/stores/attraction-store";
+import { useRoute } from "vue-router";
 
-const attractiontore = useAttractionStore()
-const { myPlanList } = storeToRefs(attractiontore);
+const route = useRoute();
 
-const stroke = ref('white')
-const strokeWidth = ref(2)
+const attractionStore = useAttractionStore();
+const { getMyPlanList } = attractionStore;
+const { myPlanList } = storeToRefs(attractionStore);
+
+const stroke = ref("white");
+const strokeWidth = ref(2);
 const calColor = (sidoCode) => {
-  const plans = myPlanList.value.find(planList => planList.sidoCode === sidoCode)
-  const count = plans.plans.length
-  return count == 0 ? 'lightgrey' : 'orange'
-}
+  const plans = myPlanList.value.find(
+    (planList) => planList.sidoCode === sidoCode
+  );
+  const count = plans.plans.length;
+  return count == 0 ? "lightgrey" : "orange";
+};
 const calFillOpacity = (sidoCode) => {
-  const plans = myPlanList.value.find(planList => planList.sidoCode === sidoCode)
-  const count = plans.plans.length
-  const percentage = (count / 10 * 100)
-  return count == 0 ? "40%" : percentage + "%"
-}
+  const plans = myPlanList.value.find(
+    (planList) => planList.sidoCode === sidoCode
+  );
+  const count = plans.plans.length;
+  const percentage = (count / 10) * 100;
+  return count == 0 ? "40%" : percentage + "%";
+};
 
 const emit = defineEmits(["selectSidoCode"]);
 

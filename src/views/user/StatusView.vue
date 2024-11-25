@@ -48,7 +48,7 @@ onMounted(async () => {
   }
   console.log(userId, userStatus.value);
 
-  await getMyPlanList();
+  await getMyPlanList(userId);
 });
 
 const isPlansVisible = ref(false);
