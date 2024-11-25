@@ -58,17 +58,17 @@ public interface UserMapper {
 	UserInfoResponse selectUserById(String id);
 	
 	@Select("""
-			SELECT count(*) follower, following
-			FROM follow ft
-			JOIN (
-				SELECT from_id, count(*) following
+			SELECT 
+			COALESCE(COUNT(ft.to_id), 0) as follower, 
+			COALESCE(following, 0) as following
+			FROM (SELECT #{id} as to_id) u
+			LEFT JOIN follow ft ON u.to_id = ft.to_id
+			LEFT JOIN (
+				SELECT from_id, COUNT(*) following
 				FROM follow
 				GROUP BY from_id
-			) fm
-			ON ft.to_id = fm.from_id
-			WHERE to_id = #{id}
-			GROUP BY to_id;
-			
+			) fm ON ft.to_id = fm.from_id
+			GROUP BY u.to_id;
 			""")
 	@Results({
 		@Result(property = "followerCount", column = "follower"),
@@ -77,18 +77,20 @@ public interface UserMapper {
 	FollowCountResponse selectFollowCountById(String id);
 	
 	@Select("""
-			SELECT t.user_id, IFNULL(success, 0) success, total, IFNULL(success, 0) / total rate
-			FROM (
+			SELECT u.id, IFNULL(success, 0) success, IFNULL(total, 0) total, IFNULL(success, 0) / IFNULL(total, 1) rate
+            FROM users u
+			LEFT JOIN (
 				SELECT p.user_id, count(*) total
 				FROM plans p
 				GROUP BY p.user_id) t
-			JOIN (
+			ON u.id = t.user_id
+			LEFT JOIN (
 				SELECT p.user_id, count(*) success
 				FROM plans p
 				WHERE p.is_clear = 1
 				GROUP BY p.user_id ) s
 			ON t.user_id = s.user_id
-			WHERE t.user_id = #{id}
+			WHERE u.id = #{id}
 			""")
 	@Results({
 		@Result(property = "successQuestRate", column = "rate"),
