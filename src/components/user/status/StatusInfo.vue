@@ -49,7 +49,7 @@ const expPercantage = computed(() => {
         </div>
       </div>
 
-      <div class="bio-container">
+      <div class="bio-container" style="white-space: pre-line">
         {{ userStatus.userInfo.profileDesc }}
       </div>
 
@@ -59,7 +59,7 @@ const expPercantage = computed(() => {
 
       <div class="exp-container">
         <div class="tier-img">
-          <img src="@/assets/img/medal.png" />
+          <img :src="userStatus.userInfo.tierInfo.tierImg" />
         </div>
         <div class="exp-info">
           <div
@@ -75,7 +75,7 @@ const expPercantage = computed(() => {
       </div>
 
       <div class="quest-container">
-        <div class="quest-text">Quest Succes</div>
+        <div class="quest-text">Quest Succes {{ userStatus.questRate.successQuestCount }}/{{ userStatus.questRate.totalQuestCount }}</div>
         <div class="quest-rate">
           <SidePanel
             :value="userStatus.questRate.successQuestRate"
