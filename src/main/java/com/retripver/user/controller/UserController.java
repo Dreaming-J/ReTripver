@@ -74,6 +74,14 @@ public class UserController {
 		return ResponseEntity.ok(statusMapCountList);
 	}
 	
+	// 유저 아이디로 상태창 지도
+	@GetMapping("/status/map/{userId}")
+	public ResponseEntity<?> statusMapByUserId(@PathVariable String userId) {
+		List<StatusMapCountResponse> statusMapCountList = userService.statusMapCount(userId);
+		
+		return ResponseEntity.ok(statusMapCountList);
+	}
+	
 	// 업적 확인
 	@GetMapping("/achievement/list")
 	public ResponseEntity<?> achievement(@RequestHeader(value = "Authorization") String authorization) {
