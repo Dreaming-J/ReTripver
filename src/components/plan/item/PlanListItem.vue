@@ -16,6 +16,11 @@ const props = defineProps({
 const review = ref("AI 리뷰 생성 중")
 
 onMounted(async () => {
+  for (let idx = 0; idx < props.plan.courses.length; idx++) {
+    if (!props.plan.courses[idx].userImg)
+      props.plan.courses[idx].userImg = "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/not-uploaded.png"
+  }
+
   let count = 0
 
   const interval = setInterval(() => {
@@ -26,10 +31,14 @@ onMounted(async () => {
 
  clearInterval(interval);
 })
+
+const openMissionView = () => {
+  console.log("클릭햇을 때, 라우터를 이용하여 이동하거나 하시면 됩니다.")
+}
 </script>
 
 <template>
-  <div class="list-item shadow-2">
+  <div class="list-item shadow-2" @click="openMissionView">
     <div class="item-images" :class="`images-count-${plan.courses.length}`">
       <div
         v-for="(course, index) in plan.courses"

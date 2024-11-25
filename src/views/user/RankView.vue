@@ -14,7 +14,7 @@ onMounted(async () => {
 
 <template>
   <div class="view-container">
-    <div>Rank</div>
+    <div class="text-title text-2xl">User Ranking</div>
     <div>
       <RankListItem
         v-for="(rank, index) in userRankList"
@@ -36,5 +36,12 @@ onMounted(async () => {
 .items-container {
   width: 100%;
   height: 100px;
+}
+
+.text-title {
+  /* border: 1px solid red; */
+  text-align: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 </style>

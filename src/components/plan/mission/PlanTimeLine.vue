@@ -1,7 +1,12 @@
 <script setup>
 import MissionUpload from "@/components/plan/mission/MissionUpload.vue";
 import { Timeline, Card } from "primevue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useMakePlanStore } from "@/stores/makePlan-store";
+import { storeToRefs } from "pinia";
+
+const makePlanStore = useMakePlanStore()
+const { newPlan } = storeToRefs(makePlanStore)
 
 const plan = ref([
   {

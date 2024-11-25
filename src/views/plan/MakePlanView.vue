@@ -7,23 +7,12 @@ import { Button, Dialog, InputText, Select, Message } from "primevue";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 const store = useMakePlanStore();
 const { makeNewPlan } = store;
-
-const newPlan = ref({
-  id: "",
-  userId: "",
-  title: "",
-  sidoCode: "",
-  isPublic: true,
-  courses : []
-})
-
-
-
-
+const { newPlan } = storeToRefs(store)
 
 const writePlanInfo = ref(true);
 const writePlanMessage = ref("");
@@ -63,8 +52,6 @@ const goQuestPage = async () => {
   }));
 
   newPlan.value.courses = courses;
-
-  console.log(newPlan.value)
 
   await makeNewPlan(newPlan.value);
 
