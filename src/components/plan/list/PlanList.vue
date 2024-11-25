@@ -57,7 +57,6 @@
 
 <template>
   <div>
-    {{ gugun }} {{ keyword }}
     <div class="flex flex-wrap">
       <div class="col-4 p-3" v-for="plan in planList" :key="plan.id">
         <PlanListItem class="plan-item" :plan="plan"/>
