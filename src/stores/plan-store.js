@@ -35,11 +35,22 @@ export const usePlanStore = defineStore("planStore", () => {
     }
   };
 
+  const createReview = async (plan) => {
+    try {
+      const response = await axios.post('/plan/review', plan)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     getRankList,
     getUserRankList,
 
     planListInSido,
     getPlanListInSido,
+
+    createReview
   };
 });

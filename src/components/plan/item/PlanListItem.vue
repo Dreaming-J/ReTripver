@@ -1,11 +1,31 @@
 <script setup>
 import {Button} from 'primevue';
-defineProps({
+import { ref, onMounted } from 'vue';
+import { usePlanStore } from '@/stores/plan-store';
+
+const planStore = usePlanStore()
+const { createReview } = planStore
+
+const props = defineProps({
   plan: {
     type: Object,
     required: true
   }
 });
+
+const review = ref("AI 리뷰 생성 중")
+
+onMounted(async () => {
+  let count = 0
+
+  const interval = setInterval(() => {
+    review.value = "AI 리뷰 생성 중" + ".".repeat(1 + count++ % 3)
+  }, 100);
+
+  review.value = await createReview(props.plan)
+
+ clearInterval(interval);
+})
 </script>
 
 <template>
@@ -23,11 +43,7 @@ defineProps({
       {{ plan.title }}
     </div>
     <div class="item-desc text-sm">
-      설명설명 리뷰리뷰 ai 리뷰?
-      설명설명 리뷰리뷰 ai 리뷰?
-      설명설명 리뷰리뷰 ai 리뷰?
-      설명설명 리뷰리뷰 ai 리뷰?
-      설명설명 리뷰리뷰 ai 리뷰?
+      {{ review }}
     </div>
     <div class="item-footer flex justify-content-end">
       <Button severity="danger" variant="text" rounded aria-label="Cancel">
