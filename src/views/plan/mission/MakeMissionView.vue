@@ -2,19 +2,17 @@
 import { ref, onMounted, computed } from "vue";
 import PlanTimeLine from "@/components/plan/mission/PlanTimeLine.vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useMakePlanStore } from "@/stores/makePlan-store";
+
+const makePlanStore = useMakePlanStore()
+const { newPlan } = storeToRefs(makePlanStore)
 
 const showTimeline = ref(false);
 const startAnimation = ref(false);
 const router = useRouter();
 
-const images = ref([
-  { id: 1, src: "/src/assets/img/sido/1.jpg" },
-  { id: 2, src: "/src/assets/img/sido/1.jpg" },
-  { id: 3, src: "/src/assets/img/sido/1.jpg" },
-  { id: 4, src: "/src/assets/img/sido/1.jpg" },
-  { id: 5, src: "/src/assets/img/sido/1.jpg" },
-  { id: 6, src: "/src/assets/img/sido/1.jpg" },
-]);
+const images = ref([]);
 
 // 각 이미지의 딜레이를 동적으로 계산
 const getDelay = (index) => {
@@ -33,6 +31,12 @@ onMounted(() => {
       router.push({ name: "mission-upload" });
     }, totalAnimationTime.value * 1000);
   }, 500);
+
+  for (let idx = 0; idx < newPlan.value.courses.length; idx++) {
+    images.value.push({
+      id: idx, src: newPlan.value.courses[idx].missionImg
+    })
+  }
 });
 </script>
 

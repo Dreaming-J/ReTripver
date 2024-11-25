@@ -1,16 +1,15 @@
 <script setup>
-import PlanTimeLine from "@/components/plan/mission/PlanTimeLine.vue";
-import { ref, onMounted } from "vue";
+  import PlanTimeLine from "@/components/plan/mission/PlanTimeLine.vue";
+  import { onMounted } from "vue";
 
-onMounted(() => {
-  // 요소가 존재하는지 확인 후 스크롤 이동
+  onMounted(() => {
+    // 요소가 존재하는지 확인 후 스크롤 이동
+    const element = document.querySelector(".mission-container");
 
-  const element = document.querySelector(".mission-container");
-
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
-  }
-});
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  });
 </script>
 
 <template>

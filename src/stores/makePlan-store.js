@@ -113,10 +113,18 @@ export const useMakePlanStore = defineStore("plans", () => {
     }
   };
 
-  const makeNewPlan = async (newPlan) => {
-    console.log(newPlan);
+  const newPlan = ref({
+    id: "",
+    userId: "",
+    title: "",
+    sidoCode: "",
+    isPublic: true,
+    courses : []
+  })
+  const makeNewPlan = async () => {
     try {
-      await axios.post(`/plan/make`, newPlan, { withCredentials: true });
+      const response = await axios.post(`/plan/make`, newPlan.value, { withCredentials: true });
+      newPlan.value.id = response.data
 
       router.replace({name: "make-mission"});
     } catch (error) {
@@ -138,6 +146,7 @@ export const useMakePlanStore = defineStore("plans", () => {
     optimizeCourses,
     optimizeList,
 
+    newPlan,
     makeNewPlan
   };
 });
