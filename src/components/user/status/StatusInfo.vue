@@ -1,20 +1,24 @@
 <script setup>
 import SidePanel from "@/components/user/status/SidePanel.vue";
-import {computed} from 'vue'
+import { computed } from "vue";
 
 const props = defineProps({
   userStatus: {
     type: Object,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 const expPercantage = computed(() => {
-  const percentage = (props.userStatus.userInfo.exp / props.userStatus.userInfo.tierInfo.nextTierExp * 100).toFixed(1)
+  const percentage = (
+    (props.userStatus.userInfo.exp /
+      props.userStatus.userInfo.tierInfo.nextTierExp) *
+    100
+  ).toFixed(1);
   return {
-    '--target-width': `${percentage}%`
-  }
-})
+    "--target-width": `${percentage}%`,
+  };
+});
 </script>
 
 <template>
@@ -26,7 +30,9 @@ const expPercantage = computed(() => {
         </div>
 
         <div class="profile-info">
-          <div class="ahievement-title">{{ userStatus.userInfo.achievementTitle }}</div>
+          <div class="ahievement-title">
+            {{ userStatus.userInfo.achievementTitle }}
+          </div>
           <div class="profile-id">
             {{ userStatus.userInfo.id }}
             <span class="edit-icon">
@@ -45,7 +51,8 @@ const expPercantage = computed(() => {
           팔로워 <span class="pl-2">{{ userStatus.follow.followerCount }}</span>
         </div>
         <div class="follow-num text-center col-6">
-          팔로우 <span class="pl-2">{{ userStatus.follow.followingCount }}</span>
+          팔로우
+          <span class="pl-2">{{ userStatus.follow.followingCount }}</span>
         </div>
       </div>
 
@@ -62,20 +69,30 @@ const expPercantage = computed(() => {
           <img :src="userStatus.userInfo.tierInfo.tierImg" />
         </div>
         <div class="exp-info">
-          <div
-            class="exp-text text-sm"
-          >
-            EXP. {{userStatus.userInfo.exp}}/{{userStatus.userInfo.tierInfo.nextTierExp}}[{{ (userStatus.userInfo.exp / userStatus.userInfo.tierInfo.nextTierExp * 100).toFixed(1) }}%]
+          <div class="exp-text text-sm">
+            EXP. {{ userStatus.userInfo.exp }}/{{
+              userStatus.userInfo.tierInfo.nextTierExp
+            }}[{{
+              (
+                (userStatus.userInfo.exp /
+                  userStatus.userInfo.tierInfo.nextTierExp) *
+                100
+              ).toFixed(1)
+            }}%]
           </div>
           <div class="exp-bar">
             <div class="exp-background"></div>
-            <div class="exp-fill":style="expPercantage"></div>
+            <div class="exp-fill" :style="expPercantage"></div>
           </div>
         </div>
       </div>
 
       <div class="quest-container">
-        <div class="quest-text">Quest Succes {{ userStatus.questRate.successQuestCount }}/{{ userStatus.questRate.totalQuestCount }}</div>
+        <div class="quest-text">
+          Quest Succes {{ userStatus.questRate.successQuestCount }}/{{
+            userStatus.questRate.totalQuestCount
+          }}
+        </div>
         <div class="quest-rate">
           <SidePanel
             :value="userStatus.questRate.successQuestRate"
