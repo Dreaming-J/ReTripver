@@ -3,53 +3,63 @@ import StatusInfo from "@/components/user/status/StatusInfo.vue";
 import StatusMap from "@/components/user/status/StatusMap.vue";
 import StatusPlan from "@/components/user/status/StatusPlan.vue";
 
-import { ref, onMounted } from 'vue'
-import { useUserStore } from "@/stores/user-store"
+import { ref, onMounted } from "vue";
+import { useUserStore } from "@/stores/user-store";
 import { useAttractionStore } from "@/stores/attraction-store";
+import { useRoute } from "vue-router";
 
-const userStore = useUserStore()
-const { getUserStatus } = userStore
+const route = useRoute();
+const userStore = useUserStore();
+const { getUserStatus, getUserStatusByUserId } = userStore;
 
-const attractiontore = useAttractionStore()
-const { getMyPlanList, setMyPlan, unSetMyPlan } = attractiontore
+const attractiontore = useAttractionStore();
+const { getMyPlanList, setMyPlan, unSetMyPlan } = attractiontore;
 
 const userStatus = ref({
   userInfo: {
-     id: '',
-     profileImg: '',
-     profileDesc: '',
-     exp: 0,
-     achievementTitle: '',
-     tierInfo: {
-      tierName: '',
-      tierImg: '',
+    id: "",
+    profileImg: "",
+    profileDesc: "",
+    exp: 0,
+    achievementTitle: "",
+    tierInfo: {
+      tierName: "",
+      tierImg: "",
       nextTierExp: 0,
-     }
+    },
   },
   follow: {
     followerCount: 0,
     followingCount: 0,
   },
   questRate: {
-	  successQuestRate: 0,
-	  successQuestCount: 0,
-	  totalQuestCount: 0,
-  }
-})
+    successQuestRate: 0,
+    successQuestCount: 0,
+    totalQuestCount: 0,
+  },
+});
 onMounted(async () => {
-  userStatus.value = await getUserStatus()
-  await getMyPlanList()
-})
+  const userId = route.params.userId;
+
+  if (userId) {
+    userStatus.value = await getUserStatusByUserId(userId);
+  } else {
+    userStatus.value = await getUserStatus();
+  }
+  console.log(userId, userStatus.value);
+
+  await getMyPlanList();
+});
 
 const isPlansVisible = ref(false);
 const selectSido = (sidoCode) => {
   isPlansVisible.value = true;
-  setMyPlan(sidoCode)
+  setMyPlan(sidoCode);
 };
 
 const closePlansPanel = () => {
   isPlansVisible.value = false;
-  unSetMyPlan()
+  unSetMyPlan();
 };
 </script>
 
@@ -66,9 +76,7 @@ const closePlansPanel = () => {
         class="plan-panel shadow-3"
         :class="{ 'plan-panel-hide': !isPlansVisible }"
       >
-        <StatusPlan
-          @close-plans-panel="closePlansPanel"
-        />
+        <StatusPlan @close-plans-panel="closePlansPanel" />
       </div>
     </div>
   </div>
