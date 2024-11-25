@@ -8,26 +8,29 @@ import { useAttractionStore } from "@/stores/attraction-store";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 import { ref, onMounted, watch } from "vue";
 
-const attractionStore = useAttractionStore()
-const { getSidoList } = attractionStore
+const attractionStore = useAttractionStore();
+const { getSidoList } = attractionStore;
 
-const makePlanStore = useMakePlanStore()
-const { searchOption } = storeToRefs(makePlanStore)
+const makePlanStore = useMakePlanStore();
+const { searchOption } = storeToRefs(makePlanStore);
 
-const selectCode = ref({})
-const sidoList = ref([])
+const selectCode = ref({});
+const sidoList = ref([]);
 
 onMounted(async () => {
-  sidoList.value = await getSidoList()
-})
+  sidoList.value = await getSidoList();
+});
 
 watch(
-  selectCode, (newSelectCode) => {
-    searchOption.value.sidoCode = newSelectCode.sidoCode
-    searchOption.value.gugunCode = newSelectCode.gugunCode
+  selectCode,
+  (newSelectCode) => {
+    searchOption.value.sidoCode = newSelectCode.sidoCode;
+    searchOption.value.gugunCode = newSelectCode.gugunCode;
+
+    console.log(searchOption.value.sidoCode, searchOption.value.gugunCode);
   },
-  {immediate: true}
-)
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -43,8 +46,13 @@ watch(
     >
       <template #option="slotProps">
         <div class="flex items-center">
-          <i v-if="slotProps.option.gugunName" class="pi pi-map-marker mr-2"></i>
-          <span>{{ slotProps.option.gugunName || slotProps.option.sidoName }}</span>
+          <i
+            v-if="slotProps.option.gugunName"
+            class="pi pi-map-marker mr-2"
+          ></i>
+          <span>{{
+            slotProps.option.gugunName || slotProps.option.sidoName
+          }}</span>
         </div>
       </template>
       <template #dropdownicon>
