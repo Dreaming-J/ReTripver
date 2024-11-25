@@ -40,6 +40,13 @@ public class PlanController {
 		return ResponseEntity.ok(planList);
 	}
 	
+	@GetMapping("/list/{userId}/{sidoCode}")
+	public ResponseEntity<?> planListInSido(@PathVariable("userId") String userId, @PathVariable int sidoCode) {
+		List<PlanResponse> planList = planService.myPlanListInSido(userId, sidoCode);
+		
+		return ResponseEntity.ok(planList);
+	}
+	
 	@GetMapping("/mylist")
 	public ResponseEntity<?> myList(@RequestHeader(value = "Authorization") String authorization) {
 		String userId = jwtUtil.extractUserId(authorization, false);
