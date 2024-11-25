@@ -3,14 +3,39 @@ import SelectedList from "@/components/plan/make/select/SelectedList.vue";
 import SearchList from "@/components/plan/make/search/SearchList.vue";
 import MapContent from "@/components/plan/make/map/MapContent.vue";
 
-import { Button, Dialog, InputText, Select } from "primevue";
-
+import { Button, Dialog, InputText, Select, Message } from "primevue";
+import { useMakePlanStore } from "@/stores/makePlan-store";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const store = useMakePlanStore();
+const { makeNewPlan } = store;
+
+const newPlan = ref({
+  id: "",
+  userId: "",
+  title: "",
+  sidoCode: "",
+  isPublic: true,
+  courses : []
+})
+
+
+
+
 
 const writePlanInfo = ref(true);
+const writePlanMessage = ref("");
+const wrietePlanTitleClose = () => {
+  if (!newPlan.value.title || newPlan.value.title === "") {
+    writePlanMessage.value = "여행 제목을 입력해주세요.";
+
+    writePlanInfo.value = true;
+  } else {
+    writePlanInfo.value = false;
+  }
+}
 
 const isSearchVisible = ref(true);
 const routeType = ref(false);
@@ -30,8 +55,18 @@ const makePlan = (selectList) => {
   }
 };
 
-const goQuestPage = () => {
+const goQuestPage = async () => {
+  const courses = store.selectList.map(item => ({
+    attractionNo: item.no,
+  courseOrder: item.courseOrder,
+  missionImg: item.firstImage1
+  }));
 
+  newPlan.value.courses = courses;
+
+  console.log(newPlan.value)
+
+  await makeNewPlan(newPlan.value);
 
   // router.push({ name: "make-mission" });
 };
@@ -81,26 +116,31 @@ const goQuestPage = () => {
       modal
       header=" "
       :style="{ width: '25rem' }"
+      :closable="false"
     >
-      <div class="px-3" style="border: 1px solid black; height: 300px">
+      <div class="px-3" style=" height: 200px">
         <div class="input-group">
           <div class="input-label">여행 제목</div>
           <div>
-            <InputText v-model="value" class="w-full" type="text" />
+            <InputText v-model="newPlan.title" class="w-full" type="text" />
           </div>
+          <div class="text-valid">
+          <Message
+            v-if="writePlanMessage !== ''"
+            class="text-sm"
+            severity="error"
+            variant="simple"
+          >
+            {{ writePlanMessage }}
+          </Message>
         </div>
-        <div class="input-group">
-          <div class="input-label">지역 선택</div>
-          <div>
-            <Select v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
-          </div>
         </div>
-        <div class="input-group">
+        <div class="input-group pt-4">
           <Button
             class="w-full"
             type="button"
             label="여행 만들기"
-            @click="isNotSelected = false"
+            @click="wrietePlanTitleClose"
           ></Button>
         </div>
       </div>
@@ -231,5 +271,9 @@ const goQuestPage = () => {
 
 .input-label {
   padding-bottom: 10px;
+}
+
+.text-valid {
+  padding-top: 10px;
 }
 </style>

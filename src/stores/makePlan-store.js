@@ -1,3 +1,4 @@
+import router from "@/router";
 import { defineStore } from "pinia";
 import { ref, inject } from "vue";
 
@@ -112,15 +113,17 @@ export const useMakePlanStore = defineStore("plans", () => {
     }
   };
 
-  // const makePlan = async () => {
-  //   await axios.post("/plan/make")
-  //         .then((response) => {
-  //           console.log("Success Make Plan");
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         })
-  // }
+  const makeNewPlan = async (newPlan) => {
+    console.log(newPlan);
+    try {
+      await axios.post(`/plan/make`, newPlan, { withCredentials: true });
+
+      router.replace({name: "make-mission"});
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  };
 
   return {
     searchOption,
@@ -134,5 +137,7 @@ export const useMakePlanStore = defineStore("plans", () => {
 
     optimizeCourses,
     optimizeList,
+
+    makeNewPlan
   };
 });
