@@ -31,6 +31,7 @@ const expPercantage = computed(() => {
 
         <div class="profile-info">
           <div class="ahievement-title">
+            <img :src="userStatus.userInfo.achievementImg" />
             {{ userStatus.userInfo.achievementTitle }}
           </div>
           <div class="profile-id">

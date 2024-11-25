@@ -58,6 +58,7 @@ const cardClickEvent = (userId) => {
           </div>
           <div class="tier-info">
             <div class="tier-item">
+              <img :src="rank.achievementImg" />
               {{ rank.achievementTitle }}
             </div>
             <div class="tier-item">
