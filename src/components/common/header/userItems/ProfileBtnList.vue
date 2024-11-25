@@ -26,13 +26,19 @@ const items = ref([
         },
       },
       {
+        label: "My Status",
+        command: () => {
+          router.push({ name: "status" });
+        },
+      },
+      {
         separator: true,
       },
       {
         label: "Logout",
         command: async () => {
           await userLogout();
-          router.push({ name: "main"});
+          router.push({ name: "main" });
         },
       },
     ],
@@ -51,7 +57,7 @@ const toggle = (event) => {
         <Button label="Start New Trip" severity="warn" variant="outlined" />
       </RouterLink>
     </div>
-    <div class="profile-item">
+    <!-- <div class="profile-item">
       <Button
         icon="pi pi-bell"
         @click="visibleNotice = true"
@@ -63,7 +69,7 @@ const toggle = (event) => {
       <Drawer v-model:visible="visibleNotice" header="Notice" position="right">
         <NoticeList />
       </Drawer>
-    </div>
+    </div> -->
     <div class="profile-item">
       <img :src="userInfo.profileImg" class="profile-img" />
     </div>

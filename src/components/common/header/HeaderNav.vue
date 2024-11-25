@@ -1,5 +1,5 @@
 <script setup>
-  import Logo from "@/assets/img/logo.png";
+import Logo from "@/assets/img/logo.png";
 </script>
 
 <template>
@@ -19,10 +19,6 @@
         </RouterLink>
 
         <RouterLink :to="{ name: 'user' }" class="nav-item"> Rank </RouterLink>
-
-        <RouterLink :to="{ name: 'status' }" class="nav-item">
-          My Status
-        </RouterLink>
       </div>
     </nav>
   </div>

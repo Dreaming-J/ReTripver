@@ -1,5 +1,5 @@
 <script setup>
-import { InputText, Button, Message } from "primevue";
+import { InputText, Button, Message, Password } from "primevue";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -34,7 +34,7 @@ const handleSubmit = async () => {
 
   if (!isLogin.value) {
     loginForm.value.password = "";
-    alert('로그인에 실패했습니다.')
+    alert("로그인에 실패했습니다.");
   }
 };
 </script>
@@ -52,7 +52,14 @@ const handleSubmit = async () => {
       <div class="input-group">
         <div class="text-xs input-label">Password</div>
         <div>
-          <InputText v-model="loginForm.password" class="w-full" type="text" />
+          <div>
+            <Password
+              class="w-full"
+              v-model="loginForm.password"
+              :feedback="false"
+              toggleMask
+            />
+          </div>
         </div>
       </div>
 
@@ -116,6 +123,10 @@ const handleSubmit = async () => {
 
 :deep(.p-message .p-message-text) {
   font-size: 0.75rem;
+}
+
+:deep(.p-password .p-inputtext) {
+  width: 100%;
 }
 
 .signup-group {
