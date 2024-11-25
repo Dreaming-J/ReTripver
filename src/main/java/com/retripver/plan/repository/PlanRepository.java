@@ -26,7 +26,7 @@ public interface PlanRepository {
 
 	int canclePlanLike(Map<String, Object> params);
 
-	void makePlan(PlanRequest planRequest);
+	int makePlan(PlanRequest planRequest);
 
 	List<PlanResponse> sidoPlanList(int sidoCode);
 

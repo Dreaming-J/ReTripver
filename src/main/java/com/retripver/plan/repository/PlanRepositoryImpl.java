@@ -66,9 +66,11 @@ public class PlanRepositoryImpl implements PlanRepository {
 	}
 
 	@Override
-	public void makePlan(PlanRequest planRequest) {
+	public int makePlan(PlanRequest planRequest) {
 		planMapper.insertPlan(planRequest);
 		planMapper.insertCourses(planRequest.getId(), planRequest.getCourses());
+		
+		return planRequest.getId();
 	}
 
 	@Override

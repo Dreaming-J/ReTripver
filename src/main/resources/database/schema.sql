@@ -146,15 +146,6 @@ CREATE TABLE `plans` (
     FOREIGN KEY (`sido_code`) REFERENCES `sidos`(`sido_code`)
 );
 
-CREATE TABLE `current_plans` (
-    `user_id`	VARCHAR(16) NOT NULL,
-    `plan_id`	INT NOT NULL,
-    
-    PRIMARY KEY (`user_id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-    FOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`)
-);
-
 CREATE TABLE `courses` (
     `id`			INT NOT NULL AUTO_INCREMENT,
     `plan_id`		INT NOT NULL,
@@ -168,6 +159,15 @@ CREATE TABLE `courses` (
     PRIMARY KEY (`id`),
     FOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`),
     FOREIGN KEY (`attraction_no`) REFERENCES `attractions`(`no`)
+);
+
+CREATE TABLE `current_plans` (
+    `user_id`	VARCHAR(16) NOT NULL,
+    `plan_id`	INT NOT NULL,
+    
+    PRIMARY KEY (`user_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+    FOREIGN KEY (`plan_id`) REFERENCES `plans`(`id`)
 );
 
 CREATE TABLE `plan_like` (

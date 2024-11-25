@@ -5,11 +5,14 @@ import static com.retripver.global.constant.Constant.PAGE_SIZE;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.retripver.attraction.repository.AttractionRepository;
 import com.retripver.global.util.OptimizeUtil;
 import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
@@ -24,11 +27,13 @@ import com.retripver.plan.repository.PlanRepository;
 public class PlanServiceImpl implements PlanService {
 
 	private final PlanRepository planRepository;
+	private final AttractionRepository attractionRepository;
 	private final OptimizeUtil optimizeUtil;
 	
 	@Autowired
-	public PlanServiceImpl(PlanRepository planRepository, OptimizeUtil optimizeUtil) {
+	public PlanServiceImpl(PlanRepository planRepository, AttractionRepository attractionRepository, OptimizeUtil optimizeUtil) {
 		this.planRepository = planRepository;
+		this.attractionRepository = attractionRepository;
 		this.optimizeUtil = optimizeUtil;
 	}
 
@@ -111,9 +116,17 @@ public class PlanServiceImpl implements PlanService {
 
 	@Override
 	@Transactional
-	public void makePlan(PlanRequest planRequest) {
-		planRequest.setSidoCode(1);
-		planRepository.makePlan(planRequest);
+	public int makePlan(PlanRequest planRequest) {
+		int sidoCode = planRequest.getCourses().stream()
+				.map(course -> attractionRepository.getAttraction(course.getAttractionNo()).getAreaCode())
+				.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+				.entrySet().stream()
+			    .max(Map.Entry.comparingByValue())
+			    .map(Map.Entry::getKey)
+			    .orElse(0);
+		
+		planRequest.setSidoCode(sidoCode);
+		return planRepository.makePlan(planRequest);
 	}
 
 	@Override
