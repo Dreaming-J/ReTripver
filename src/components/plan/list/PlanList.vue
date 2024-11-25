@@ -3,6 +3,9 @@
   import { ref, onMounted, watch } from 'vue'
   import { storeToRefs } from "pinia";
   import { usePlanStore } from "@/stores/plan-store";
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
 
   const planStore = usePlanStore();
   const { planListInSido } = storeToRefs(planStore)
@@ -53,13 +56,25 @@
       return isTarget && hasKeyword
     })
   })
+
+const planListItemClick = (plan) => {
+  // console.log(plan);
+
+
+  router.push({name: "plan-info", params: {
+      planId : plan.id
+    }
+  });
+
+
+}
 </script>
 
 <template>
   <div>
     <div class="flex flex-wrap">
       <div class="col-4 p-3" v-for="plan in planList" :key="plan.id">
-        <PlanListItem class="plan-item" :plan="plan"/>
+        <PlanListItem class="plan-item" :plan="plan" @click="planListItemClick(plan)"/>
       </div>
     </div>
   </div>

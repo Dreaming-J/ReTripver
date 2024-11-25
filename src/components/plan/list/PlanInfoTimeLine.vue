@@ -1,12 +1,13 @@
 <script setup>
-import MissionUpload from "@/components/plan/mission/MissionUpload.vue";
+import CourseImg from "@/components/plan/list/CourseImg.vue";
 import { Timeline, Card } from "primevue";
-import { ref, onMounted } from "vue";
-import { useMakePlanStore } from "@/stores/makePlan-store";
-import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
-const makePlanStore = useMakePlanStore()
-const { newPlan } = storeToRefs(makePlanStore)
+const props = defineProps({
+    courses: {
+        type: Object
+    }
+})
 
 const plan = ref([
   {
@@ -29,16 +30,16 @@ const plan = ref([
 
 <template>
   <div class="container">
-    <Timeline :value="plan">
+    <Timeline :value="courses">
       <template #opposite="slotProps">
         <small class="text-surface-500 dark:text-surface-400">{{
-          slotProps.item.name
+          slotProps.item.attraction.title
         }}</small>
       </template>
       <template #content="slotProps">
         <Card class="mt-4 mb-8 card-container">
           <template #content>
-            <MissionUpload :course="slotProps.item" />
+            <CourseImg :course="slotProps.item" />
           </template>
         </Card>
       </template>

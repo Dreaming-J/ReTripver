@@ -90,7 +90,7 @@ export const onSearchOnlyTime = async (start, end, routeType) => {
     });
 };
 
-export const onSearchRoute = (map, start, end, routeType) => {
+export const onSearchRoute = async (map, start, end, routeType) => {
   // console.log("경로 그리기:", start.title, "->", end.title);
 
   const headers = {
@@ -117,7 +117,7 @@ export const onSearchRoute = (map, start, end, routeType) => {
       "https://apis.openapi.sk.com/tmap/routes/pedestrian?version=1&format=json";
   }
 
-  fetch(url.value, {
+  return await fetch(url.value, {
     method: "POST",
     headers: headers,
     body: JSON.stringify(requestData),
@@ -131,9 +131,10 @@ export const onSearchRoute = (map, start, end, routeType) => {
       const resultData = data.features;
 
       // 경로 정보 저장
+      let tTime;
       if (resultData[0] && resultData[0].properties) {
         const tDistance = resultData[0].properties.totalDistance / 1000;
-        const tTime = resultData[0].properties.totalTime / 60;
+        tTime = resultData[0].properties.totalTime / 60;
 
         // console.log(
         //   `[경로 정보] ${start.title} -> ${end.title} : ${tDistance}km, ${tTime}분`
@@ -171,6 +172,8 @@ export const onSearchRoute = (map, start, end, routeType) => {
         if (!resultdrawArr.value) resultdrawArr.value = [];
         resultdrawArr.value.push(polyline);
       }
+      // console.log("!!!!!", tTime);
+      return tTime;
     })
     .catch((error) => {
       console.error("경로 검색 중 오류 발생:", error);

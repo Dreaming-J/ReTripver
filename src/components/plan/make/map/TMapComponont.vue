@@ -105,7 +105,17 @@ const initializeRoute = async (locations) => {
     // console.log(idx, start);
     // console.log(idx + 1, end);
 
-    onSearchRoute(map.value, start, end, props.routeType);
+   const time = await onSearchRoute(map.value, start, end, props.routeType);
+  
+    console.log(time);
+
+    store.selectList = store.selectList.map((item, index) => {
+      if (index == idx) {
+        return { ...item, time: time}
+      }
+
+      return item;
+    });
   }
 
   console.log("시간 구하기!!")

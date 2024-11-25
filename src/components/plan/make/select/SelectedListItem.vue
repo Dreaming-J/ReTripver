@@ -17,7 +17,7 @@ const deleteLocation = (no) => {
 <template>
   <div class="container shadow-2">
     <div class="list-container col-11 p-0 h-full">
-      <ListItem :info="select" />
+      <ListItem :info="select" /> 
     </div>
     <div class="col-1 p-0">
       <Button

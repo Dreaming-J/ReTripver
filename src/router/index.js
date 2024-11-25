@@ -45,6 +45,11 @@ const router = createRouter({
           props: true,
         },
         {
+          path: "info/:planId",
+          name: "plan-info",
+          component: () => import("@/views/plan/PlanInfoView.vue"),
+        },
+        {
           path: "make",
           name: "make-plan",
           component: () => import("@/views/plan/MakePlanView.vue"),
