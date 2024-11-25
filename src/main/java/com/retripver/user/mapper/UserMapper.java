@@ -115,6 +115,15 @@ public interface UserMapper {
 			</script>
 			""")
 	String selectNameFromAchievementById(int achievementId, String achievementTable);
+	
+	@Select("""
+			<script>
+				SELECT img
+				FROM ${achievementTable}
+				WHERE id = #{achievementId}
+			</script>
+			""")
+	String selectImgFromAchievementById(int achievementId, String achievementTable);
 
 	@Select("""
 			SELECT s.sido_code, ifnull(v.count, 0) count

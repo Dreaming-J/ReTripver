@@ -60,6 +60,9 @@ public class UserRepositoryImpl implements UserRepository {
 		String achievementTitle = getAchievementTitle(statusInfo.getUserInfo());
 		statusInfo.getUserInfo().setAchievementTitle(achievementTitle);
 		
+		String achievementImg = getAchievementImg(statusInfo.getUserInfo());
+		statusInfo.getUserInfo().setAchievementImg(achievementImg);
+		
 		return statusInfo;
 	}
 
@@ -87,8 +90,10 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		for (UserInfoResponse user : userList) {
 			String achievementTitle = getAchievementTitle(user);
-			
 			user.setAchievementTitle(achievementTitle);
+			
+			String achievementImg = getAchievementImg(user);
+			user.setAchievementImg(achievementImg);
 		}
 		
 		return userList;
@@ -101,8 +106,10 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		for (UserInfoResponse user : userList) {
 			String achievementTitle = getAchievementTitle(user);
-			
 			user.setAchievementTitle(achievementTitle);
+			
+			String achievementImg = getAchievementImg(user);
+			user.setAchievementImg(achievementImg);
 		}
 		
 		return userList;
@@ -114,8 +121,10 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		for (UserInfoResponse user : userList) {
 			String achievementTitle = getAchievementTitle(user);
-			
 			user.setAchievementTitle(achievementTitle);
+			
+			String achievementImg = getAchievementImg(user);
+			user.setAchievementImg(achievementImg);
 		}
 		
 		return userList;
@@ -128,5 +137,14 @@ public class UserRepositoryImpl implements UserRepository {
 		if (achievementId == 0 || achievementTable == null) return null;
 		
 		return userMapper.selectNameFromAchievementById(achievementId, achievementTable);
+	}
+
+	private String getAchievementImg(UserInfoResponse user) {
+		int achievementId = user.getAchievementId();
+		String achievementTable = user.getAchievementTable();
+		
+		if (achievementId == 0 || achievementTable == null) return null;
+		
+		return userMapper.selectImgFromAchievementById(achievementId, achievementTable);
 	}
 }

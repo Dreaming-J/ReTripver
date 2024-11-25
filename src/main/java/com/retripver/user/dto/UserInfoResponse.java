@@ -9,6 +9,7 @@ public class UserInfoResponse {
 	private String achievementTable;
 	private int achievementId;
 	private String achievementTitle;
+	private String achievementImg;
 	private TierInfoResponse tierInfo;
 	
 	public String getId() {
@@ -52,6 +53,12 @@ public class UserInfoResponse {
 	}
 	public void setAchievementTitle(String achievementTitle) {
 		this.achievementTitle = achievementTitle;
+	}
+	public String getAchievementImg() {
+		return achievementImg;
+	}
+	public void setAchievementImg(String achievementImg) {
+		this.achievementImg = achievementImg;
 	}
 	public TierInfoResponse getTierInfo() {
 		return tierInfo;
