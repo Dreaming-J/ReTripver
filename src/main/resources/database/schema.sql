@@ -75,7 +75,7 @@ CREATE TABLE `tier` (
 );
 
 CREATE TABLE `users` (
-    `id`				VARCHAR(16) NOT NULL,
+    `id`				VARCHAR(100) NOT NULL,
     `password`			VARCHAR(128) NOT NULL,
     `salt`				VARCHAR(32) NOT NULL,
     `name`				VARCHAR(16) NOT NULL,
@@ -101,8 +101,8 @@ CREATE TABLE `black_list` (
 );
 
 CREATE TABLE `follow` (
-    `from_id`	VARCHAR(16) NOT NULL,
-    `to_id`		VARCHAR(16) NOT NULL,
+    `from_id`	VARCHAR(100) NOT NULL,
+    `to_id`		VARCHAR(100) NOT NULL,
     
     PRIMARY KEY (`from_id`, `to_id`),
     FOREIGN KEY (`from_id`) REFERENCES `users`(`id`),

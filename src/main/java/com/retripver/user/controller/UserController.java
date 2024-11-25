@@ -48,7 +48,7 @@ public class UserController {
 		String id = jwtUtil.extractUserId(authorization, false);
 
 		StatusUserInfoResponse statusInfo = userService.statusUserInfo(id);
-		System.out.println(statusInfo.getQuestRate());
+		System.out.println(statusInfo.getUserInfo().getAchievementImg());
 		
 		return ResponseEntity.ok(statusInfo);
 	}

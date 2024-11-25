@@ -11,16 +11,16 @@ VALUES	(1,'브론즈','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.c
         (4,'플레티넘','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-platinum.png',300),
         (5,'다이아','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-diamond.png',400);
 INSERT INTO `users`
-VALUES	('admin','74871D696745843B5119B3B72F115C44BA49068329E482F98C76D589615C32F1667ACFF996960DA433FD85B8BCA741C6B78F84A9D4E4E50404FFC82C37550DC0','67e07ac2430420e0ce57c136868c1626','관리자','admin@admin.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','사이트 관리자입니다.',999,NULL,NULL,'2024-11-01 05:13:20',5),
-		('guest1','DA63F86849923626240CA014974CC8EC4DAB2E10AAAF619ADEB99C19C31BFFF4568C440C7C299D49D8EACF6EDDB76551BF8AFDCBFF5663A44532414B2E83E250','67e07ac2430420e0ce57c136868c1626','이방문자','guest1@guest.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','방문자입니다.',150,NULL,NULL,'2024-11-01 05:13:20',2),
-        ('pro1','F77F231FECFC90464F2DF4421E76C5DB6CA92C114291C5C9D74D65D755F3F2AB2431687D8FC9DAD776B94DE20C89536BD7334AF0302B6AAFEF139D7FDC24D807','67e07ac2430420e0ce57c136868c1626','정전문가','pro1@pro.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','전문가 수준의 유저입니다.',540,NULL,NULL,'2024-11-01 05:13:20',5),
-        ('user','5FAF24FFACD18F7B42D122B6C217E8A8FD86F0F2B9B8831DFCE67ECF848CD5F27445873237F38D24CD1DDB3B7E593F3D4CA39DE5A0627FD37423022EF7B69809','67e07ac2430420e0ce57c136868c1626','박유저','user@user.com','https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png','유저입니다.',250,NULL,NULL,'2024-11-01 05:13:20',3),
-        ('kim_JJong','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','kim_JJong@kim_JJong.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/8d259f70bce34ad7b05bcadf686b183a.webp','여행을 좋아하는 27살 ㅁㅁ입니다.\n잘 부탁드립니다.\n강원도 좋아',157,'achievement_visit',1,'2024-11-01 05:13:20',4);
+VALUES	('scuba_lover','74871D696745843B5119B3B72F115C44BA49068329E482F98C76D589615C32F1667ACFF996960DA433FD85B8BCA741C6B78F84A9D4E4E50404FFC82C37550DC0','67e07ac2430420e0ce57c136868c1626','관리자','scuba_lover@scuba_lover.com','https://media-cdn.tripadvisor.com/media/photo-s/16/f9/42/7c/caption.jpg','다이빙 좋아~',999,'achievement_visit',28,'2024-11-01 05:13:20',5),
+		('luckybicky_ni_city','DA63F86849923626240CA014974CC8EC4DAB2E10AAAF619ADEB99C19C31BFFF4568C440C7C299D49D8EACF6EDDB76551BF8AFDCBFF5663A44532414B2E83E250','67e07ac2430420e0ce57c136868c1626','이방문자','luckybicky_ni_city@guest.com','https://health.chosun.com/site/data/img_dir/2024/08/02/2024080201756_0.jpg','럭키비키니시티잖아~',150,'achievement_visit',24,'2024-11-01 05:13:20',2),
+        ('yoon_pro','F77F231FECFC90464F2DF4421E76C5DB6CA92C114291C5C9D74D65D755F3F2AB2431687D8FC9DAD776B94DE20C89536BD7334AF0302B6AAFEF139D7FDC24D807','67e07ac2430420e0ce57c136868c1626','정전문가','yoon_pro@pro.com','https://watermark.lovepik.com/photo/20211210/large/lovepik-golfers-back-picture_501801971.jpg','골프를 사랑하는 40대.\n마음만은 아직 20대!',540,'achievement_visit',1,'2024-11-01 05:13:20',5),
+        ('no_jjaem_man','5FAF24FFACD18F7B42D122B6C217E8A8FD86F0F2B9B8831DFCE67ECF848CD5F27445873237F38D24CD1DDB3B7E593F3D4CA39DE5A0627FD37423022EF7B69809','67e07ac2430420e0ce57c136868c1626','박유저','no_jjaem_man@no_jjaem_man.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/%EB%85%B8%EC%9E%BC.png','노잼도시 대전을 사랑한 남자',250,'achievement_visit',12,'2024-11-01 05:13:20',3),
+        ('kim_JJong','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','kim_JJong@kim_JJong.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/8d259f70bce34ad7b05bcadf686b183a.webp','여행을 좋아하는 27살 ㅁㅁ입니다.\n잘 부탁드립니다.\n제주도 좋아',157,'achievement_visit',35,'2024-11-01 05:13:20',4);
 INSERT INTO `follow`
-VALUES	('kim_JJong','guest1'),
-		('guest1','kim_JJong'),
-        ('user','kim_JJong'),
-        ('kim_JJong','user');
+VALUES	('kim_JJong','luckybicky_ni_city'),
+		('luckybicky_ni_city','kim_JJong'),
+        ('no_jjaem_man','kim_JJong'),
+        ('kim_JJong','no_jjaem_man');
 INSERT INTO `visit_counts`
 VALUES	('kim_JJong',1,5),
 		('kim_JJong',36,1);
@@ -122,7 +122,7 @@ VALUES
 
 -- 충청북도(33) - 0개
 INSERT INTO plans (id, user_id, sido_code, title, is_clear, is_public)
-VALUES (0, 'user', 32, '속초 설악산', false, true);
+VALUES (0, 'no_jjaem_man', 32, '속초 설악산', false, true);
 
 -- 충청남도(34) - 5개 (4개 true)
 INSERT INTO plans (id, user_id, sido_code, title, is_clear, is_public)
@@ -234,29 +234,87 @@ INSERT INTO courses (id, plan_id, attraction_no, course_order, mission_img, user
 (0, 7, 5458, 2, 'http://tong.visitkorea.or.kr/cms/resource/50/3109550_image2_1.jpg', 'http://tong.visitkorea.or.kr/cms/resource/50/3109550_image2_1.jpg', 150, false);
         
 INSERT INTO `plan_like`
-VALUES	(6,'admin'),
-		(8,'admin'),
-		(1,'pro1'),
-		(6,'pro1'),
-		(1,'user'),
-		(2,'user'),
-		(3,'user'),
-		(6,'user');
+VALUES	(6,'scuba_lover'),
+		(8,'scuba_lover'),
+		(1,'yoon_pro'),
+		(6,'yoon_pro'),
+		(1,'no_jjaem_man'),
+		(2,'no_jjaem_man'),
+		(3,'no_jjaem_man'),
+		(6,'no_jjaem_man');
 
 -- -----------------------------------
 -- 업적 관련 TABLE
 -- -----------------------------------
 
-INSERT INTO `achievement_visit`
-VALUES	(1,'서울 1회','서울을 1회 이상 방문하여 얻을 수 있는 업적',1,1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
-		(2,'서울 3회','서울을 3회 이상 방문하여 얻을 수 있는 업적',1,3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
-		(3,'서울 5회','서울을 5회 이상 방문하여 얻을 수 있는 업적',1,5,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
-		(4,'경남 수호자','경상남도를 3회 이상 방문하여 얻을 수 있는 업적',36,3,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png');
+INSERT INTO achievement_visit (id, name, content, sido_code, visit_count, img) VALUES
+(0, '[서울] 초보 모험가', '서울을 1회 방문한 모험가에게 주어지는 칭호입니다.', 1, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-1-1.png'),
+(0, '[서울] 주니어 모험가', '서울을 3회 방문한 모험가에게 주어지는 칭호입니다.', 1, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-1-2.png'),
+(0, '[서울] 베테랑 모험가', '서울을 5회 방문한 모험가에게 주어지는 칭호입니다.', 1, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-1-3.png'),
+(0, '[서울] 마스터 모험가', '서울을 7회 방문한 모험가에게 주어지는 칭호입니다.', 1, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-1-4.png'),
+(0, '[서울] 정복자', '서울을 10회 방문한 모험가에게 주어지는 칭호입니다.', 1, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-1-5.png'),
+
+(0, '[인천] 초보 모험가', '인천을 1회 방문한 모험가에게 주어지는 칭호입니다.', 2, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-2-1.png'),
+(0, '[인천] 주니어 모험가', '인천을 3회 방문한 모험가에게 주어지는 칭호입니다.', 2, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-2-2.png'),
+(0, '[인천] 베테랑 모험가', '인천을 5회 방문한 모험가에게 주어지는 칭호입니다.', 2, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-3.png'),
+(0, '[인천] 마스터 모험가', '인천을 7회 방문한 모험가에게 주어지는 칭호입니다.', 2, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-4.png'),
+(0, '[인천] 정복자', '인천을 10회 방문한 모험가에게 주어지는 칭호입니다.', 2, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-5.png'),
+
+(0, '[대전] 초보 모험가', '대전을 1회 방문한 모험가에게 주어지는 칭호입니다.', 3, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-1.png'),
+(0, '[대전] 주니어 모험가', '대전을 3회 방문한 모험가에게 주어지는 칭호입니다.', 3, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-2.png'),
+(0, '[대전] 베테랑 모험가', '대전을 5회 방문한 모험가에게 주어지는 칭호입니다.', 3, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-3.png'),
+(0, '[대전] 마스터 모험가', '대전을 7회 방문한 모험가에게 주어지는 칭호입니다.', 3, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-4.png'),
+(0, '[대전] 정복자', '대전을 10회 방문한 모험가에게 주어지는 칭호입니다.', 3, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-5png'),
+
+(0, '[대구] 초보 모험가', '대구를 1회 방문한 모험가에게 주어지는 칭호입니다.', 4, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-4-1.png'),
+(0, '[대구] 주니어 모험가', '대구를 3회 방문한 모험가에게 주어지는 칭호입니다.', 4, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-4-2.png'),
+(0, '[대구] 베테랑 모험가', '대구를 5회 방문한 모험가에게 주어지는 칭호입니다.', 4, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-4-3.png'),
+(0, '[대구] 마스터 모험가', '대구를 7회 방문한 모험가에게 주어지는 칭호입니다.', 4, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-4-4.png'),
+(0, '[대구] 정복자', '대구를 10회 방문한 모험가에게 주어지는 칭호입니다.', 4, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-4-5.png'),
+
+(0, '[광주] 초보 모험가', '광주를 1회 방문한 모험가에게 주어지는 칭호입니다.', 5, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-5-1.png'),
+(0, '[광주] 주니어 모험가', '광주를 3회 방문한 모험가에게 주어지는 칭호입니다.', 5, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-5-2.png'),
+(0, '[광주] 베테랑 모험가', '광주를 5회 방문한 모험가에게 주어지는 칭호입니다.', 5, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-5-3.png'),
+(0, '[광주] 마스터 모험가', '광주를 7회 방문한 모험가에게 주어지는 칭호입니다.', 5, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-5-4.png'),
+(0, '[광주] 정복자', '광주를 10회 방문한 모험가에게 주어지는 칭호입니다.', 5, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-5-5.png'),
+
+(0, '[부산] 초보 모험가', '부산을 1회 방문한 모험가에게 주어지는 칭호입니다.', 6, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-6-1.png'),
+(0, '[부산] 주니어 모험가', '부산을 3회 방문한 모험가에게 주어지는 칭호입니다.', 6, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-6-2.png'),
+(0, '[부산] 베테랑 모험가', '부산을 5회 방문한 모험가에게 주어지는 칭호입니다.', 6, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-6-3.png'),
+(0, '[부산] 마스터 모험가', '부산을 7회 방문한 모험가에게 주어지는 칭호입니다.', 6, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-6-4.png'),
+(0, '[부산] 정복자', '부산을 10회 방문한 모험가에게 주어지는 칭호입니다.', 6, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-6-5.png'),
+
+(0, '[제주도] 초보 모험가', '제주도을 1회 방문한 모험가에게 주어지는 칭호입니다.', 7, 1, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-7-1.png'),
+(0, '[제주도] 주니어 모험가', '제주도을 3회 방문한 모험가에게 주어지는 칭호입니다.', 7, 3, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-7-2.png'),
+(0, '[제주도] 베테랑 모험가', '제주도을 5회 방문한 모험가에게 주어지는 칭호입니다.', 7, 5, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-7-3.png'),
+(0, '[제주도] 마스터 모험가', '제주도을 7회 방문한 모험가에게 주어지는 칭호입니다.', 7, 7, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-7-4.png'),
+(0, '[제주도] 정복자', '제주도을 10회 방문한 모험가에게 주어지는 칭호입니다.', 7, 10, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-7-5.png');
+
 INSERT INTO `acquire_visit`
 VALUES	('kim_JJong',1),
-		('kim_JJong',4);
+		('kim_JJong',2),
+		('kim_JJong',3),
+		('kim_JJong',4),
+		('kim_JJong',6),
+		('kim_JJong',7),
+		('kim_JJong',11),
+		('kim_JJong',16),
+		('kim_JJong',17),
+		('kim_JJong',21),
+		('kim_JJong',22),
+		('kim_JJong',26),
+		('kim_JJong',27),
+		('kim_JJong',28),
+		('kim_JJong',29),
+		('kim_JJong',31),
+		('kim_JJong',32),
+		('kim_JJong',33),
+		('kim_JJong',34),
+		('kim_JJong',35);
+        
 INSERT INTO `achievement_tier`
 VALUES	(1,'브론즈 업적','브론즈 달성 시 얻을 수 있는 업적',1,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png'),
 		(2,'실버 업적','실버 달성 시 얻을 수 있는 업적',2,'https://cdn4.iconfinder.com/data/icons/solid-part-6/128/image_icon-512.png');
+        
 INSERT INTO `acquire_tier`
 VALUES	('kim_JJong',1);
