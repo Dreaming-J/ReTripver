@@ -19,9 +19,9 @@ const route = useRoute();
 
       <!-- <TestDrag /> -->
     </main>
-    <footer v-if="route.meta.layout !== 'empty'">
+    <!-- <footer v-if="route.meta.layout !== 'empty'">
       <Footer />
-    </footer>
+    </footer> -->
   </div>
 </template>
 
