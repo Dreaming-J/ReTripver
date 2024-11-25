@@ -10,9 +10,6 @@ defineProps({
 
 <template>
   <div class="list-item shadow-2">
-    <div class="item-header">
-      {{ plan.title }}
-    </div>
     <div class="item-images" :class="`images-count-${plan.courses.length}`">
       <div
         v-for="(course, index) in plan.courses"
@@ -23,7 +20,7 @@ defineProps({
       ></div>
     </div>
     <div class="item-header mt-3">
-      {{ title }}
+      {{ plan.title }}
     </div>
     <div class="item-desc text-sm">
       설명설명 리뷰리뷰 ai 리뷰?
