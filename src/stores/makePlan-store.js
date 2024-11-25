@@ -112,6 +112,16 @@ export const useMakePlanStore = defineStore("plans", () => {
     }
   };
 
+  // const makePlan = async () => {
+  //   await axios.post("/plan/make")
+  //         .then((response) => {
+  //           console.log("Success Make Plan");
+  //         })
+  //         .catch((error) => {
+  //           console.log(error);
+  //         })
+  // }
+
   return {
     searchOption,
     searchList,

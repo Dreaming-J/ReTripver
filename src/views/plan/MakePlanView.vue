@@ -3,12 +3,14 @@ import SelectedList from "@/components/plan/make/select/SelectedList.vue";
 import SearchList from "@/components/plan/make/search/SearchList.vue";
 import MapContent from "@/components/plan/make/map/MapContent.vue";
 
-import { Button, Dialog } from "primevue";
+import { Button, Dialog, InputText, Select } from "primevue";
 
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const writePlanInfo = ref(true);
 
 const isSearchVisible = ref(true);
 const routeType = ref(false);
@@ -29,7 +31,9 @@ const makePlan = (selectList) => {
 };
 
 const goQuestPage = () => {
-  router.push({ name: "make-mission" });
+
+
+  // router.push({ name: "make-mission" });
 };
 </script>
 
@@ -71,6 +75,36 @@ const goQuestPage = () => {
         <MapContent :route-type="routeType" />
       </div>
     </div>
+
+    <Dialog
+      v-model:visible="writePlanInfo"
+      modal
+      header=" "
+      :style="{ width: '25rem' }"
+    >
+      <div class="px-3" style="border: 1px solid black; height: 300px">
+        <div class="input-group">
+          <div class="input-label">여행 제목</div>
+          <div>
+            <InputText v-model="value" class="w-full" type="text" />
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="input-label">지역 선택</div>
+          <div>
+            <Select v-model="selectedCity" :options="cities" optionLabel="name" placeholder="Select a City" class="w-full md:w-56" />
+          </div>
+        </div>
+        <div class="input-group">
+          <Button
+            class="w-full"
+            type="button"
+            label="여행 만들기"
+            @click="isNotSelected = false"
+          ></Button>
+        </div>
+      </div>
+    </Dialog>
 
     <Dialog
       v-model:visible="isNotSelected"
@@ -189,5 +223,13 @@ const goQuestPage = () => {
   position: relative;
   z-index: 1;
   min-width: 0;
+}
+
+.input-group {
+  padding: 10px 0;
+}
+
+.input-label {
+  padding-bottom: 10px;
 }
 </style>
