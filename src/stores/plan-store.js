@@ -44,6 +44,17 @@ export const usePlanStore = defineStore("planStore", () => {
     }
   }
 
+  // const planInfoById = ref();
+  const getPlanInfoById = async (planId) => {
+    try {
+      const response = await axios.get(`/plan/copy/${planId}`);
+
+      return response.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+ 
   return {
     getRankList,
     getUserRankList,
@@ -51,6 +62,8 @@ export const usePlanStore = defineStore("planStore", () => {
     planListInSido,
     getPlanListInSido,
 
-    createReview
+    createReview,
+
+    getPlanInfoById
   };
 });

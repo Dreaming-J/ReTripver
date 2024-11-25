@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import PlanTimeLine from "@/components/plan/mission/PlanTimeLine.vue";
+import PlanTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useMakePlanStore } from "@/stores/makePlan-store";

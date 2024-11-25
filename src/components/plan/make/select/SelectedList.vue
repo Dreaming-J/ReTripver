@@ -51,7 +51,6 @@ watch(
       <div class="header-item fa-lg">
         <font-awesome-icon :icon="['fas', 'location-dot']" />
       </div>
-
       <div class="header-item fa-base">여행 장소 선택</div>
 
       <div class="header-item">
