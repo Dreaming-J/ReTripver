@@ -7,7 +7,7 @@ import { ref, watch } from "vue";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 import { VueDraggableNext } from "vue-draggable-next";
 
-const emit = defineEmits(["changeRouteType"]);
+const emit = defineEmits(["changeRouteType", "makePlan"]);
 
 const visible = ref(false);
 const routeType = ref(false); // true -> 자동차, false -> 도보
@@ -33,6 +33,10 @@ const changeRouteTypeFunc = (routeType) => {
 
 const deleteSearchItem = (no) => {
   store.removeSeletedItem(no);
+};
+
+const makePlanClick = () => {
+  emit("makePlan", store.selectList);
 };
 
 watch(
@@ -95,7 +99,12 @@ watch(
       <ToggleBtn v-model="routeType" />
     </div>
     <div>
-      <Button label="여행 만들기" severity="warn" variant="outlined" />
+      <Button
+        label="여행 만들기"
+        severity="warn"
+        variant="outlined"
+        @click="makePlanClick"
+      />
     </div>
   </div>
 </template>

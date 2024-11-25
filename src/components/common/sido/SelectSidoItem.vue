@@ -2,7 +2,7 @@
 defineProps({
   sido: {
     type: Object,
-  }
+  },
 });
 </script>
 
@@ -13,7 +13,7 @@ defineProps({
     </div>
     <div class="hover-overlay">
       <div class="description">
-        <div class="sido-name-hover">{{ sido.name}}</div>
+        <div class="sido-name-hover">{{ sido.name }}</div>
         <p class="sido-description">{{ sido.desc }}</p>
       </div>
     </div>
@@ -110,6 +110,7 @@ defineProps({
     to bottom,
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.3) 30%,
+    rgba(0, 0, 0, 0.8) 80%,
     rgba(0, 0, 0, 0.9) 100%
   );
   display: flex;

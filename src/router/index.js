@@ -50,6 +50,11 @@ const router = createRouter({
           component: () => import("@/views/plan/MakePlanView.vue"),
         },
         {
+          path: "mission/make",
+          name: "make-mission",
+          component: () => import("@/views/plan/mission/MakeMissionView.vue"),
+        },
+        {
           path: "mission",
           name: "mission-upload",
           component: () => import("@/views/plan/MissionUploadView.vue"),
