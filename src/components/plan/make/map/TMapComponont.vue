@@ -9,16 +9,19 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
+import { storeToRefs } from "pinia";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 import {
   initTmap,
   addMarker,
   removeMarker,
+  onSearchOnlyTime,
   onSearchRoute,
   clearRoute,
 } from "@/util/tmapLoader";
 
 const store = useMakePlanStore();
+const { selectList, optimizeCourses } = storeToRefs(store)
 
 const props = defineProps({
   routeType: {
@@ -90,7 +93,7 @@ const clearAllMarkers = () => {
   markers.value = [];
 };
 
-const initializeRoute = (locations) => {
+const initializeRoute = async (locations) => {
   clearRoute();
 
   console.log("새로 그림!!");
@@ -98,11 +101,30 @@ const initializeRoute = (locations) => {
     const start = locations[idx];
     const end = locations[idx + 1];
 
-    console.log("경로 그리기 시작!");
-    console.log(idx, start);
-    console.log(idx + 1, end);
+    // console.log("경로 그리기 시작!");
+    // console.log(idx, start);
+    // console.log(idx + 1, end);
 
     onSearchRoute(map.value, start, end, props.routeType);
+  }
+
+  console.log("시간 구하기!!")
+  optimizeCourses.value.optimizeCourses = []
+  for (let from = 0; from < locations.length; from++) {
+    for (let to = 0; to < locations.length; to++) {
+      if (from === to)
+        continue
+
+      const start = locations[from]
+      const end = locations[to]
+
+      const time = await onSearchOnlyTime(start, end, props.routeType)
+      optimizeCourses.value.optimizeCourses.push({
+        from: from,
+        to: to,
+        time: time
+      })
+    }
   }
 };
 

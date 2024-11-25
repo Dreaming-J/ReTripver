@@ -11,7 +11,6 @@ defineProps({
 const emit = defineEmits(["selectSearchItem"]);
 
 const selectLocation = (location) => {
-  console.log(location);
   emit("selectSearchItem", location);
 };
 </script>
