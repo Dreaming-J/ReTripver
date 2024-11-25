@@ -39,9 +39,9 @@ const router = createRouter({
           component: () => import("@/views/plan/PlanSelectSidoView.vue"),
         },
         {
-          path:"list/:sidoCode",
-          name:"plan-list-sido",
-          component: ()=>import("@/views/plan/PlanListView.vue"),
+          path: "list/:sidoCode",
+          name: "plan-list-sido",
+          component: () => import("@/views/plan/PlanListView.vue"),
           props: true,
         },
         {
@@ -86,6 +86,11 @@ const router = createRouter({
           component: () => import("@/views/user/StatusView.vue"),
         },
         {
+          path: "status/:userId",
+          name: "status-user",
+          component: () => import("@/views/user/StatusView.vue"),
+        },
+        {
           path: "myPage",
           name: "myPage",
           component: () => import("@/views/user/MyPageView.vue"),
@@ -104,8 +109,8 @@ const router = createRouter({
               path: "password",
               name: "myPage-password",
               component: () => import("@/views/user/myPage/EditPassword.vue"),
-            }
-          ]
+            },
+          ],
         },
       ],
     },
