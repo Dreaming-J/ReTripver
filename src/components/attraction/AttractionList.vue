@@ -1,15 +1,18 @@
 <script setup>
 import AttractionListItem from "@/components/attraction/AttractionListItem.vue";
 
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 
 import Dialog from 'primevue/dialog';
 
 const store = useMakePlanStore();
+const { searchAttractions } = store
 
-
+onMounted(async () => {
+  await searchAttractions()
+})
 </script>
 
 <template>
