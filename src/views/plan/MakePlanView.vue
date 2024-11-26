@@ -96,17 +96,6 @@ onBeforeRouteLeave((to, from, next) => {
     });
   })
 
-
-  
-
-
-
-
-  // if (!isExcluded) {
-  //   store.resetSelectList();
-  // }
-
-  // next();
 });
 </script>
 

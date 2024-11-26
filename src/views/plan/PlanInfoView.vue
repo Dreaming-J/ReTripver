@@ -22,7 +22,7 @@ onMounted(async () => {
 
 <template>
     <div class="view-container">
-      <div class="map mt-5">지도로 경유지 보여주기</div>
+      <div class="map mt-5"> </div>
       <div class="mission-container mt-8">
         <PlanInfoTimeLine :courses="planInfo.courses"/>
       </div>
