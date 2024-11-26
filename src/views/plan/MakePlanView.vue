@@ -165,6 +165,7 @@ onBeforeRouteLeave((to, from, next) => {
         <div class="input-group pt-4">
           <Button
             class="w-full"
+            severity="warn"
             type="button"
             label="여행 만들기"
             @click="wrietePlanTitleClose"
@@ -186,6 +187,7 @@ onBeforeRouteLeave((to, from, next) => {
         <Button
           class="w-full"
           type="button"
+          severity="warn"
           label="확인"
           @click="isNotSelected = false"
         ></Button>
@@ -215,6 +217,7 @@ onBeforeRouteLeave((to, from, next) => {
         <Button
           class="col-6"
           type="button"
+          severity="warn"
           label="확인"
           @click="goQuestPage"
         ></Button>

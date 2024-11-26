@@ -19,12 +19,12 @@ const menu = ref();
 const items = ref([
   {
     items: [
-      {
-        label: "My Page",
-        command: () => {
-          router.push({ name: "myPage" });
-        },
-      },
+      // {
+      //   label: "My Page",
+      //   command: () => {
+      //     router.push({ name: "myPage" });
+      //   },
+      // },
       {
         label: "My Status",
         command: () => {
