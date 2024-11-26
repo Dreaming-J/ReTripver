@@ -1,6 +1,16 @@
 USE `you1000`;
 
 -- -----------------------------------
+-- 장소 관련 TABLE
+-- -----------------------------------
+
+INSERT INTO attractions VALUES
+(0, 1, "싸피 정수기", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/1%EB%B2%88.jpg", "", 6, 37.50128969810118, 127.03960183847694, '', '', '', null, null),
+(0, 1, "싸피 엘리베이터", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/2%EB%B2%88.jpg", "", 6, 37.50275484176343, 127.03646708754778, '', '', '', null, null),
+(0, 1, "싸피 벤치", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/3%EB%B2%88.jpg", "", 6, 37.498607450848645, 127.0445282103422, '', '', '', null, null),
+(0, 1, "상도 야경", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/4%EB%B2%88.jpg", "", 6, 37.49812597973529, 127.02800594454918, '', '', '', null, null);
+
+-- -----------------------------------
 -- 유저 관련 TABLE
 -- -----------------------------------
 
@@ -15,7 +25,7 @@ VALUES	('scuba_lover','74871D696745843B5119B3B72F115C44BA49068329E482F98C76D5896
 		('luckybicky_ni_city','DA63F86849923626240CA014974CC8EC4DAB2E10AAAF619ADEB99C19C31BFFF4568C440C7C299D49D8EACF6EDDB76551BF8AFDCBFF5663A44532414B2E83E250','67e07ac2430420e0ce57c136868c1626','이방문자','luckybicky_ni_city@guest.com','https://health.chosun.com/site/data/img_dir/2024/08/02/2024080201756_0.jpg','럭키비키니시티잖아~',150,'achievement_visit',24,'2024-11-01 05:13:20',2),
         ('yoon_pro','F77F231FECFC90464F2DF4421E76C5DB6CA92C114291C5C9D74D65D755F3F2AB2431687D8FC9DAD776B94DE20C89536BD7334AF0302B6AAFEF139D7FDC24D807','67e07ac2430420e0ce57c136868c1626','정전문가','yoon_pro@pro.com','https://watermark.lovepik.com/photo/20211210/large/lovepik-golfers-back-picture_501801971.jpg','골프를 사랑하는 40대.\n마음만은 아직 20대!',540,'achievement_visit',1,'2024-11-01 05:13:20',5),
         ('no_jjaem_man','5FAF24FFACD18F7B42D122B6C217E8A8FD86F0F2B9B8831DFCE67ECF848CD5F27445873237F38D24CD1DDB3B7E593F3D4CA39DE5A0627FD37423022EF7B69809','67e07ac2430420e0ce57c136868c1626','박유저','no_jjaem_man@no_jjaem_man.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/%EB%85%B8%EC%9E%BC.png','노잼도시 대전을 사랑한 남자',250,'achievement_visit',12,'2024-11-01 05:13:20',3),
-        ('kim_JJong','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','kim_JJong@kim_JJong.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/8d259f70bce34ad7b05bcadf686b183a.webp','여행을 좋아하는 27살 취준생입니다.\n잘 부탁드립니다.\n강릉 좋아',157,'achievement_visit',35,'2024-11-01 05:13:20',4);
+        ('kim_JJong','c081d2d4c53f1ae185779aa47f344413833c143e9dc00b8cb404e0dc386628474d317e94eb62ebe74b3cdb2e25fb30839a2fa88664710dd36b9d967fdbb1ac8b','67e07ac2430420e0ce57c136868c1626','김테스트','kim_JJong@kim_JJong.com','https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/8d259f70bce34ad7b05bcadf686b183a.webp','여행 좋아하는 27살 취준생입니다.\n잘 부탁드립니다.\n강릉 좋아',157,'achievement_visit',35,'2024-11-01 05:13:20',4);
 INSERT INTO `follow`
 VALUES	('kim_JJong','luckybicky_ni_city'),
 		('luckybicky_ni_city','kim_JJong'),
@@ -234,14 +244,14 @@ INSERT INTO courses (id, plan_id, attraction_no, course_order, mission_img, user
 (0, 7, 5458, 2, 'http://tong.visitkorea.or.kr/cms/resource/50/3109550_image2_1.jpg', 'http://tong.visitkorea.or.kr/cms/resource/50/3109550_image2_1.jpg', 150, false);
 
 -- 대전 코스
-INSERT INTO courses (id, plan_id, attraction_no, course_order, mission_img, user_img, exp, is_clear) VALUES 
-(0, 11, 14664, 0, 'http://tong.visitkorea.or.kr/cms/resource/00/2760700_image2_1.jpg', NULL, 100, false),
-(0, 11, 12781, 1, 'http://tong.visitkorea.or.kr/cms/resource/23/3338823_image2_1.jpg', NULL, 150, false),
-(0, 11, 14782, 2, 'http://tong.visitkorea.or.kr/cms/resource/94/3023994_image2_1.jpg', NULL, 100, false),
-(0, 11, 14709, 3, 'http://tong.visitkorea.or.kr/cms/resource/05/2794105_image2_1.jpg', NULL, 120, false);
+-- INSERT INTO courses (id, plan_id, attraction_no, course_order, mission_img, user_img, exp, is_clear) VALUES 
+-- (0, 11, 14664, 0, 'http://tong.visitkorea.or.kr/cms/resource/00/2760700_image2_1.jpg', NULL, 100, false),
+-- (0, 11, 12781, 1, 'http://tong.visitkorea.or.kr/cms/resource/23/3338823_image2_1.jpg', NULL, 150, false),
+-- (0, 11, 14782, 2, 'http://tong.visitkorea.or.kr/cms/resource/94/3023994_image2_1.jpg', NULL, 100, false),
+-- (0, 11, 14709, 3, 'http://tong.visitkorea.or.kr/cms/resource/05/2794105_image2_1.jpg', NULL, 120, false);
 
-INSERT INTO current_plans
-VALUES ('kim_JJong', 11);
+-- INSERT INTO current_plans
+-- VALUES ('kim_JJong', 11);
         
 INSERT INTO `plan_like`
 VALUES	(6,'scuba_lover'),
