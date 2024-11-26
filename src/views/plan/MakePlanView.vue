@@ -53,7 +53,7 @@ const goQuestPage = async () => {
 
   newPlan.value.courses = courses;
 
-  await makeNewPlan(newPlan.value);
+  await makeNewPlan();
 
   // router.push({ name: "make-mission" });
 };

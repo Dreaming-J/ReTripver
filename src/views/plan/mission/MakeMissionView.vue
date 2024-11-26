@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import PlanTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 
@@ -11,6 +11,7 @@ const { newPlan } = storeToRefs(makePlanStore)
 const showTimeline = ref(false);
 const startAnimation = ref(false);
 const router = useRouter();
+const route = useRoute();
 
 const images = ref([]);
 
@@ -28,7 +29,7 @@ onMounted(() => {
   setTimeout(() => {
     startAnimation.value = true;
     setTimeout(() => {
-      router.push({ name: "mission-upload" });
+      router.push({ name: "mission-upload", params: {newPlanId: newPlan.value.id} });
     }, totalAnimationTime.value * 1000);
   }, 500);
 

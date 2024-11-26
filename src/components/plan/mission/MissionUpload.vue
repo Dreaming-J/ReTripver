@@ -9,12 +9,12 @@ const props = defineProps({
 <template>
   <div class="container">
     <div class="img-container">
-      <img :src="course.questImg" width="100%" height="100%" />
+      <img :src="course.missionImg" width="100%" height="100%" />
     </div>
     <div class="img-container">
       <form>
         <label for="uploadImg">
-          <img :src="course.uploadImg" width="100%" height="100%" />
+          <img :src="course.userImg" width="100%" height="100%" />
         </label>
         <input type="file" id="uploadImg" style="display: none" />
       </form>

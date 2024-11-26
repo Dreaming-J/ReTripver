@@ -2,15 +2,22 @@
 import MissionUpload from "@/components/plan/mission/MissionUpload.vue";
 import { Timeline, Card } from "primevue";
 import { ref } from "vue";
+
+const props = defineProps({
+    courses: {
+        type: Object
+    }
+}) 
+
 </script>
 
 <template>
   <div class="container">
-    <Timeline :value="plan">
+    <Timeline :value="courses">
       <template #opposite="slotProps">
         <small class="text-surface-500 dark:text-surface-400">{{
-          slotProps.item.name
-        }}</small>
+          slotProps.item.attraction.title
+        }}</small> 
       </template>
       <template #content="slotProps">
         <Card class="mt-4 mb-8 card-container">
