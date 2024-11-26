@@ -4,6 +4,7 @@
   import { ref, onMounted } from "vue";
   import { useRoute } from "vue-router";
   import { usePlanStore } from "@/stores/plan-store";
+  import { Button } from "primevue";
 
   const route = useRoute();
   const store = usePlanStore();
@@ -22,6 +23,10 @@
       element.scrollIntoView({ behavior: "smooth" });
     }
   });
+
+  const tripCompleteEvent = () => {
+    console.log("여행 완료!");
+  }
 </script>
 
 <template>
@@ -31,6 +36,10 @@
     </div>
     <div class="mission-container mt-8">
       <PlanMissionTimeLine :courses="planInfo.courses"/>
+    </div>
+    <div class="btn-container flex justify-content-center">
+      <Button label="여행 완료" severity="warn" class="col-4"
+              @click="tripCompleteEvent"/>
     </div>
   </div>
 </template>
@@ -71,5 +80,9 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.btn-container {
+  margin-bottom: 100px;
 }
 </style>
