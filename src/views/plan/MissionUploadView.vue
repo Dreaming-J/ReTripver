@@ -39,13 +39,13 @@
     },
     {
       header: "티어 상승",
-      msg: "다이아 상승을 축하합니다.",
-      img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-diamond.png"
+      msg: "실버 상승을 축하합니다.",
+      img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-silver.png"
     },
     {
       header: "업적 획득",
-      msg: "[대전] 주니어 모험가 획득을 축하합니다.",
-      img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-2.png"
+      msg: "[서울] 초보 모험가 획득을 축하합니다.",
+      img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-1-1.png"
     },
   ])
   const count = ref(0)
