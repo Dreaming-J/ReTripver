@@ -235,11 +235,11 @@ INSERT INTO courses (id, plan_id, attraction_no, course_order, mission_img, user
 
 -- 대전 코스
 INSERT INTO courses (id, plan_id, attraction_no, course_order, mission_img, user_img, exp, is_clear) VALUES 
-(0, 11, 2760707, 0, 'http://tong.visitkorea.or.kr/cms/resource/00/2760700_image2_1.jpg', NULL, 100, false),
-(0, 11, 2833003, 1, 'http://tong.visitkorea.or.kr/cms/resource/23/3338823_image2_1.jpg', NULL, 150, false),
-(0, 11, 3023999, 2, 'http://tong.visitkorea.or.kr/cms/resource/94/3023994_image2_1.jpg', NULL, 100, false),
-(0, 11, 2782788, 3, 'http://tong.visitkorea.or.kr/cms/resource/05/2794105_image2_1.jpg', NULL, 120, false);
-select * from attractions where area_code = 3 and title like '%엑스포%';
+(0, 11, 14664, 0, 'http://tong.visitkorea.or.kr/cms/resource/00/2760700_image2_1.jpg', NULL, 100, false),
+(0, 11, 12781, 1, 'http://tong.visitkorea.or.kr/cms/resource/23/3338823_image2_1.jpg', NULL, 150, false),
+(0, 11, 14782, 2, 'http://tong.visitkorea.or.kr/cms/resource/94/3023994_image2_1.jpg', NULL, 100, false),
+(0, 11, 14709, 3, 'http://tong.visitkorea.or.kr/cms/resource/05/2794105_image2_1.jpg', NULL, 120, false);
+
 INSERT INTO current_plans
 VALUES ('kim_JJong', 11);
         
