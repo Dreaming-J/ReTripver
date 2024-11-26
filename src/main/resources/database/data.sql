@@ -8,7 +8,7 @@ INSERT INTO attractions VALUES
 (0, 1, "싸피 정수기", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/1%EB%B2%88.jpg", "", 6, 37.50128969810118, 127.03960183847694, '', '', '', null, null),
 (0, 1, "싸피 엘리베이터", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/2%EB%B2%88.jpg", "", 6, 37.50275484176343, 127.03646708754778, '', '', '', null, null),
 (0, 1, "싸피 벤치", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/3%EB%B2%88.jpg", "", 6, 37.498607450848645, 127.0445282103422, '', '', '', null, null),
-(0, 1, "상도 야경", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/4%EB%B2%88.jpg", "", 6, 37.49812597973529, 127.02800594454918, '', '', '', null, null);
+(0, 1, "싸피 야경", 12, 1, 1, "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/4%EB%B2%88.jpg", "", 6, 37.49812597973529, 127.02800594454918, '', '', '', null, null);
 
 -- -----------------------------------
 -- 유저 관련 TABLE
