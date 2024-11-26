@@ -90,7 +90,7 @@ input[type="checkbox"] {
   position: absolute;
   width: 27px;
   height: 27px;
-  background: #ddd44e;
+  background: #FED9B7;
   border-radius: 50%;
   left: 1.5px;
   top: 1.3px;
@@ -108,7 +108,7 @@ input[type="checkbox"] {
 
 .checkcross input:checked + .toggle-item .check {
   transform: rotate(360deg);
-  background: #4577d4;
+  background: #00AFB9;
   left: calc(100% - 28.5px);
 }
 

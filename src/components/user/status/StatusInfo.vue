@@ -19,6 +19,8 @@ const expPercantage = computed(() => {
     "--target-width": `${percentage}%`,
   };
 });
+
+console.log(props.userStatus);
 </script>
 
 <template>
@@ -65,36 +67,28 @@ const expPercantage = computed(() => {
         <button class="btn-follow">+ 팔로우</button>
       </div> -->
 
-      <div class="status-container">
+      <div class="status-container pt-4">
         <div class="tier-img flex justify-content-center w-full">
           <img :src="userStatus.userInfo.tierInfo.tierImg"/>
         </div>
-        <div class="exp-bar-container">
 
-        </div>
-         
-
-      </div>
-
-
-
-
-      <div class="exp-container">
-        <div class="tier-img">
-          <img :src="userStatus.userInfo.tierInfo.tierImg" />
-        </div>
- 
+        <div class="exp-container">
         <div class="exp-info">
-          <div class="exp-text text-sm">
-            EXP. {{ userStatus.userInfo.exp }}/{{
-              userStatus.userInfo.tierInfo.nextTierExp
-            }}[{{
-              (
-                (userStatus.userInfo.exp /
-                  userStatus.userInfo.tierInfo.nextTierExp) *
-                100
-              ).toFixed(1)
-            }}%]
+          <div class="flex justify-content-between p-2">
+            <div class="text-sm">
+              EXP
+            </div>
+            <div class="text-sm">
+              {{ userStatus.userInfo.exp }}/{{
+                userStatus.userInfo.tierInfo.nextTierExp
+              }}[{{
+                (
+                  (userStatus.userInfo.exp /
+                    userStatus.userInfo.tierInfo.nextTierExp) *
+                  100
+                ).toFixed(1)
+              }}%]
+            </div>
           </div>
           <div class="exp-bar">
             <div class="exp-background"></div>
@@ -103,18 +97,51 @@ const expPercantage = computed(() => {
         </div>
       </div>
 
+      <div class="exp-container">
+        <div class="exp-info">
+          <div class="flex justify-content-between p-2">
+            <div class="text-sm">
+              Quest Succes
+              <!-- {{ userStatus }} -->
+            </div>
+            <div class="text-sm">
+              {{ userStatus.questRate.successQuestCount }}/{{
+            userStatus.questRate.totalQuestCount
+          }}[{{
+                (
+                  userStatus.questRate.successQuestRate *
+                  100
+                ).toFixed(1)
+              }}%]
+            </div>
+          </div>
+          <div class="exp-bar">
+            <div class="exp-background"></div>
+            <div class="exp-fill" :style="expPercantage"></div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+
+
+  
+         
       
 
       
 
       
 
-      <div class="quest-container">
+      
+
+      <!-- <div class="quest-container">
         <div class="quest-text">
           Quest Succes {{ userStatus.questRate.successQuestCount }}/{{
             userStatus.questRate.totalQuestCount
           }}
-        </div>
+        </div> -->
         <!-- <div class="quest-rate">
           <SidePanel
             :value="userStatus.questRate.successQuestRate"
@@ -128,7 +155,7 @@ const expPercantage = computed(() => {
             </template>
           </SidePanel>
         </div> -->
-      </div>
+      <!-- </div> -->
 
       <!-- <div class="progress-section">
         <div class="exp-label">
@@ -304,6 +331,8 @@ const expPercantage = computed(() => {
 
 .status-container .tier-img img {
   width: 80px;
+  /* border: 1px solid red; */
+  border-radius: 40%;
 }
 
 

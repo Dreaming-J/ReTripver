@@ -63,7 +63,7 @@ const copyPlanEvent = (planId) => {
       {{ review }}
     </div>
     <div class="item-footer flex justify-content-end">
-      <Button class="text-sm" severity="contrast" variant="text"
+      <Button class="text-sm" severity="secondary" variant="text"
               @click.stop="copyPlanEvent(plan.id)">
         <!-- <font-awesome-icon class="text-lg" :icon="['far', 'copy']" /> -->
         <font-awesome-icon :icon="['fas', 'person-walking']" />
