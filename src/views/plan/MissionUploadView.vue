@@ -1,18 +1,16 @@
 <script setup>
-import PlanMissionTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import { usePlanStore } from "@/stores/plan-store";
+  import PlanMissionTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
+  import { ref, onMounted } from "vue";
+  import { useRoute } from "vue-router";
+  import { usePlanStore } from "@/stores/plan-store";
 
-const route = useRoute();
-const store = usePlanStore();
+  const route = useRoute();
+  const store = usePlanStore();
 
-const planInfo = ref({});
+  const planInfo = ref({courses: []});
 
   onMounted(async () => {
     const newPlanId = route.params.newPlanId
-
-    console.log(newPlanId)
 
     planInfo.value = await store.getPlanInfoById(newPlanId);
 
