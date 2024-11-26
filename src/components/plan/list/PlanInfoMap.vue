@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { initTmap, addMarker, addPolyline } from "@/util/tmapLoader";
 
 const props = defineProps({
@@ -10,19 +10,28 @@ const props = defineProps({
 
 const map = ref(null);
 const markers = ref([]);
+const locations = ref({})
 
-const locations = props.courses.map(course => ({
-    latitude: course.attraction.latitude,
-    longitude: course.attraction.longitude,
-}))
+watch(
+  () => props.courses,
+  (newValue, oldValue) => {
+    console.log(props.courses)
+
+    locations.value = props.courses.map(course => ({
+      latitude: course.attraction.latitude,
+      longitude: course.attraction.longitude,
+    }))
+    
+    map.value.on("ConfigLoad", () => {
+      initializeMarkers(locations.value);
+      addPolyline(map.value, locations.value);
+    });
+  },
+  { deep: true }
+)
 
 onMounted(() => {
   map.value = initTmap();
-
-  map.value.on("ConfigLoad", () => {
-    initializeMarkers(locations);
-    addPolyline(map.value, locations);
-  });
 });
 
 const initializeMarkers = (locations) => {
