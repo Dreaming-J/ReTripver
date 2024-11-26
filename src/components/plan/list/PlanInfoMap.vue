@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { initTmap, addMarker } from "@/util/tmapLoader";
+import { initTmap, addMarker, addPolyline } from "@/util/tmapLoader";
 
 const props = defineProps({
     courses: {
@@ -11,39 +11,41 @@ const props = defineProps({
 const map = ref(null);
 const markers = ref([]);
 
-console.log(props.courses);
+const locations = props.courses.map(course => ({
+    latitude: course.attraction.latitude,
+    longitude: course.attraction.longitude,
+}))
 
 onMounted(() => {
   map.value = initTmap();
 
   map.value.on("ConfigLoad", () => {
-    initializeMarkers(props.courses);
+    initializeMarkers(locations);
+    addPolyline(map.value, locations);
   });
 });
 
-const initializeMarkers = (courses) => {
-  if (!courses || courses.length === 0) return;
+const initializeMarkers = (locations) => {
+  if (!locations || locations.length === 0) return;
 
-  console.log("!!", courses[0].attraction.latitude, courses[0].attraction.longitude);
+  console.log("!!", locations[0].latitude, locations[0].longitude);
 
   // LatLngBounds 객체 생성
   const bounds = new Tmapv3.LatLngBounds(
-    new Tmapv3.LatLng(courses[0].attraction.latitude, courses[0].attraction.longitude)
+    new Tmapv3.LatLng(locations[0].latitude, locations[0].longitude)
   );
 
-  console.log(bounds);
-
   // 새 위치로 마커 추가 및 bounds 확장
-  courses.forEach((location) => {
-    console.log(location);
+  locations.forEach((location) => {
+    // console.log(location);
 
-    const marker = addMarker(map.value, location.attraction.latitude, location.attraction.longitude);
+    const marker = addMarker(map.value, location.latitude, location.longitude);
     markers.value.push("++", marker);
 
     console.log(marker);
 
     // bounds 확장
-    bounds.extend(new Tmapv3.LatLng(location.attraction.latitude, location.attraction.longitude));
+    bounds.extend(new Tmapv3.LatLng(location.latitude, location.longitude));
   });
 
   // 여백 설정
