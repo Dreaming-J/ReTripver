@@ -83,6 +83,7 @@ public class EmailServiceImpl implements EmailService {
 				message.setText(text, "UTF-8", "html"); // 이메일 내용
 
 				mailSender.send(message);
+				System.out.println("메일 전송");
 			} catch (MessagingException e) {
 				e.getStackTrace();
 			}

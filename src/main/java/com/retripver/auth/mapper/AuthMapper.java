@@ -31,7 +31,7 @@ public interface AuthMapper {
 	@Select("SELECT * FROM users WHERE id = #{id} AND password = #{password}")
 	LoginResponse selectByIdAndPassword(LoginRequest loginRequest);
 
-	@Insert("INSERT INTO users (id, password, salt, name, email) VALUES (#{id}, #{password}, #{salt}, #{name}, #{email})")
+	@Insert("INSERT INTO users (id, password, salt, name, email, profile_img) VALUES (#{id}, #{password}, #{salt}, #{name}, #{email}, 'https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/default.jpg')")
 	void insert(SignupRequest signupRequest) throws SQLException;
 
     @Insert("INSERT INTO black_list (id, token, expired_at) VALUES (#{userId}, #{token}, #{expiredAt})")
