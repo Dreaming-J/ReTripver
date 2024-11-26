@@ -80,7 +80,9 @@ public class PlanController {
 	
 	@GetMapping("/copy/{planId}")
 	public ResponseEntity<?> copyPlan(@PathVariable("planId") int planId) {
+		System.out.println("!!!" + planId);
 		PlanResponse planResponse = planService.getPlan(planId);
+		System.out.println(planResponse);
 		
 		return ResponseEntity.ok(planResponse);
 	}

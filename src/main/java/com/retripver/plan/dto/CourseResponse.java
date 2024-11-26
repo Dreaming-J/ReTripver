@@ -67,7 +67,7 @@ public class CourseResponse {
 	public void setClear(boolean isClear) {
 		this.isClear = isClear;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "CourseResponse [id=" + id + ", planId=" + planId + ", attractionNo=" + attractionNo + ", attraction="
