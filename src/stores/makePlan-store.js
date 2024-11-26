@@ -133,6 +133,27 @@ export const useMakePlanStore = defineStore("plans", () => {
     }
   };
 
+  const resetSelectList = () => {
+    selectList.value = [];
+    newPlan.value.title = "";
+  };
+
+  const copyPlan = async (planId) => {
+    try {
+      const response = await axios.get(`/plan/copy/${planId}`);
+
+      console.log(response.data);
+      selectList.value = response.data.courses.map(course => ({
+        ...course.attraction,
+        courseOrder: course.courseOrder
+      }));
+
+      router.replace({name: "make-plan"});
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     searchOption,
     searchList,
@@ -147,6 +168,10 @@ export const useMakePlanStore = defineStore("plans", () => {
     optimizeList,
 
     newPlan,
-    makeNewPlan
+    makeNewPlan,
+
+    resetSelectList,
+
+    copyPlan
   };
 });

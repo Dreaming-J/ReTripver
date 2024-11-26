@@ -2,9 +2,13 @@
 import {Button} from 'primevue';
 import { ref, onMounted } from 'vue';
 import { usePlanStore } from '@/stores/plan-store';
+import { useMakePlanStore } from '@/stores/makePlan-store';
 
 const planStore = usePlanStore()
 const { createReview } = planStore
+
+const makePlanStore = useMakePlanStore();
+const { copyPlan } = makePlanStore;
 
 const props = defineProps({
   plan: {
@@ -35,6 +39,10 @@ onMounted(async () => {
 const openMissionView = () => {
   console.log("클릭햇을 때, 라우터를 이용하여 이동하거나 하시면 됩니다.")
 }
+
+const copyPlanEvent = (planId) => {
+  copyPlan(planId);
+}
 </script>
 
 <template>
@@ -55,8 +63,11 @@ const openMissionView = () => {
       {{ review }}
     </div>
     <div class="item-footer flex justify-content-end">
-      <Button severity="danger" variant="text" rounded aria-label="Cancel">
-        <font-awesome-icon :icon="['far', 'heart']" />
+      <Button class="text-sm" severity="contrast" variant="text"
+              @click.stop="copyPlanEvent(plan.id)">
+        <!-- <font-awesome-icon class="text-lg" :icon="['far', 'copy']" /> -->
+        <font-awesome-icon :icon="['fas', 'person-walking']" />
+        여행 따라가기
       </Button>
     </div>
   </div>
