@@ -44,12 +44,14 @@ export const usePlanStore = defineStore("planStore", () => {
     }
   }
 
-  // const planInfoById = ref();
   const getPlanInfoById = async (planId) => {
     try {
+      console.log("_---", planId);
       const response = await axios.get(`/plan/copy/${planId}`);
 
-      return response.data
+      console.log(response.data);
+
+      // return response.data
     } catch (error) {
       console.log(error);
     }

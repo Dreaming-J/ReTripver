@@ -1,11 +1,7 @@
 <script setup>
-<<<<<<< Updated upstream
-  import PlanTimeLine from "@/components/plan/mission/PlanTimeLine.vue";
-  import { onMounted } from "vue";
-=======
 import PlanTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
 import { ref, onMounted } from "vue";
->>>>>>> Stashed changes
+
 
   onMounted(() => {
     // 요소가 존재하는지 확인 후 스크롤 이동

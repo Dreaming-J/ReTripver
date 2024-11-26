@@ -11,9 +11,12 @@ const planInfo = ref(null);
 
 onMounted(async () => {
     const planId = route.params.planId;
+
+    console.log("!!!", planId);
+
     planInfo.value = await store.getPlanInfoById(planId);
 
-    console.log(planInfo.value);
+    console.log(planInfo.value); 
 })
 </script>
 
