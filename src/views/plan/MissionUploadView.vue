@@ -4,7 +4,7 @@
   import { ref, onMounted } from "vue";
   import { useRoute } from "vue-router";
   import { usePlanStore } from "@/stores/plan-store";
-  import { Button } from "primevue";
+  import { Button, Dialog } from "primevue";
 
   const route = useRoute();
   const store = usePlanStore();
@@ -24,6 +24,10 @@
     }
   });
 
+
+
+  const dialogVisible = ref(true);
+
   const tripCompleteEvent = () => {
     console.log("여행 완료!");
   }
@@ -41,6 +45,19 @@
       <Button label="여행 완료" severity="warn" class="col-4"
               @click="tripCompleteEvent"/>
     </div>
+
+    <Dialog v-model:visible="dialogVisible" modal header="이곳은 헤더" :style="{ width: '25rem' }">
+            <div class="flex items-center gap-4 mb-4">
+              <!--여기에 dialog 창에 들어갈 내용 작성!!-->
+              <!-- 헤더 부분에 제목 넣고 싶음 넣기! 안 넣을거면 " "로 설정해야 함!!-->
+              업적 획득!
+              경험치 획득!
+              여행완료!!
+            </div>
+            <div class="flex justify-end gap-2">
+                <Button  class="w-full" severity="warn" type="button" label="Save" @click="visible = false"></Button>
+            </div>
+    </Dialog>
   </div>
 </template>
 
