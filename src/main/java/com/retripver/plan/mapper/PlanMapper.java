@@ -161,6 +161,12 @@ public interface PlanMapper {
 			""")
 	int insertCourses(int planId, List<CourseRequest> courses);
 
+    @Insert("""
+    		INSERT INTO current_plans
+    		VALUES (#{userId}, #{id})
+    		""")
+	void insertCurrentPlan(PlanRequest planRequest);
+
 	@Select("""
 			SELECT *
 			FROM plans p
