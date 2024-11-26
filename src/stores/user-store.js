@@ -13,6 +13,15 @@ export const useUserStore = defineStore("userStore", () => {
 
   const userInfo = ref(new UserInfo());
 
+  const existCurrentQuest = async () => {
+    try {
+      const response = await axios.get("/user/current-quest", { withCredentials: true })
+      return response.data
+    } catch (error) {
+      return 0
+    }
+  }
+
   const isLogin = ref(false);
   const userLogin = async (loginUser) => {
     await axios
@@ -136,6 +145,7 @@ export const useUserStore = defineStore("userStore", () => {
 
   return {
     userInfo,
+    existCurrentQuest,
 
     isLogin,
     userLogin,

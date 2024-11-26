@@ -4,7 +4,7 @@ import SelectSido from "@/components/common/sido/SelectSido.vue";
 
 <template>
   <div class="view-container">
-    <div class="text-title text-2xl">어떤 계획을 보고 싶나요?</div>
+    <div class="text-title text-2xl">어떤 지역을 보고 싶나요?</div>
     <div class="select-sido-container">
       <SelectSido />
     </div>

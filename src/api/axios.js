@@ -55,7 +55,9 @@ instance.interceptors.response.use( (response) => {
               })
               .catch( (error) => {
                 if (config.url.includes('/auth/info'))
-                    throw error 
+                    throw error
+                if (config.url.includes('/user/current-quest'))
+                    throw error
                 
                 console.log("Access Token 재발급 실패:", error)
                 alert("로그인이 필요합니다.")
