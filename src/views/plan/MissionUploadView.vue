@@ -2,12 +2,13 @@
   import PlanMissionTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
   import PlanInfoMap from "@/components/plan/list/PlanInfoMap.vue";
   import { ref, onMounted } from "vue";
-  import { useRoute } from "vue-router";
+  import { useRoute, useRouter } from "vue-router";
   import { storeToRefs } from "pinia";
   import { usePlanStore } from "@/stores/plan-store";
   import { Button, Dialog } from "primevue";
 
   const route = useRoute();
+  const router = useRouter();
   const store = usePlanStore();
   const { questClear } = store
   const { gainExp } = storeToRefs(store)
@@ -29,11 +30,41 @@
     }
   });
 
-  const dialogVisible = ref(true);
+  const dialogVisible = ref(false);
+  const msgList = [
+    {
+      header: "여행 완료",
+      msg: "경험치 40 획득.",
+      img: ""
+    },
+    {
+      header: "티어 상승",
+      msg: "다이아",
+      img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-diamond.png"
+    },
+    {
+      header: "업적 획득",
+      msg: "[대전] 주니어 모험가",
+      img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-2.png"
+    },
+  ]
+  const count = ref(0)
 
   const tripCompleteEvent = async () => {
     await questClear(planInfo.value.id)
-    console.log("경험치 40 획득.\n[티어 상승] https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-diamond.png 다이아\n[업적 획득]https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-2.png [대전] 주니어 모험가")
+
+    dialogVisible.value = true;
+  }
+
+  const dialogClick = () => {
+    dialogVisible.value = false;
+    if (count.value < 2) {
+      count.value++
+      dialogVisible.value = true;
+    }
+    else {
+      router.push({name: "main"})
+    }
   }
 </script>
 
@@ -50,16 +81,13 @@
               @click="tripCompleteEvent"/>
     </div>
 
-    <Dialog v-model:visible="dialogVisible" modal header="이곳은 헤더" :style="{ width: '25rem' }">
+    <Dialog v-model:visible="dialogVisible" modal :header="msgList[count].header" :style="{ width: '25rem' }">
             <div class="flex items-center gap-4 mb-4">
-              <!--여기에 dialog 창에 들어갈 내용 작성!!-->
-              <!-- 헤더 부분에 제목 넣고 싶음 넣기! 안 넣을거면 " "로 설정해야 함!!-->
-              업적 획득!
-              경험치 획득!
-              여행완료!!
+              <img :src="msgList[count].img" style="width: 30px;">
+              {{ msgList[count].msg }}
             </div>
             <div class="flex justify-end gap-2">
-                <Button  class="w-full" severity="warn" type="button" label="Save" @click="visible = false"></Button>
+                <Button  class="w-full" severity="warn" type="button" label="확인" @click="dialogClick"></Button>
             </div>
     </Dialog>
   </div>

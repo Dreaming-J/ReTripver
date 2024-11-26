@@ -1,8 +1,12 @@
 <script setup>
 import {Button} from 'primevue';
 import { ref, onMounted } from 'vue';
+import { useUserStore } from '@/stores/user-store';
 import { usePlanStore } from '@/stores/plan-store';
 import { useMakePlanStore } from '@/stores/makePlan-store';
+
+const userStore = useUserStore()
+const { isLogin } = userStore
 
 const planStore = usePlanStore()
 const { createReview } = planStore
@@ -64,7 +68,7 @@ const copyPlanEvent = (planId) => {
     </div>
     <div class="item-footer flex justify-content-end">
       <Button class="text-sm" severity="secondary" variant="text"
-              @click.stop="copyPlanEvent(plan.id)">
+              @click.stop="copyPlanEvent(plan.id)" :disabled="!isLogin">
         <!-- <font-awesome-icon class="text-lg" :icon="['far', 'copy']" /> -->
         <font-awesome-icon :icon="['fas', 'person-walking']" />
         여행 따라가기
