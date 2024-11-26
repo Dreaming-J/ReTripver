@@ -196,7 +196,7 @@ CREATE TABLE `achievement_visit` (
 );
 
 CREATE TABLE `acquire_visit` (
-    `user_id`			VARCHAR(16) NOT NULL,
+    `user_id`			VARCHAR(100) NOT NULL,
     `achievement_id`	INT NOT NULL,
     
     PRIMARY KEY (`user_id`, `achievement_id`),
@@ -216,7 +216,7 @@ CREATE TABLE `achievement_tier` (
 );
 
 CREATE TABLE `acquire_tier` (
-    `user_id`			VARCHAR(16) NOT NULL,
+    `user_id`			VARCHAR(100) NOT NULL,
     `achievement_id`	INT NOT NULL,
     
     PRIMARY KEY (`user_id`, `achievement_id`),

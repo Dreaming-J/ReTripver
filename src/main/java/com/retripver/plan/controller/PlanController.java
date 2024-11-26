@@ -31,6 +31,7 @@ import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.dto.QuestClearRequest;
 import com.retripver.plan.service.PlanService;
 
 @RestController
@@ -136,10 +137,11 @@ public class PlanController {
 	}
 	
 	@PatchMapping("/quest-clear")
-	public ResponseEntity<?> questClear(@RequestBody int planId, @RequestHeader(value = "Authorization") String authorization) {
+	public ResponseEntity<?> questClear(@RequestBody QuestClearRequest questClearRequest, @RequestHeader(value = "Authorization") String authorization) {
 		String userId = jwtUtil.extractUserId(authorization, false);
+		questClearRequest.setUserId(userId);
 		
-		planService.questClear(planId, userId);
+		planService.questClear(questClearRequest);
 		
 		return ResponseEntity.ok(null);
 	}

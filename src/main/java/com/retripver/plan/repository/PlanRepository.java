@@ -6,6 +6,7 @@ import java.util.Map;
 import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.dto.QuestClearRequest;
 
 public interface PlanRepository {
 
@@ -40,4 +41,12 @@ public interface PlanRepository {
 	void gainExp(int gainExp, String userId);
 
 	void uploadMission(MissionUploadRequest missionUploadRequest);
+
+	void questClear(QuestClearRequest questClearRequest);
+
+	int updateTier(String userId);
+
+	void updateAchievement(String userId);
+
+	void clearCurrentQuest(String userId);
 }

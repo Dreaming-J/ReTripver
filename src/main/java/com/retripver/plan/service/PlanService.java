@@ -6,6 +6,7 @@ import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.dto.QuestClearRequest;
 
 public interface PlanService {
 
@@ -27,7 +28,7 @@ public interface PlanService {
 
 	List<PlanResponse> sidoPlanList(int sidoCode);
 
-	void questClear(int planId, String userId);
+	void questClear(QuestClearRequest questClearRequest);
 
 	int[] optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest);
 
