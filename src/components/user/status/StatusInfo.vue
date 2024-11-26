@@ -10,13 +10,22 @@ const props = defineProps({
 });
 
 const expPercantage = computed(() => {
-  const percentage = (
+  const percentageExp = props.userStatus.userInfo.tierInfo.nextTierExp === 0 ?
+  (
+    (props.userStatus.userInfo.exp /
+      500) *
+    100
+  ).toFixed(1) : 
+  (
     (props.userStatus.userInfo.exp /
       props.userStatus.userInfo.tierInfo.nextTierExp) *
     100
   ).toFixed(1);
+
+  const percentageQuest = (props.userStatus.questRate.successQuestRate * 100).toFixed(1)
   return {
-    "--target-width": `${percentage}%`,
+    "--target-expwidth": `${percentageExp}%`,
+    "--target-questwidth": `${percentageQuest}%`,
   };
 });
 
@@ -80,13 +89,19 @@ console.log(props.userStatus);
             </div>
             <div class="text-sm">
               {{ userStatus.userInfo.exp }}/{{
-                userStatus.userInfo.tierInfo.nextTierExp
+                userStatus.userInfo.tierInfo.nextTierExp === 0 ? 500 : userStatus.userInfo.tierInfo.nextTierExp
               }}[{{
+                userStatus.userInfo.tierInfo.nextTierExp === 0 ?
+                (
+                  (userStatus.userInfo.exp /
+                    500) *
+                  100
+                ).toFixed(1) :
                 (
                   (userStatus.userInfo.exp /
                     userStatus.userInfo.tierInfo.nextTierExp) *
                   100
-                ).toFixed(1)
+                ).toFixed(1) 
               }}%]
             </div>
           </div>
@@ -116,8 +131,8 @@ console.log(props.userStatus);
             </div>
           </div>
           <div class="exp-bar">
-            <div class="exp-background"></div>
-            <div class="exp-fill" :style="expPercantage"></div>
+            <div class="quest-background"></div>
+            <div class="quest-fill" :style="expPercantage"></div>
           </div>
         </div>
       </div>
@@ -309,7 +324,44 @@ console.log(props.userStatus);
     width: 0%; /* 시작 너비 */
   }
   to {
-    width: var(--target-width); /* 종료 너비 */
+    width: var(--target-expwidth); /* 종료 너비 */
+  }
+}
+
+.quest-background {
+  background-color: lightgray;
+  border-radius: 15px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.quest-fill {
+  background: linear-gradient(
+    90deg,
+    rgb(255, 239, 148) 0%,
+    rgb(255, 220, 100) 50%,
+    rgb(255, 200, 50) 100%
+  );
+  border-radius: 15px;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  animation: fill-quest-animation 1.5s ease-out forwards; /* 애니메이션 설정 */
+}
+
+@keyframes fill-quest-animation {
+  from {
+    width: 0%; /* 시작 너비 */
+  }
+  to {
+    width: var(--target-questwidth); /* 종료 너비 */
   }
 }
 
