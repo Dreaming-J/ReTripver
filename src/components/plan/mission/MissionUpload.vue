@@ -65,10 +65,6 @@
       <div class="pt-3 text-sm">
         {{ (compareResult.similarity * 100).toFixed(2) }}%
       </div>
-      <!-- 통과: {{ compareResult.similar }}<br> -->
-      
-      
-      
     </div>
   </div>
 </template>
