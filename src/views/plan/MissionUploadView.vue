@@ -31,23 +31,23 @@
   });
 
   const dialogVisible = ref(false);
-  const msgList = [
+  const msgList = ref([
     {
       header: "여행 완료",
-      msg: "경험치 40 획득.",
+      msg: `경험치 ${gainExp.value} 받았습니다.`,
       img: ""
     },
     {
       header: "티어 상승",
-      msg: "다이아",
+      msg: "다이아 상승을 축하합니다.",
       img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/tier/tier-diamond.png"
     },
     {
       header: "업적 획득",
-      msg: "[대전] 주니어 모험가",
+      msg: "[대전] 주니어 모험가 획득을 축하합니다.",
       img: "https://retripver-s3-bucket.s3.ap-northeast-2.amazonaws.com/badges/badge-3-2.png"
     },
-  ]
+  ])
   const count = ref(0)
 
   const tripCompleteEvent = async () => {
