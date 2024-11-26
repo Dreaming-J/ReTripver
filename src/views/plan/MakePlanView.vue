@@ -3,11 +3,15 @@ import SelectedList from "@/components/plan/make/select/SelectedList.vue";
 import SearchList from "@/components/plan/make/search/SearchList.vue";
 import MapContent from "@/components/plan/make/map/MapContent.vue";
 
-import { Button, Dialog, InputText, Select, Message } from "primevue";
+import { Button, Dialog, InputText, Select, Message, ConfirmDialog } from "primevue";
+import { useConfirm } from "primevue/useconfirm";
 import { useMakePlanStore } from "@/stores/makePlan-store";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import { storeToRefs } from "pinia";
+
+
+const confirm = useConfirm();
 
 const router = useRouter();
 const store = useMakePlanStore();
@@ -54,9 +58,45 @@ const goQuestPage = async () => {
   newPlan.value.courses = courses;
 
   await makeNewPlan();
-
-  // router.push({ name: "make-mission" });
 };
+
+onBeforeRouteLeave((to, from, next) => {
+  const excludePaths = [{name: "make-mission"}];
+
+  const isExcluded = excludePaths.some((path) => path.name === to.name);
+
+  if (isExcluded) {
+    next();
+    return;
+  }
+
+  return new Promise((resolve) => {
+    confirm.require({
+        message: '변경사항이 저장되지 않습니다.',
+        header: ' ',
+        icon: 'pi pi-exclamation-triangle',
+        rejectProps: {
+            label: '취소',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptProps: {
+            label: '확인'
+        },
+        accept: () => {
+            store.resetSelectList();
+
+            next();
+            resolve();
+        },
+        reject: () => {
+            next(false);
+            resolve();
+        }
+    });
+  })
+
+});
 </script>
 
 <template>
@@ -180,6 +220,8 @@ const goQuestPage = async () => {
         ></Button>
       </div>
     </Dialog>
+
+    <ConfirmDialog />
   </div>
 </template>
 

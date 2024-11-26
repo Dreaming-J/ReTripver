@@ -46,7 +46,6 @@ export const usePlanStore = defineStore("planStore", () => {
 
   const getPlanInfoById = async (planId) => {
     try {
-      console.log("_---", planId);
       const response = await axios.get(`/plan/copy/${planId}`);
 
       console.log(response.data);

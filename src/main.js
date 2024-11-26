@@ -17,6 +17,7 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 // primevue -  관련 설정
 import PrimeVue from "primevue/config";
 import Aura from "@primevue/themes/aura";
+import ConfirmationService from 'primevue/confirmationservice';
 // import ConfirmationService from "primevue/confirmationservice";
 // import ToastService from "primevue/toastservice";
 import "primeicons/primeicons.css";
@@ -44,6 +45,7 @@ app.use(PrimeVue, {
     },
   },
 });
+app.use(ConfirmationService);
 // app.use(ConfirmationService);
 // app.use(ToastService);
 
