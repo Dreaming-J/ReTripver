@@ -7,25 +7,8 @@ const props = defineProps({
     courses: {
         type: Object
     }
-})
+}) 
 
-const plan = ref([
-  {
-    name: "경복궁",
-    questImg: new URL("@/assets/img/sido/1.jpg", import.meta.url).href,
-    uploadImg: "",
-  },
-  {
-    name: "광화문",
-    questImg: new URL("@/assets/img/sido/1.jpg", import.meta.url).href,
-    uploadImg: "",
-  },
-  {
-    name: "종로",
-    questImg: new URL("@/assets/img/sido/1.jpg", import.meta.url).href,
-    uploadImg: "",
-  },
-]);
 </script>
 
 <template>

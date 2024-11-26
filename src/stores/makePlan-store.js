@@ -120,13 +120,13 @@ export const useMakePlanStore = defineStore("plans", () => {
     sidoCode: "",
     isPublic: true,
     courses : []
-  })
+  });
   const makeNewPlan = async () => {
     try {
       const response = await axios.post(`/plan/make`, newPlan.value, { withCredentials: true });
       newPlan.value.id = response.data
 
-      router.replace({name: "make-mission"});
+      router.replace({name: "make-mission", params:{newPlanId: newPlan.value.id}});
     } catch (error) {
       console.log(error);
       alert(error);

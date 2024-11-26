@@ -1,9 +1,21 @@
 <script setup>
-import PlanTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
+import PlanMissionTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
 import { ref, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { usePlanStore } from "@/stores/plan-store";
 
+const route = useRoute();
+const store = usePlanStore();
 
-  onMounted(() => {
+const planInfo = ref({});
+
+  onMounted(async () => {
+    const newPlanId = route.params.newPlanId
+
+    console.log(newPlanId)
+
+    planInfo.value = await store.getPlanInfoById(newPlanId);
+
     // 요소가 존재하는지 확인 후 스크롤 이동
     const element = document.querySelector(".mission-container");
 
@@ -17,7 +29,7 @@ import { ref, onMounted } from "vue";
   <div class="view-container">
     <div class="map mt-5">지도로 경유지 보여주기</div>
     <div class="mission-container mt-8">
-      <PlanTimeLine />
+      <PlanMissionTimeLine :courses="planInfo.courses"/>
     </div>
   </div>
 </template>
