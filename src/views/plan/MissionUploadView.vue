@@ -1,5 +1,6 @@
 <script setup>
   import PlanMissionTimeLine from "@/components/plan/mission/PlanMissionTimeLine.vue";
+  import PlanInfoMap from "@/components/plan/list/PlanInfoMap.vue";
   import { ref, onMounted } from "vue";
   import { useRoute } from "vue-router";
   import { usePlanStore } from "@/stores/plan-store";
@@ -25,7 +26,9 @@
 
 <template>
   <div class="view-container">
-    <div class="map mt-5">지도로 경유지 보여주기</div>
+    <div class="map mt-5">
+      <PlanInfoMap :courses="planInfo.courses" />
+    </div>
     <div class="mission-container mt-8">
       <PlanMissionTimeLine :courses="planInfo.courses"/>
     </div>
@@ -42,7 +45,7 @@
 .map {
   width: 100%;
   height: 300px;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .mission-container {
