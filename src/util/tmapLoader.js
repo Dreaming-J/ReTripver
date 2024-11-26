@@ -28,6 +28,34 @@ export const addMarker = (map, lat, lng) => {
   return marker;
 };
 
+export const addPolyline = (map, locations) => {
+  locations = locations.map(location => new Tmapv3.LatLng(location.latitude, location.longitude));
+  console.log(locations);
+
+  var polyline = new Tmapv3.Polyline({
+    path: locations,
+    strokeColor: "#808080",
+    strokeWeight: 6,
+    direction: true,
+     map: map
+  });
+
+  return polyline;
+}
+
+function addPolyline2(){
+  var polyline = new Tmapv3.Polyline({
+    path: [new Tmapv3.LatLng(37.56480450,126.98512028),	// 선의 꼭짓점 좌표
+      new Tmapv3.LatLng(37.56565450,126.98512028),	// 선의 꼭짓점 좌표
+      new Tmapv3.LatLng(37.56480450,126.98582028),	// 선의 꼭짓점 좌표
+      new Tmapv3.LatLng(37.56565450,126.98652028),	// 선의 꼭짓점 좌표
+      new Tmapv3.LatLng(37.56480450,126.98652028)],
+    strokeColor: "#dd00dd",
+    strokeWeight: 6,
+     map: map
+  });
+}
+
 export const removeMarker = (marker) => {
   marker.setMap(null);
 };
@@ -166,6 +194,7 @@ export const onSearchRoute = async (map, start, end, routeType) => {
           path: routeCoordinates,
           strokeColor: "#DD0000",
           strokeWeight: 6,
+          direction: true,
           map: map,
         });
 
