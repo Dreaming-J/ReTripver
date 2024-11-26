@@ -46,14 +46,30 @@ export const usePlanStore = defineStore("planStore", () => {
 
   const getPlanInfoById = async (planId) => {
     try {
-      console.log("_---", planId);
       const response = await axios.get(`/plan/copy/${planId}`);
-
-      console.log(response.data);
-
       return response.data
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  const uploadImage = async (formData) => {
+    try {
+      const response = await axios.post('/plan/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+        withCredentials: true
+      })
+      return response.data
+    } catch (error) {
+      console.error('업로드 실패:', error)
+    }
+  }
+  const compareImage = async (missionImg, userImg) => {
+    try {
+      const response = await axios.get('/plan/comparision', {params: {url1: missionImg, url2: userImg}})
+      return response.data
+    } catch (error) {
+      console.error(error)
     }
   }
  
@@ -66,6 +82,9 @@ export const usePlanStore = defineStore("planStore", () => {
 
     createReview,
 
-    getPlanInfoById
+    getPlanInfoById,
+
+    uploadImage,
+    compareImage
   };
 });
