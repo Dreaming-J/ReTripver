@@ -51,7 +51,7 @@ export const usePlanStore = defineStore("planStore", () => {
 
       console.log(response.data);
 
-      // return response.data
+      return response.data
     } catch (error) {
       console.log(error);
     }
