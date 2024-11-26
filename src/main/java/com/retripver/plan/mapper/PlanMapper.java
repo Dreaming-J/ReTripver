@@ -19,6 +19,7 @@ import com.retripver.plan.dto.CourseResponse;
 import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.dto.QuestClearRequest;
 
 @Mapper
 public interface PlanMapper {
@@ -218,4 +219,31 @@ public interface PlanMapper {
     		AND id = #{courseId}
     		""")
 	void updateMissionImage(MissionUploadRequest missionUploadRequest);
+
+    @Update("""
+    		UPDATE plans
+    		SET is_clear = true
+    		WHERE id = #{planId}
+    		AND user_id = #{userId}
+    		""")
+	void updatePlansClear(QuestClearRequest questClearRequest);
+
+    @Update("""
+    		UPDATE users
+    		SET tier_no = tier_no + 1
+    		WHERE id = #{userId}
+    		""")
+	int updateTier(String userId);
+
+    @Insert("""
+    		INSERT INTO acquire_visit
+    		VALUES (#{userId}, 12)
+    		""")
+	void updateAchievement(String userId);
+
+    @Delete("""
+    		DELETE FROM current_plans
+    		WHERE user_id = #{userId}
+    		""")
+	void deleteCurrentPlans(String userId);
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
+import com.retripver.plan.dto.QuestClearRequest;
 import com.retripver.plan.mapper.PlanMapper;
 
 @Repository
@@ -103,5 +104,25 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Override
 	public void uploadMission(MissionUploadRequest missionUploadRequest) {
 		planMapper.updateMissionImage(missionUploadRequest);
+	}
+
+	@Override
+	public void questClear(QuestClearRequest questClearRequest) {
+		planMapper.updatePlansClear(questClearRequest);
+	}
+
+	@Override
+	public int updateTier(String userId) {
+		return planMapper.updateTier(userId);
+	}
+
+	@Override
+	public void updateAchievement(String userId) {
+		planMapper.updateAchievement(userId);
+	}
+
+	@Override
+	public void clearCurrentQuest(String userId) {
+		planMapper.deleteCurrentPlans(userId);
 	}
 }
