@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.retripver.attraction.repository.AttractionRepository;
 import com.retripver.global.util.OptimizeUtil;
+import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
@@ -157,5 +158,10 @@ public class PlanServiceImpl implements PlanService {
 	@Override
 	public int[] optimizeCourses(OptimizeCoursesRequest optimizeCoursesRequest) {
 		return optimizeUtil.optimeRoute(optimizeCoursesRequest);
+	}
+
+	@Override
+	public void uploadMission(MissionUploadRequest missionUploadRequest) {
+		planRepository.uploadMission(missionUploadRequest);
 	}
 }
