@@ -1,9 +1,11 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { usePlanStore } from '@/stores/plan-store';
+  import { storeToRefs } from 'pinia';
 
   const planStore = usePlanStore()
   const { uploadImage, compareImage } = planStore
+  const { gainExp } = storeToRefs(planStore)
 
   const props = defineProps({
     course: {
@@ -40,7 +42,20 @@
 
     compareResult.value = await compareImage(props.course.missionImg, props.course.userImg)
     executeCompare.value = true
+
+    gainExp.value += compareResult.value.similar ? compareResult.value.similarity * 50 : 0
   }
+
+  onMounted(async () => {
+    if (!props.course.userImg) {
+      return
+    }
+
+    compareResult.value = await compareImage(props.course.missionImg, props.course.userImg)
+    executeCompare.value = true
+
+    gainExp.value += compareResult.value.similar ? compareResult.value.similarity * 50 : 0
+  })
 </script>
 
 <template>
