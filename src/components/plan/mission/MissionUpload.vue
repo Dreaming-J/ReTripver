@@ -55,9 +55,20 @@
       <input type="file" :id="`uploadImg-${course.id}`" @change="setFile" style="display: none" />
     </div>
 
-    <div :style="{ visibility: executeCompare ? 'visible' : 'hidden' }">
-      통과: {{ compareResult.similar }}<br>
-      유사도: {{ compareResult.similarity.toFixed(2) }}
+    <div class="flex flex-column justify-content-center" :style="{ visibility: executeCompare ? 'visible' : 'hidden' }">
+      <div v-if="compareResult.similar" class="flex justify-content-center">
+        <font-awesome-icon class="text-5xl" :style="{color: '#28bf71'}" :icon="['fas', 'circle-check']" />
+      </div>
+      <div v-else class="flex justify-content-center">
+        <font-awesome-icon class="text-5xl" :style="{color: '#e64132'}" :icon="['far', 'circle-xmark']" />
+      </div>
+      <div class="pt-3 text-sm">
+        {{ (compareResult.similarity * 100).toFixed(2) }}%
+      </div>
+      <!-- 통과: {{ compareResult.similar }}<br> -->
+      
+      
+      
     </div>
   </div>
 </template>

@@ -59,10 +59,10 @@ const initializeMarkers = (locations) => {
 
   // 여백 설정
   const margin = {
-    top: 100,
-    right: 100,
-    bottom: 100,
-    left: 100,
+    top: 80,
+    right: 80,
+    bottom: 80,
+    left: 80,
   };
 
   // bounds에 여백을 추가하고 지도 뷰 설정
