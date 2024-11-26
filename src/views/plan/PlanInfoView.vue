@@ -7,7 +7,7 @@ import { usePlanStore } from "@/stores/plan-store";
 const route = useRoute();
 const store = usePlanStore();
 
-const planInfo = ref(null);
+const planInfo = ref({});
 
 onMounted(async () => {
     const planId = route.params.planId;
@@ -16,7 +16,7 @@ onMounted(async () => {
 
     planInfo.value = await store.getPlanInfoById(planId);
 
-    console.log(planInfo.value); 
+    console.log(planInfo.value.courses); 
 })
 </script>
 
