@@ -39,7 +39,8 @@ public class JWTFilter extends OncePerRequestFilter {
 				"swagger-ui", "favicon.ico",
 				"/auth/login", "/auth/logout",
 				"/auth/signup", "/auth/exist/id", "/auth/exist/email", "/auth/email", "/auth/email/verify", "/auth/profile",
-				"/auth/search"
+				"/auth/search",
+				"/attraction/sidos", "/attraction/search", "/plan/search/", "/plan/copy/", "/user/rank", "/user/status/info", "/auth/info", "/plan/list/", "/attraction/sido/", "/plan/comparision"
 		};
 		
 		// 필터를 거치치 않을 URI와 일치하는 경우 True(필터를 거치지 않음) / False(필터를 거침)
