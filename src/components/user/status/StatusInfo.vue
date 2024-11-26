@@ -36,13 +36,13 @@ const expPercantage = computed(() => {
           </div>
           <div class="profile-id">
             {{ userStatus.userInfo.id }}
-            <span class="edit-icon">
+            <!-- <span class="edit-icon">
               <font-awesome-icon
                 :icon="['far', 'pen-to-square']"
                 class="text-xl"
-              />
+              /> -->
               <!-- <button class="text-xs">follow</button> -->
-            </span>
+            <!-- </span> -->
           </div>
         </div>
       </div>
@@ -65,10 +65,25 @@ const expPercantage = computed(() => {
         <button class="btn-follow">+ 팔로우</button>
       </div> -->
 
+      <div class="status-container">
+        <div class="tier-img flex justify-content-center w-full">
+          <img :src="userStatus.userInfo.tierInfo.tierImg"/>
+        </div>
+        <div class="exp-bar-container">
+
+        </div>
+         
+
+      </div>
+
+
+
+
       <div class="exp-container">
         <div class="tier-img">
           <img :src="userStatus.userInfo.tierInfo.tierImg" />
         </div>
+ 
         <div class="exp-info">
           <div class="exp-text text-sm">
             EXP. {{ userStatus.userInfo.exp }}/{{
@@ -88,13 +103,19 @@ const expPercantage = computed(() => {
         </div>
       </div>
 
+      
+
+      
+
+      
+
       <div class="quest-container">
         <div class="quest-text">
           Quest Succes {{ userStatus.questRate.successQuestCount }}/{{
             userStatus.questRate.totalQuestCount
           }}
         </div>
-        <div class="quest-rate">
+        <!-- <div class="quest-rate">
           <SidePanel
             :value="userStatus.questRate.successQuestRate"
             :size="120"
@@ -106,7 +127,7 @@ const expPercantage = computed(() => {
               {{ Math.round(progress * 100) }}%
             </template>
           </SidePanel>
-        </div>
+        </div> -->
       </div>
 
       <!-- <div class="progress-section">
@@ -277,4 +298,13 @@ const expPercantage = computed(() => {
   display: flex;
   justify-content: center;
 }
+
+
+
+
+.status-container .tier-img img {
+  width: 80px;
+}
+
+
 </style>
