@@ -14,22 +14,25 @@ import org.opencv.imgproc.Imgproc;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.retripver.global.dto.CompareResult;
+
 @Service
 public class ImageComparisonService {
 	
 	@Value("${opencv.similarity-threshold}")
 	private double threshold;
 
-    public boolean compareTwoImages(String imageUrl1, String imageUrl2) {
+    public CompareResult compareTwoImages(String imageUrl1, String imageUrl2) {
 		try {
 	        Mat img1 = downloadAndReadImage(imageUrl1);
 	        Mat img2 = downloadAndReadImage(imageUrl2);
 	        
 	        double similarity = calculateSimilarity(img1, img2);
+	        boolean isSimilar = calculateSimilarity(img1, img2) >= threshold;
 	        
-	        System.out.println("유사도: " + similarity);
+	        System.out.println("유사도: " + similarity + " -> " + isSimilar);
 	        
-	        return calculateSimilarity(img1, img2) >= threshold;
+	        return new CompareResult(similarity, isSimilar);
 		} catch (IOException e) {
 			throw new RuntimeException();
 		}
