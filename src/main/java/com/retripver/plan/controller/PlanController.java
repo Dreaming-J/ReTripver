@@ -22,8 +22,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.retripver.auth.dto.UserProfileRequest;
+import com.retripver.global.dto.CompareResult;
 import com.retripver.global.service.FileManageService;
+import com.retripver.global.service.ImageComparisonService;
 import com.retripver.global.util.JWTUtil;
 import com.retripver.global.util.PromptTemplateLoader;
 import com.retripver.plan.dto.MissionUploadRequest;
@@ -41,14 +42,16 @@ public class PlanController {
 	private final ChatModel chatModel;
 	private final PromptTemplateLoader promptLoader;
 	private final FileManageService fileManageService;
+	private final ImageComparisonService imageComparisonService;
 	
 	@Autowired
-	public PlanController(PlanService planService, JWTUtil jwtUtil, ChatModel chatModel, PromptTemplateLoader promptLoader, FileManageService fileManageService) {
+	public PlanController(PlanService planService, JWTUtil jwtUtil, ChatModel chatModel, PromptTemplateLoader promptLoader, FileManageService fileManageService, ImageComparisonService imageComparisonService) {
 		this.planService = planService;
 		this.jwtUtil = jwtUtil;
 		this.chatModel = chatModel;
 		this.promptLoader = promptLoader;
 		this.fileManageService = fileManageService;
+		this.imageComparisonService = imageComparisonService;
 	}
 	
 	@GetMapping("/list/{userId}")
@@ -85,9 +88,7 @@ public class PlanController {
 	
 	@GetMapping("/copy/{planId}")
 	public ResponseEntity<?> copyPlan(@PathVariable("planId") int planId) {
-		System.out.println("!!!" + planId);
 		PlanResponse planResponse = planService.getPlan(planId);
-		System.out.println(planResponse);
 		
 		return ResponseEntity.ok(planResponse);
 	}
@@ -195,5 +196,12 @@ public class PlanController {
 		System.out.println(missionUploadRequest);
 		
 		return ResponseEntity.ok(imgUrl);
+	}
+	
+	@GetMapping("/comparision")
+	public ResponseEntity<?> compareImage(@RequestParam String url1, @RequestParam String url2) {
+		CompareResult result = imageComparisonService.compareTwoImages(url1, url2);
+		
+		return ResponseEntity.ok(result);
 	}
 }
