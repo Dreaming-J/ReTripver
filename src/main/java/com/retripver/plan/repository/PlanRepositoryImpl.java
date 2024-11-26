@@ -70,6 +70,7 @@ public class PlanRepositoryImpl implements PlanRepository {
 	public int makePlan(PlanRequest planRequest) {
 		planMapper.insertPlan(planRequest);
 		planMapper.insertCourses(planRequest.getId(), planRequest.getCourses());
+		planMapper.insertCurrentPlan(planRequest);
 		
 		return planRequest.getId();
 	}
