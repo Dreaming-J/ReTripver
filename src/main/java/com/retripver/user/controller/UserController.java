@@ -116,4 +116,14 @@ public class UserController {
 		return ResponseEntity.ok(userList);
 	}
 	
+	@GetMapping("/current-quest")
+	public ResponseEntity<?> currentQuest(@RequestHeader(value = "Authorization") String authorization) {
+		String id = jwtUtil.extractUserId(authorization, false);
+		
+		int planId = userService.currentQeust(id);
+		
+		System.out.println(planId);
+		
+		return ResponseEntity.ok(planId);
+	}
 }

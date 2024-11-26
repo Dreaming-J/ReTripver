@@ -230,4 +230,13 @@ public interface UserMapper {
 		@Result(property = "tierInfo", column="tier_no", one = @One(select = "selectTierById"))
 	})
 	List<UserInfoResponse> selectUserSearchByKeyword(String keyword);
+
+	@Select("""
+			SELECT plan_id
+			FROM users u
+			LEFT JOIN current_plans cp
+			ON u.id = cp.user_id
+			WHERE u.id = #{id}
+			""")
+	int selectCurrentQuestById(String id);
 }

@@ -147,4 +147,9 @@ public class UserRepositoryImpl implements UserRepository {
 		
 		return userMapper.selectImgFromAchievementById(achievementId, achievementTable);
 	}
+
+	@Override
+	public int currentQuest(String id) {
+		return userMapper.selectCurrentQuestById(id);
+	}
 }
