@@ -14,10 +14,6 @@ const marker = ref(null);
 onMounted(() => {
   map.value = initTmap();
 
-  // map.value.setCenter(new Tmapv3.LatLng(props.attraction.latitude, props.attraction.longitude));
-
-  //   marker.value = addMarker(map.value, props.attraction.latitude, props.attraction.longitude);
-
   map.value.on("ConfigLoad", () => {
     map.value.setCenter(new Tmapv3.LatLng(props.attraction.latitude, props.attraction.longitude));
 
