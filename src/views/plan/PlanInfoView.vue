@@ -8,7 +8,7 @@ import { usePlanStore } from "@/stores/plan-store";
 const route = useRoute();
 const store = usePlanStore();
 
-const planInfo = ref({});
+const planInfo = ref({ courses: [] });
 
 onMounted(async () => {
     const planId = route.params.planId;
