@@ -1,9 +1,30 @@
 <script setup>
-const props = defineProps({
-  course: {
-    type: Object,
-  },
-});
+  import { ref, onMounted } from 'vue'
+  import { usePlanStore } from '@/stores/plan-store';
+
+  const planStore = usePlanStore()
+  const { compareImage } = planStore
+
+  const props = defineProps({
+    course: {
+      type: Object,
+    },
+  });
+
+  const executeCompare = ref(false)
+  const compareResult = ref({
+    similar: false,
+    similarity: 0.01
+  })
+
+  onMounted(async () => {
+    if (!props.course.userImg) {
+      return
+    }
+
+    compareResult.value = await compareImage(props.course.missionImg, props.course.userImg)
+    executeCompare.value = true
+  })
 </script>
 
 <template>
@@ -14,6 +35,17 @@ const props = defineProps({
     <div class="img-container upload-content">
       <img :src="course.userImg" width="100%" height="100%" />
     </div>
+    <div class="flex flex-column justify-content-center" :style="{ visibility: executeCompare ? 'visible' : 'hidden' }">
+    <div v-if="compareResult.similar" class="flex justify-content-center">
+      <font-awesome-icon class="text-5xl" :style="{color: '#28bf71'}" :icon="['fas', 'circle-check']" />
+    </div>
+    <div v-else class="flex justify-content-center">
+      <font-awesome-icon class="text-5xl" :style="{color: '#e64132'}" :icon="['far', 'circle-xmark']" />
+    </div>
+    <div class="pt-3 text-sm">
+      {{ (compareResult.similarity * 100).toFixed(2) }}%
+    </div>
+  </div>
   </div>
 </template>
 

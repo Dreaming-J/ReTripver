@@ -40,7 +40,7 @@ export const usePlanStore = defineStore("planStore", () => {
       const response = await axios.post('/plan/review', plan)
       return response.data
     } catch (error) {
-      console.log(error)
+      return "로그인하여 AI 리뷰를 확인하세요."
     }
   }
 
