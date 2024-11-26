@@ -67,4 +67,9 @@ public class UserServiceImpl implements UserService {
 	public List<UserInfoResponse> getSearchUserByKeyword(String keyword) {
 		return userRepository.getSearchUserByKeyword(keyword);
 	}
+
+	@Override
+	public int currentQeust(String id) {
+		return userRepository.currentQuest(id);
+	}
 }

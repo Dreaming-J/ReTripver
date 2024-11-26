@@ -24,4 +24,6 @@ public interface UserService {
 
 	List<UserInfoResponse> getSearchUserByKeyword(String keyword);
 
+	int currentQeust(String id);
+
 }

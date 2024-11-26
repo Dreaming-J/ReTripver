@@ -40,7 +40,7 @@ public class AttractionServiceImpl implements AttractionService {
 	public List<AttractionResponse> getAttractions(SearchOption searchOption) {
 		int page = (searchOption.getPage() - 1) * PAGE_SIZE;
 		searchOption.setPage(page);
-		searchOption.setSize(PAGE_SIZE);
+		searchOption.setSize(PAGE_SIZE * 10);
 		
 		List<AttractionResponse> attractionList = attractionRepository.getAttractions(searchOption);
 		

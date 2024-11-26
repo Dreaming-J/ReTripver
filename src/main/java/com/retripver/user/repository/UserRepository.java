@@ -28,4 +28,6 @@ public interface UserRepository {
 
 	List<UserInfoResponse> getSearchUserByKeyword(String keyword);
 
+	int currentQuest(String id);
+
 }
