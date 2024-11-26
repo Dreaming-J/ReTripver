@@ -8,9 +8,7 @@ import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,10 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.retripver.auth.dto.UserProfileRequest;
+import com.retripver.global.service.FileManageService;
 import com.retripver.global.util.JWTUtil;
 import com.retripver.global.util.PromptTemplateLoader;
+import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.OptimizeCoursesRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
@@ -37,13 +40,15 @@ public class PlanController {
 	private final JWTUtil jwtUtil;
 	private final ChatModel chatModel;
 	private final PromptTemplateLoader promptLoader;
+	private final FileManageService fileManageService;
 	
 	@Autowired
-	public PlanController(PlanService planService, JWTUtil jwtUtil, ChatModel chatModel, PromptTemplateLoader promptLoader) {
+	public PlanController(PlanService planService, JWTUtil jwtUtil, ChatModel chatModel, PromptTemplateLoader promptLoader, FileManageService fileManageService) {
 		this.planService = planService;
 		this.jwtUtil = jwtUtil;
 		this.chatModel = chatModel;
 		this.promptLoader = promptLoader;
+		this.fileManageService = fileManageService;
 	}
 	
 	@GetMapping("/list/{userId}")
@@ -175,5 +180,20 @@ public class PlanController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error processing request: " + e.getMessage());
         }
+	}
+	
+	@PostMapping("/upload")
+	public ResponseEntity<?> uploadMission(@RequestPart MissionUploadRequest missionUploadRequest, @RequestPart MultipartFile multipartFile, @RequestHeader(value = "Authorization") String authorization) {
+		String userId = jwtUtil.extractUserId(authorization, false);
+		missionUploadRequest.setUserId(userId);
+		
+		String imgUrl = fileManageService.uploadFile(multipartFile);
+		missionUploadRequest.setUserImg(imgUrl);
+		
+		planService.uploadMission(missionUploadRequest);
+		
+		System.out.println(missionUploadRequest);
+		
+		return ResponseEntity.ok(imgUrl);
 	}
 }

@@ -3,6 +3,7 @@ package com.retripver.plan.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
@@ -37,4 +38,6 @@ public interface PlanRepository {
 	int getSumExpOfClearCourses(int planId);
 
 	void gainExp(int gainExp, String userId);
+
+	void uploadMission(MissionUploadRequest missionUploadRequest);
 }

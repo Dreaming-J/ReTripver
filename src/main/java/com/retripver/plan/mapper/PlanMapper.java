@@ -16,6 +16,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.retripver.plan.dto.CourseRequest;
 import com.retripver.plan.dto.CourseResponse;
+import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 
@@ -41,7 +42,6 @@ public interface PlanMapper {
 			JOIN sidos s
 			ON p.sido_code = s.sido_code
 			WHERE user_id = #{userId}
-			AND is_public = true
 			""")
 	@Results({
 	    @Result(property = "courses", column = "id", many = @Many(select = "selectCoursesByPlanId"))
@@ -95,7 +95,6 @@ public interface PlanMapper {
 			JOIN sidos s
 			ON p.sido_code = s.sido_code
 			WHERE pl.user_id = #{userId}
-			AND p.is_public = true
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
@@ -168,7 +167,6 @@ public interface PlanMapper {
 			JOIN sidos s
 			ON p.sido_code = s.sido_code
 			WHERE p.sido_code = #{sidoCode}
-			AND is_public = true
 			""")
 	@Results({
 	    @Result(property = "id", column = "id"),
@@ -206,4 +204,12 @@ public interface PlanMapper {
     		WHERE id = #{userId}
     		""")
 	void updateExpByUserId(int gainExp, String userId);
+
+    @Update("""
+    		UPDATE courses
+    		SET user_img = #{userImg}
+    		WHERE plan_id = #{planId}
+    		AND id = #{courseId}
+    		""")
+	void updateMissionImage(MissionUploadRequest missionUploadRequest);
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.retripver.plan.dto.MissionUploadRequest;
 import com.retripver.plan.dto.PlanRequest;
 import com.retripver.plan.dto.PlanResponse;
 import com.retripver.plan.mapper.PlanMapper;
@@ -96,5 +97,10 @@ public class PlanRepositoryImpl implements PlanRepository {
 	@Override
 	public void gainExp(int gainExp, String userId) {
 		planMapper.updateExpByUserId(gainExp, userId);
+	}
+
+	@Override
+	public void uploadMission(MissionUploadRequest missionUploadRequest) {
+		planMapper.updateMissionImage(missionUploadRequest);
 	}
 }
