@@ -72,6 +72,16 @@ export const usePlanStore = defineStore("planStore", () => {
       console.error(error)
     }
   }
+
+  const gainExp = ref(0)
+  const questClear = async (planId) => {
+    try {
+      const response = await axios.patch('plan/quest-clear', {planId: planId, gainExp: gainExp.value}, { withCredentials: true })
+      console.log(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
  
   return {
     getRankList,
@@ -85,6 +95,9 @@ export const usePlanStore = defineStore("planStore", () => {
     getPlanInfoById,
 
     uploadImage,
-    compareImage
+    compareImage,
+
+    gainExp,
+    questClear
   };
 });
