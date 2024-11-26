@@ -107,15 +107,15 @@ const initializeRoute = async (locations) => {
 
    const time = await onSearchRoute(map.value, start, end, props.routeType);
   
-    console.log(time);
+  //   console.log(time);
 
-    store.selectList = store.selectList.map((item, index) => {
-      if (index == idx) {
-        return { ...item, time: time}
-      }
+  //   store.selectList = store.selectList.map((item, index) => {
+  //     if (index == idx) {
+  //       return { ...item, time: time}
+  //     }
 
-      return item;
-    });
+  //     return item;
+  //   });
   }
 
   console.log("시간 구하기!!")
@@ -136,6 +136,8 @@ const initializeRoute = async (locations) => {
       })
     }
   }
+
+  console.log("종료")
 };
 
 watch(
