@@ -1,7 +1,8 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
-**/application-secret.properties
+**/application-local.properties
 *.pem
+docker-compose.yml
 
 ### STS ###
 .apt_generated
