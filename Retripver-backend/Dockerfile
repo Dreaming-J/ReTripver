@@ -15,7 +15,7 @@ COPY ./src ./src
 
 # Maven 빌드 실행 (테스트 제외를 원하면 -DskipTests)
 RUN chmod +x ./mvnw
-RUN ./mvnw clean package
+RUN ./mvnw clean package -DskipTests
 
 # 실행을 위해 자바 17 slim 이미지 사용
 FROM openjdk:17-jdk-slim
@@ -23,8 +23,12 @@ FROM openjdk:17-jdk-slim
 # 작업 디렉토리 설정
 WORKDIR /app
 
+# wait-for-it 스크립트 다운로드 및 실행 권한 부여
+ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
+
 # jar파일 복사
 COPY --from=build /app/target/*.jar app.jar
 
-# JAR 파일 실행
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# wait-for-it을 사용하여 DB 연결 확인 후 앱 시작
+ENTRYPOINT ["/bin/sh", "-c", "./wait-for-it.sh db:3306 -t 180 -- java -jar app.jar"]
